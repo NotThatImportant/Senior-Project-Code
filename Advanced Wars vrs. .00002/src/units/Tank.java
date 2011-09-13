@@ -1,4 +1,4 @@
-package ai;
+package units;
 
 public class Tank extends Unit{
 	char type = 't';

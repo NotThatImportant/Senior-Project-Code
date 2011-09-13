@@ -1,6 +1,16 @@
-package ai;
+package terrain;
 
 public abstract class Tile {
 
-	private int height;
+	protected int height;
+	protected char type;
+	
+	public char getType() {
+		return type;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
 }

@@ -1,10 +1,10 @@
-package ai;
+package units;
 
 public abstract class Unit {
 
-	static final char AIRTYPE = 'a'; 
-	static final char INFANTRYTYPE = 'i'; 
-	static final char TANKTYPE = 't'; 
+	public static final char AIRTYPE = 'a'; 
+	public static final char INFANTRYTYPE = 'i'; 
+	public static final char TANKTYPE = 't'; 
 
 	char type;
 	boolean owner;

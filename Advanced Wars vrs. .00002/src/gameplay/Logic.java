@@ -1,4 +1,7 @@
-package ai;
+package gameplay;
+
+import units.Unit;
+import terrain.Terrain;
 
 public class Logic {
 
@@ -36,7 +39,7 @@ public class Logic {
 		switch(pUnit.getType()){
 		case Unit.AIRTYPE:
 				for(int i = 0; i < pUnit.getMove();i++)
-					
+					break;
 			break;
 		case Unit.TANKTYPE:
 

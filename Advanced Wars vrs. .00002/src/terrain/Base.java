@@ -1,14 +1,12 @@
 package terrain;
 
-public class Town extends Tile{
-
+public class Base extends Tile{
+	
 	private int height = 0;
 	private char owner;
-	private int cap;
 	
-	public Town(){
+	public Base(){
 		owner = 'n';
-		cap = 20;
 	}
-	
+
 }
