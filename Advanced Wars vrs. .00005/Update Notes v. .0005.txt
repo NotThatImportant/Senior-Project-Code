@@ -1,0 +1,6 @@
+Sorted out alot of things into different packages for organizational purposes.
+
+Created a "create map" function that reads in a file name to create the map, still
+needs a little touching up.
+
+Removed other terrain types in favor of just Tiles. 
