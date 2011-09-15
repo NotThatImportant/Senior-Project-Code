@@ -1,5 +1,10 @@
 package player;
 
+/**
+ * 
+ * Player class
+ * 
+ */
 public class Player {
 	
 	private int numUnits; 
