@@ -45,8 +45,10 @@ public abstract class Unit {
 		this.move = move;
 	}
 	public int getAttack() {
-		return attack;
+		int totalAttack = (hp / 2) * attack; 
+		return totalAttack;
 	}
+	
 	public void setAttack(int attack) {
 		this.attack = attack;
 	}
@@ -91,5 +93,10 @@ public abstract class Unit {
 	}
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public int getBonus() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
