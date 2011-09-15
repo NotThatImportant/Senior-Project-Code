@@ -4,12 +4,6 @@ import java.io.*;
 
 import terrain.Tile;
 
-/**
- * 
- * @author padillaa
- * This is a git test
- * Austin is awesome
- */
 public class MapReader {
 	private Tile[][] map;
 	private int size;
