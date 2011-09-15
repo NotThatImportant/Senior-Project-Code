@@ -1,4 +1,0 @@
-Edited some of the information in Unit (added HP), Map reader was fixed and logic 
-has been redone to account for the new map reader and tile class. 
-
-Dan
