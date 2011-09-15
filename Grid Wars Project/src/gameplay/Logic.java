@@ -97,42 +97,42 @@ public class Logic {
 			damage = (mP1.getAttack() + mP1.getBonus() + mp1HB) - 
 					(mP2.getArmor() + mp2HB);
 			mP2.setHP(mP2.getHP() - damage);
-			if (mP2.getHP() < 0) {
+			if (mP2.getHP() <= 0) {
 				//TODO: Take off of grid as it DIED :(
 				playerList.get(PLAYER2).setNumUnits(playerList.get(PLAYER2).
 						getNumUnits()- 1);
-				tBoard[mP2.getX()][mP2.getY()] = null;
+				unitBoard[mP2.getX()][mP2.getY()] = null;
 			} else {
 				cDamage = (mP2.getAttack() + mP2.getBonus() + mp2HB) - 
 					(mP1.getArmor() + mp1HB);
 				
 				mP1.setHP(mP1.getHP() - cDamage);
-				if (mP1.getHP() < 0) {
+				if (mP1.getHP() <= 0) {
 					//TODO: take off grid
 					playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).
 							getNumUnits()- 1);;
-					tBoard[mP1.getX()][mP1.getY()] = null;
+					unitBoard[mP1.getX()][mP1.getY()] = null;
 				}
 			}
 		} else {
 			damage = (mP2.getAttack() + mP2.getBonus() + mp2HB) - 
 			(mP1.getArmor() + mp1HB);
 			mP2.setHP(mP1.getHP() - damage);
-			if (mP1.getHP() < 0) {
+			if (mP1.getHP() <= 0) {
 				//TODO: Take off of grid as it DIED :( 
 				playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).
 						getNumUnits()- 1);
-				tBoard[mP1.getX()][mP1.getY()] = null;
+				unitBoard[mP1.getX()][mP1.getY()] = null;
 			} else {
 				cDamage = (mP1.getAttack() + mP1.getBonus() + mp1HB) - 
 					(mP2.getArmor() + mp2HB);
 				
 				mP2.setHP(mP2.getHP() - cDamage);
-				if (mP2.getHP() < 0) {
+				if (mP2.getHP() <= 0) {
 					//TODO: take off grid
 					playerList.get(PLAYER2).setNumUnits(playerList.get(PLAYER2).
 							getNumUnits()- 1);
-					tBoard[mP2.getX()][mP2.getY()] = null;
+					unitBoard[mP2.getX()][mP2.getY()] = null;
 				}
 			}
 		}
@@ -150,7 +150,21 @@ public class Logic {
 			unitBoard[x][y] = pU;
 			p.setCash(p.getCash() - pU.getCost());
 			p.setNumUnits(p.getNumUnits()+1);
+		}	
+	}
+	
+	public boolean didWin(Player p) {
+		
+		if (p.getPNum() == PLAYER1) {
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)  {
+				return true;
+			}
+		}
+		else {
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)
+				return true;
 		}
 		
+		return false;
 	}
 }
