@@ -8,6 +8,7 @@ import terrain.Tile;
  * 
  * @author padillaa
  * This is a git test
+ * This is a git test 2
  */
 public class MapReader {
 	private Tile[][] map;
