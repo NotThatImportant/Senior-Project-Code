@@ -1,31 +1,39 @@
 package gameplay;
 
+import java.util.ArrayList;
+
+import player.Player;
+
 import units.*;
 import terrain.Tile;
 import maps.MapReader;
 
+//TODO
 public class Logic {
-
+	
+	private final int BINCOME = 1000;
+	private final int BASEINCOME = 3000;
+	
 	private final int PLAYER1 = 0;
 	private final int PLAYER2 = 1;
 	
-	private final int BINCOME = 300;
-	
+	private ArrayList<Player> playerList;
 	private Unit[][] unitBoard;
 	private Tile[][] tBoard;
 	private char[][] moves;
 	private int mapSize;
 	private MapReader mr;
-	private int currPlayer;
 	
-	private int p1UnitCount, p2UnitCount;
-	private int p1BCount, p2BCount;
-	
-	public Logic(String mapName){
+	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
+			String p2Name){
 		mr = new MapReader(mapName);
 		createBoards();    
 		mapSize = mr.getSize();
-		currPlayer = PLAYER1;
+		playerList = new ArrayList();
+		Player p1 = new Player(p1Name, 1, p1Fact);
+		Player p2 = new Player(p2Name, 2, p2Fact);
+		playerList.add(p1);
+		playerList.add(p2);
 	}
 
 
@@ -69,16 +77,9 @@ public class Logic {
 		return moves;
 	}
 	
-	public int econDay(int player) {
-		int econ = 0;
-		
-		if (player == PLAYER1) {
-			econ = p1BCount * BINCOME;
-		} else {
-			econ = p2BCount * BINCOME;
-		}
-		
-		return econ;
+	public void econDay(Player p) {
+		int econ = p.getNumBuild() * BINCOME + BASEINCOME;
+		p.setCash(p.getCash() + econ);
 	}
 	
 	public Unit[] battle(Unit p1, Unit p2, int attackFirst) {
@@ -96,38 +97,42 @@ public class Logic {
 			damage = (mP1.getAttack() + mP1.getBonus() + mp1HB) - 
 					(mP2.getArmor() + mp2HB);
 			mP2.setHP(mP2.getHP() - damage);
-			if (mP2.getHP() < 0) {
+			if (mP2.getHP() <= 0) {
 				//TODO: Take off of grid as it DIED :(
-				p2UnitCount--;
-				tBoard[mP2.getX()][mP2.getY()] = null;
+				playerList.get(PLAYER2).setNumUnits(playerList.get(PLAYER2).
+						getNumUnits()- 1);
+				unitBoard[mP2.getX()][mP2.getY()] = null;
 			} else {
 				cDamage = (mP2.getAttack() + mP2.getBonus() + mp2HB) - 
 					(mP1.getArmor() + mp1HB);
 				
 				mP1.setHP(mP1.getHP() - cDamage);
-				if (mP1.getHP() < 0) {
+				if (mP1.getHP() <= 0) {
 					//TODO: take off grid
-					p1UnitCount--;
-					tBoard[mP1.getX()][mP1.getY()] = null;
+					playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).
+							getNumUnits()- 1);;
+					unitBoard[mP1.getX()][mP1.getY()] = null;
 				}
 			}
 		} else {
 			damage = (mP2.getAttack() + mP2.getBonus() + mp2HB) - 
 			(mP1.getArmor() + mp1HB);
 			mP2.setHP(mP1.getHP() - damage);
-			if (mP1.getHP() < 0) {
+			if (mP1.getHP() <= 0) {
 				//TODO: Take off of grid as it DIED :( 
-				p1UnitCount--;
-				tBoard[mP1.getX()][mP1.getY()] = null;
+				playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).
+						getNumUnits()- 1);
+				unitBoard[mP1.getX()][mP1.getY()] = null;
 			} else {
 				cDamage = (mP1.getAttack() + mP1.getBonus() + mp1HB) - 
 					(mP2.getArmor() + mp2HB);
 				
 				mP2.setHP(mP2.getHP() - cDamage);
-				if (mP2.getHP() < 0) {
+				if (mP2.getHP() <= 0) {
 					//TODO: take off grid
-					p2UnitCount--;
-					tBoard[mP2.getX()][mP2.getY()] = null;
+					playerList.get(PLAYER2).setNumUnits(playerList.get(PLAYER2).
+							getNumUnits()- 1);
+					unitBoard[mP2.getX()][mP2.getY()] = null;
 				}
 			}
 		}
@@ -137,9 +142,29 @@ public class Logic {
 		return modifiedUnits;
 	}
 	
-	public void produceUnit(int player, Unit pU, Tile pT) {
+	public void produceUnit(Player p, Unit pU, Tile pT) {
 		int x = pT.getX();
 		int y = pT.getY();
 		
+		if (unitBoard[x][y] == null) {
+			unitBoard[x][y] = pU;
+			p.setCash(p.getCash() - pU.getCost());
+			p.setNumUnits(p.getNumUnits()+1);
+		}	
+	}
+	
+	public boolean didWin(Player p) {
+		
+		if (p.getPNum() == PLAYER1) {
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)  {
+				return true;
+			}
+		}
+		else {
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)
+				return true;
+		}
+		
+		return false;
 	}
 }
