@@ -17,6 +17,11 @@ public abstract class Unit {
 	int[] movement;
 	int x, y;
 	int hp = 10;
+	int cost; 
+	
+	public int getCost() {
+		return cost;
+	}
 	
 	public int getHP() {
 		return hp;

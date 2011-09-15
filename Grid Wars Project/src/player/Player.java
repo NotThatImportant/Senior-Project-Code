@@ -18,6 +18,7 @@ public class Player {
 		faction = fact;
 		playName = pN;
 		playNum = pNum;
+		cash = 6000;
 	}
 	
 	public int getPNum() {
