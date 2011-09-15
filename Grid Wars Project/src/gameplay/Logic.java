@@ -8,6 +8,7 @@ import units.*;
 import terrain.Tile;
 import maps.MapReader;
 
+//TODO
 public class Logic {
 	
 	private final int BINCOME = 1000;
