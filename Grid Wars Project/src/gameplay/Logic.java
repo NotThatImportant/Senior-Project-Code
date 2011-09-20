@@ -128,7 +128,7 @@ public class Logic {
 			} else 
 				break;
 		}
-
+		
 		//This loop searches the bottom side to see if pUnits can move
 		for (int r = 0; r < movement || x - r > 0; r++) {
 			tileType = tempMap[x-r][y].getType();
@@ -144,13 +144,12 @@ public class Logic {
 				break;
 		}
 
-		/*//This loop searches the top right side to see if pUnit can move
+		int sub = 1;
+
+		//This loop searches the top right side to see if pUnit can move
 		for (int r = 0; r < movement - 1 || x + r < mr.getSize(); r++) {
-			for (int c = 0; c < movement -1 || y + c < mr.getSize(); c++) {
+			for (int c = 0; c < movement - sub || y + c < mr.getSize(); c++) {
 				tileType = tempMap[x+r][y+c].getType();
-				if (r == movement - 2) {
-					
-				}
 				if (unitBoard[x+r][y+c] == null) {
 					if (tileType == 'm') {
 						if ( (type == 'i' || type == 'a'))
@@ -162,7 +161,8 @@ public class Logic {
 				} else 
 					break;
 			}
-		}*/
+			sub++;
+		}
 
 		return moves;
 	}
