@@ -19,6 +19,8 @@ public class Player {
 		playName = pN;
 		playNum = pNum;
 		cash = 6000;
+		numBuild = 0;
+		numUnits = 0;
 	}
 	
 	public int getPNum() {
@@ -47,6 +49,10 @@ public class Player {
 	
 	public void setNumBuild(int numBuild) {
 		this.numBuild = numBuild;
+	}
+	
+	public void addBuilding() {
+		numBuild++;
 	}
 	
 	public int getCash() {

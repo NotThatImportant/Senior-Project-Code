@@ -7,7 +7,7 @@ public abstract class Unit {
 	public static final char TANKTYPE = 't'; 
 
 	char type;
-	boolean owner;
+	int owner;
 	int move;
 	int attack;
 	int fuel;
@@ -34,15 +34,6 @@ public abstract class Unit {
 	public char getType() {
 		return type;
 	}
-	public void setType(char type) {
-		this.type = type;
-	}
-	public boolean isOwner() {
-		return owner;
-	}
-	public void setOwner(boolean owner) {
-		this.owner = owner;
-	}
 	public int getMove() {
 		return move;
 	}
@@ -50,13 +41,10 @@ public abstract class Unit {
 		this.move = move;
 	}
 	public int getAttack() {
-		int totalAttack = (hp / 2) * attack; 
-		return totalAttack;
+		int tA = attack * (hp / 2 );
+		return tA;
 	}
 	
-	public void setAttack(int attack) {
-		this.attack = attack;
-	}
 	public int getFuel() {
 		return fuel;
 	}

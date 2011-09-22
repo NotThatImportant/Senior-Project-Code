@@ -1,20 +1,18 @@
 package units;
 
 public class Infantry extends Unit{
-
-	private char type = 'i';
-	private boolean owner;
-	private int move = 3;
-	private int attack;
-	private int fuel = -1;
-	private int ammo = -1;
-	private int atkRange = 1;
-	private int[] movement;
 	
-	public Infantry(boolean owner){
+	public Infantry(int owner){
+		this.owner = owner;
 		
+		attack = 1;
+		type = INFANTRYTYPE;
+		move = 5;
+		fuel = 99;
+		ammo = 20;
+		atkRange = 1;
+		armor = 1;
+		cost = 1000;
+		hp = 10;
 	}
-	
-	
-	
 }
