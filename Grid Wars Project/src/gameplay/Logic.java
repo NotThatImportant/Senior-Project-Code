@@ -70,145 +70,7 @@ public class Logic {
 	public Player getP2() {
 		return playerList.get(PLAYER2);
 	}
-	
-	/*public boolean move(Unit pUnit, int destX, int destY){
-		boolean returnVal = false;
 
-		if (canMove(destX, destY)) {
-			pUnit.setX(destX);
-			pUnit.setY(destY);
-		}
-
-
-	}*/
-
-	/*public boolean canMove(Unit pUnit, int pX, int pY) {
-
-		int desiredX = pX;
-		int desiredY = pY;
-
-		int currX = pUnit.getX();
-		int currY = pUnit.getY();
-
-
-
-		return false;
-	}*/
-
-	public char[][] setUpMoves(Unit pUnit) {
-		int movement = pUnit.getMove();
-
-		int x = pUnit.getX();
-		int y = pUnit.getY();
-
-		Tile[][] tempMap = tBoard;
-		char[][] moves = new char[mr.getSize()][mr.getSize()];
-
-		char type = pUnit.getType();
-		char tileType = tempMap[x][y].getType();
-
-		//This loop searches the left side to see if pUnit can move
-		for (int c = 0; c < movement || y - c > 0; c++) {
-			tileType = tempMap[x][y-c].getType();
-			if (unitBoard[x][y-c] == null) {
-				if (tileType == 'm') {
-					if ( (type == 'i' || type == 'a'))
-						moves[x][y-c] = '-';
-				} else if (tileType != 'w')
-					moves[x][y-c] = '-';
-				else 
-					break;
-			} else 
-				break;
-		}
-
-
-		//This loop searches the right side to see if pUnit can move
-		for (int c = 0; c < movement || y + c < mr.getSize(); c++) {
-			tileType = tempMap[x][y+c].getType();
-			if (unitBoard[x][y+c] == null) {
-				if (tileType == 'm') {
-					if ( (type == 'i' || type == 'a'))
-						moves[x][y+c] = '-';
-				} else if (tileType != 'w')
-					moves[x][y+c] = '-';
-				else 
-					break;
-			} else 
-				break;
-		}
-
-		//This loop searches the top side to see if pUnits can move
-		for (int r = 0; r < movement || x + r < mr.getSize(); r++) {
-			tileType = tempMap[x+r][y].getType();
-			if (unitBoard[x+r][y] == null) {
-				if (tileType == 'm') {
-					if ( (type == 'i' || type == 'a'))
-						moves[x+r][y] = '-';
-				} else if (tileType != 'w')
-					moves[x+r][y] = '-';
-				else 
-					break;
-			} else 
-				break;
-		}
-
-		//This loop searches the bottom side to see if pUnits can move
-		for (int r = 0; r < movement || x - r > 0; r++) {
-			tileType = tempMap[x-r][y].getType();
-			if (unitBoard[x-r][y] == null) {
-				if (tileType == 'm') {
-					if ( (type == 'i' || type == 'a'))
-						moves[x-r][y] = '-';
-				} else if (tileType != 'w')
-					moves[x-r][y] = '-';
-				else 
-					break;
-			} else 
-				break;
-		}
-
-		/*//This loop searches the top right side to see if pUnit can move
-		for (int r = 0; r < movement - 1 || x + r < mr.getSize(); r++) {
-			for (int c = 0; c < movement -1 || y + c < mr.getSize(); c++) {
-				tileType = tempMap[x+r][y+c].getType();
-				if (r == movement - 2) {
-
-				}
-				if (unitBoard[x+r][y+c] == null) {
-					if (tileType == 'm') {
-						if ( (type == 'i' || type == 'a'))
-							moves[x+r][y+c] = '-';
-					} else if (tileType != 'w')
-						moves[x+r][y+c] = '-';
-					else 
-						break;
-				} else 
-					break;
-			}
-		}*/
-
-		return moves;
-	}
-
-	private char[][] calculateMoves(Unit pUnit){
-		switch(pUnit.getType()){
-		case Unit.AIRTYPE:
-			for(int i = 0; i < pUnit.getMove();i++)
-				break;
-			break;
-		case Unit.TANKTYPE:
-
-			break;
-		case Unit.INFANTRYTYPE:
-
-			break;
-
-		}
-
-		return moves;
-
-	}
 
 	public void econDay(Player p) {
 		int econ = p.getNumBuild() * BINCOME + BASEINCOME;
@@ -431,7 +293,7 @@ public class Logic {
 
 
 /******************************************************** 
- *	canMove is used by the move method.  It checks for 
+ *	possibleMove is used by the move method.  It checks for 
  *	making sure that only infantry and mech infantry can
  *	move on mountains.  
  *	Later we can change this method to account for water
