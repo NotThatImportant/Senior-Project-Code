@@ -21,7 +21,6 @@ public class MapReader {
 			
 			/*Change C:/Users/Dan/ to a method to get root*/
 			file = new File("C:/Users/Dan/" + pFileName + ".txt");
-			System.out.println(file.getAbsolutePath()+ " : " + file.exists());
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
