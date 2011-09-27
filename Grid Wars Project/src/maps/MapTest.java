@@ -1,6 +1,5 @@
 package maps;
 
-import java.io.File;
 import java.util.Scanner;
 
 import terrain.Tile;

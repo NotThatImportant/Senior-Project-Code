@@ -18,6 +18,12 @@ public abstract class Unit {
 	int x, y;
 	int hp = 10;
 	int cost; 
+	boolean bonus = false;
+	String name;
+	
+	public String getName() {
+		return name;
+	}
 	
 	public int getCost() {
 		return cost;
@@ -88,8 +94,7 @@ public abstract class Unit {
 		this.y = y;
 	}
 
-	public int getBonus() {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean getBonus() {
+		return bonus;
 	}
 }

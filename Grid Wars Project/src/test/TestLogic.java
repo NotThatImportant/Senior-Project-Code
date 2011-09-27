@@ -21,7 +21,6 @@ public class TestLogic {
 	public void testBoards() {
 		Logic log = new Logic("map1", 'r','b', "Austin", "Matt");
 		assertNotNull(log.getUB());
-		assertNotNull(log.getMoves());
 		
 		assertNull(log.getUB()[0][0]);
 	}
@@ -76,6 +75,19 @@ public class TestLogic {
 		System.out.println("Unit 2 HP: " + log.getUnit(1,2).getHP());
 		
 		assertTrue(log.getUnit(1, 1).getHP() != 10);
+	}
+	
+	@Test
+	public void testMove() {
+		Logic log = new Logic("map1", 'r', 'b', "Austin", "Matt");
+		Infantry inf = new Infantry(1);
+		log.produceUnit(log.getP1(), inf, log.getTile(1,1));
+		
+		char[][] board = log.getMoves(inf);
+		if (board[1][2] == '+') {
+			
+		}
+		
 	}
 	
 }

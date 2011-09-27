@@ -14,5 +14,6 @@ public class Infantry extends Unit{
 		armor = 1;
 		cost = 1000;
 		hp = 10;
+		name = "Infantry";
 	}
 }

@@ -1,12 +1,18 @@
 package units;
 
 public class Tank extends Unit{
-	char type = 't';
-	boolean owner;
-	int move;
-	int attack; 
-	int fuel;
-	int ammo;
-	int atkRange = 1;
-	int[] movement;
+	public Tank(int owner){
+		this.owner = owner;
+		
+		attack = 3;
+		type = TANKTYPE;
+		move = 7;
+		fuel = 30;
+		ammo = 10;
+		atkRange = 1;
+		armor = 1;
+		cost = 1000;
+		hp = 10;
+		name = "Tank";
+	}
 }

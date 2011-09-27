@@ -15,18 +15,11 @@ public class MapReader {
 		int c = 0;
 		
 		try {
-			
-			//file = new File(pFileName + ".txt");
-			//Need to have the android file directory
-			
-			/*Change C:/Users/Dan/ to a method to get root*/
-			file = new File("C:/Users/Dan/" + pFileName + ".txt");
+			file = new File("maps/" + pFileName + ".txt");
 			System.out.println(file.getAbsolutePath()+ " : " + file.exists());
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			
-			//BufferedReader br = new BufferedReader(new FileReader("C:/Users/Dan/" + pFileName + ".txt"));
 			
 			String strLine;
 			strLine = br.readLine();
@@ -41,7 +34,6 @@ public class MapReader {
 				line[c] = strLine;
 				c++;
 			}
-			//in.close();
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		}
