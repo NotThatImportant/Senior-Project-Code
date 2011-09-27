@@ -83,8 +83,6 @@ public class TestLogic {
 		Infantry inf = new Infantry(1);
 		log.produceUnit(log.getP1(), inf, log.getTile(1,1));
 		
-		
-		
 		char[][] board = log.getMoves(inf);
 		
 		int size = board[1].length;

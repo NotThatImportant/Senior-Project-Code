@@ -2,12 +2,18 @@ package units;
 
 public class HeavyTank extends Unit{
 	
-	char type = 'h';
-	boolean owner;
-	int move ;
-	int attack;
-	int fuel;
-	int ammo;
-	int atkRange = 1;
-	int[] movement;
+	public HeavyTank(int owner){
+		this.owner = owner;
+		
+		attack = 8;
+		type = TANKTYPE;
+		move = 6;
+		fuel = 200;
+		ammo = 5;
+		atkRange = 1;
+		armor = 4;
+		cost = 20000;
+		hp = 10;
+		name = "APC";
+	}
 }

@@ -35,7 +35,10 @@ public class AI extends Player{
 		
 		for (int r = 0; r < size; r++) {
 			for (int c = 0; c < size; c++) {
-				
+				if (map[r][c].getType() == 'p' &&
+						map[r][c].getOwner() == playNum) {
+					
+				}
 			}
 		}
 	}

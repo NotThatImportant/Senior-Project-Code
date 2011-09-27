@@ -60,9 +60,9 @@ public class Logic {
 			herpDerp = new AI("Herp Derp", 2, 'r');
 		else 
 			p2 = new Player(p2Name, 2, p2Fact);
-		
+
 		playerList.add(p1);
-		
+
 		if (wantAI == true) 
 			playerList.add(herpDerp);
 		else
@@ -99,7 +99,7 @@ public class Logic {
 	public Tile[][] getTBoard() {
 		return tBoard;
 	}
-	
+
 	/************************************************************************
 	 * This method returns the unit board. Used exclusively to test the 
 	 * board and make sure that a unit is properly placed and that the 
@@ -134,7 +134,7 @@ public class Logic {
 
 		return moves;
 	}
-	
+
 	/************************************************************************
 	 * 
 	 * 
@@ -144,12 +144,12 @@ public class Logic {
 		if (tBoard[pX][pY].getType() == 'p' || 
 				tBoard[pX][pY].getType() == 'b' && 
 				tBoard[pX][pY].getOwner() != p.getPNum()) {
-			
+
 			if (tBoard[pX][pY].getBC() == p.getPNum()) 
 				tBoard[pX][pY].setOwner(p.getPNum());
 			else 
 				tBoard[pX][pY].setBC(p.getPNum());
-			
+
 		}
 	}
 
@@ -276,7 +276,7 @@ public class Logic {
 
 		return false;
 	}
-	
+
 	/************************************************************************
 	 * This method is to be used after the move method so you don't need to 
 	 * do checks. After that you look at the move board (via GUI) and you
@@ -287,13 +287,13 @@ public class Logic {
 	 * @param pX The X where the unit is moving too
 	 * @param pY The Y where the unit is moving too
 	 ***********************************************************************/
-	
+
 	public void moveUnit(Unit pUnit, int pX, int pY) {
 		int oX = pUnit.getX();
 		int oY = pUnit.getY();
-		
+
 		unitBoard[oX][oY] = null;
-		
+
 		unitBoard[pX][pY] = pUnit;
 	}
 
@@ -312,84 +312,73 @@ public class Logic {
 			movement-=2;
 		}
 		//Top
-		for(int r = pUnit.getX()-1; r<movement && r>=0; r--){
-			if(possibleMove(pUnit, r, pUnit.getY())==false){
+		for(int r = 1; r<=movement && pUnit.getX()-r >= 0; r++){
+			if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY())==false){
 				break;
 			}
 			else{
-				moves[r][pUnit.getY()] = 'x';
-				for(int j = 1; j < movement; j++){
-					if(possibleMove(pUnit,r, pUnit.getY()+j)==true){
-						moves[r][pUnit.getY()+j] = 'x';
+				moves[pUnit.getX()-r][pUnit.getY()] = 'x';
+				for(int j = 1; j < movement && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
+					if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()+j)==true){
+						moves[pUnit.getX()-r][pUnit.getY()+j] = 'x';
 					}
-				}
-				for(int j = 1; j > movement; j++){
-					if(possibleMove(pUnit,r, pUnit.getY()-j)==true){
-						moves[r][pUnit.getY()+j] = 'x';
+					if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()-j)==true){
+						moves[pUnit.getX()-r][pUnit.getY()-j] = 'x';
 					}
 				}
 			}
 		}
 		//Bottom
-		for(int r = pUnit.getX()+1; r<movement && r<mapSize; r++){
-			if(possibleMove(pUnit, r, pUnit.getY())==false){
+		for(int r = 1; r<movement && pUnit.getX()+r<mapSize; r++){
+			if(possibleMove(pUnit, pUnit.getX()+r, pUnit.getY())==false){
 				break;
 			}
 			else{
-				moves[r][pUnit.getY()] = 'x';
+				moves[pUnit.getX()+r][pUnit.getY()] = 'x';
 				// Checking Left
-				for(int j = 1; j < movement; j--){
-					if(possibleMove(pUnit,r, pUnit.getY()+j)==true){
-						moves[r][pUnit.getY()+j] = 'x';
+				for(int j = 1; j < movement && pUnit.getY()+r<mapSize && pUnit.getY()-r>=0; j--){
+					if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
+						moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
 					}
-				}
-				// Checking Right
-				for(int j = 1; j > movement; j++){
-					if(possibleMove(pUnit,r, pUnit.getY()-j)== true){
-						moves[r][pUnit.getY()-j] = 'x';
+					if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()-j)== true){
+						moves[pUnit.getX()+r][pUnit.getY()-j] = 'x';
 					}
 				}
 			}
 		}
 		//Left
-		for(int c = pUnit.getY()-1; c<movement && c>=0; c--){
-			if(possibleMove(pUnit, pUnit.getX(), c)==false){
+		for(int c = 1; c<movement && pUnit.getY()-c>=0; c++){
+			if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()-c)==false){
 				break;
 			}
 			else{
-				moves[pUnit.getX()][c] = 'x';
+				moves[pUnit.getX()][pUnit.getY()-c] = 'x';
 				// Checking below
-				for(int j = 1; j < movement; j++){
-					if(possibleMove(pUnit, pUnit.getX()+j, c)==true){
-						moves[pUnit.getX()+j][c] = 'x';
+				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+					if(possibleMove(pUnit, pUnit.getX()+j, pUnit.getY()-c)==true){
+						moves[pUnit.getX()+j][pUnit.getY()-c] = 'x';
 					}
-				}
-				// Checking above
-				for(int j = 1; j > movement; j++){
-					if(possibleMove(pUnit,pUnit.getX()-j, c)==true){
-						moves[pUnit.getX()-j][c] = 'x';
+					if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()-c)==true){
+						moves[pUnit.getX()-j][pUnit.getY()-c] = 'x';
 					}
 				}
 
 			}
 		}
 		//Right
-		for(int c = pUnit.getY()+1; c<movement && c<mapSize; c++){
-			if(possibleMove(pUnit, pUnit.getX(), c)==false){
+		for(int c = 1; c<movement && pUnit.getY()+c<mapSize; c++){
+			if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()+c)==false){
 				break;
 			}
 			else{
-				moves[pUnit.getX()][c] = 'x';
+				moves[pUnit.getX()][pUnit.getY()+c] = 'x';
 				// Checking Below
-				for(int j = 1; j < movement; j--){
-					if(possibleMove(pUnit,pUnit.getX()+j, c)==true){
-						moves[pUnit.getX()+j][c] = 'x';
+				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j--){
+					if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
+						moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
 					}
-				}
-				// Checking Above
-				for(int j = 1; j > movement; j++){
-					if(possibleMove(pUnit,pUnit.getX()-j, c)==true){
-						moves[pUnit.getX()-j][c] = 'x';
+					if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()+c)==true){
+						moves[pUnit.getX()-j][pUnit.getY()+c] = 'x';
 					}
 				}
 			}
@@ -432,7 +421,6 @@ public class Logic {
 
 		return retval;
 	}
-
 
 	/**private void move(unit pUnit){
 		moveUnit(pUnit, pUnit.getMovement(), pUnit.getX(), pUnit.getY());
