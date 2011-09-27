@@ -13,13 +13,13 @@ public class TestLogic {
 	
 	@Test
 	public void createLogic() {
-		Logic log = new Logic("map1", 'r','b', "Austin", "Matt");
+		Logic log = new Logic("map1", 'r','b', "Austin", "Matt", false);
 		assertNotNull(log);
 	}
 	
 	@Test
 	public void testBoards() {
-		Logic log = new Logic("map1", 'r','b', "Austin", "Matt");
+		Logic log = new Logic("map1", 'r','b', "Austin", "Matt", false);
 		assertNotNull(log.getUB());
 		
 		assertNull(log.getUB()[0][0]);
@@ -27,7 +27,7 @@ public class TestLogic {
 	
 	@Test
 	public void testInfo() {
-		Logic log = new Logic("map1", 'r', 'b', "Austin", "Matt");
+		Logic log = new Logic("map1", 'r', 'b', "Austin", "Matt", false);
 		MapReader mr = new MapReader("map1");
 		
 		assertNotNull(log.getP1());
@@ -79,13 +79,57 @@ public class TestLogic {
 	
 	@Test
 	public void testMove() {
-		Logic log = new Logic("map1", 'r', 'b', "Austin", "Matt");
+		Logic log = new Logic("map1", 'r', 'b', "Austin", "Matt", false);
 		Infantry inf = new Infantry(1);
 		log.produceUnit(log.getP1(), inf, log.getTile(1,1));
 		
+		
+		
 		char[][] board = log.getMoves(inf);
-		if (board[1][2] == '+') {
-			
+		
+		int size = board[1].length;
+		for(int i = 0; i < size; i++) {
+			System.out.print(i + " ");
+			for (int j = 0; j < size; j++) {
+				System.out.print(board[i][j]);
+			}
+			System.out.println();
+		}
+		
+		System.out.println("++++++++++++++++++++++++");
+		
+		Unit[][] uBoard = log.getUB();
+		size = uBoard[1].length;
+		
+		for (int r = 0; r < size; r++) {
+			System.out.print(r + " ");
+			for (int c = 0; c < size; c++) {
+				if (uBoard[r][c] != null)
+					System.out.print(uBoard[r][c].getType());
+				else
+					System.out.print("-");
+			}
+			System.out.println();
+		}
+		
+		System.out.println("++++++++++++++++++++++++++++");
+		
+		if (board[1][2] == 'x') {
+			log.moveUnit(inf, 1, 2);
+		} else
+			log.moveUnit(inf, 1, 2);
+		
+		uBoard = log.getUB();
+		size = uBoard[1].length;
+		
+		for (int r = 0; r < size; r++) {
+			for (int c = 0; c < size; c++) {
+				if (uBoard[r][c] != null)
+					System.out.print(uBoard[r][c].getType());
+				else
+					System.out.print("-");
+			}
+			System.out.println();
 		}
 		
 	}

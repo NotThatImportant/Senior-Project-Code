@@ -15,8 +15,17 @@ public class MapReader {
 		int c = 0;
 		
 		try {
+<<<<<<< HEAD
 			file = new File("maps/" + pFileName + ".txt");
 			System.out.println(file.getAbsolutePath()+ " : " + file.exists());
+=======
+			
+			//file = new File(pFileName + ".txt");
+			//Need to have the android file directory
+			
+			/*Change C:/Users/Dan/ to a method to get root*/
+			file = new File("C:/Users/Dan/" + pFileName + ".txt");
+>>>>>>> a47797ac3b4617460257b05d9885dc84b98d3a06
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));

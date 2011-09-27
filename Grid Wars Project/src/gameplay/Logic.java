@@ -2,7 +2,7 @@ package gameplay;
 
 import java.util.ArrayList;
 
-import player.Player;
+import player.*;
 
 import units.*;
 import terrain.Tile;
@@ -31,7 +31,7 @@ public class Logic {
 	private char[][] moves; //board that shows all of the possible moves 
 	private int mapSize; //current map size
 	private MapReader mr; //map reader, reads in the map name and makes it
-
+	private AI herpDerp; //AI
 
 	/************************************************************************
 	 * The constructor takes in a lot of the basic information, though 
@@ -49,15 +49,24 @@ public class Logic {
 	 ***********************************************************************/
 
 	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
-			String p2Name){
+			String p2Name, boolean wantAI){
 		mr = new MapReader(mapName);
 		mapSize = mr.getSize();
 		createBoards();
 		playerList = new ArrayList<Player>();
 		Player p1 = new Player(p1Name, 1, p1Fact);
-		Player p2 = new Player(p2Name, 2, p2Fact);
+		Player p2 = null;
+		if (wantAI == true) 
+			herpDerp = new AI("Herp Derp", 2, 'r');
+		else 
+			p2 = new Player(p2Name, 2, p2Fact);
+		
 		playerList.add(p1);
-		playerList.add(p2);
+		
+		if (wantAI == true) 
+			playerList.add(herpDerp);
+		else
+			playerList.add(p2);
 	}
 
 	/************************************************************************
@@ -82,6 +91,15 @@ public class Logic {
 				moves[i][j] = '-';
 	}
 
+	/************************************************************************
+	 * Returns the terrain board
+	 * 
+	 * @return
+	 ***********************************************************************/
+	public Tile[][] getTBoard() {
+		return tBoard;
+	}
+	
 	/************************************************************************
 	 * This method returns the unit board. Used exclusively to test the 
 	 * board and make sure that a unit is properly placed and that the 
@@ -115,6 +133,24 @@ public class Logic {
 		move(u);
 
 		return moves;
+	}
+	
+	/************************************************************************
+	 * 
+	 * 
+	 * @param p
+	 ************************************************************************/
+	public void captureBuilding(Player p, int pX, int pY) {
+		if (tBoard[pX][pY].getType() == 'p' || 
+				tBoard[pX][pY].getType() == 'b' && 
+				tBoard[pX][pY].getOwner() != p.getPNum()) {
+			
+			if (tBoard[pX][pY].getBC() == p.getPNum()) 
+				tBoard[pX][pY].setOwner(p.getPNum());
+			else 
+				tBoard[pX][pY].setBC(p.getPNum());
+			
+		}
 	}
 
 	public Player getP1() {

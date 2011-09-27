@@ -7,18 +7,18 @@ package player;
  */
 public class Player {
 	
-	private int numUnits; 
-	private int playNum;
-	private String playName;
-	private int numBuild;
-	private int cash;
-	private char faction;
+	protected int numUnits; 
+	protected int playNum;
+	protected String playName;
+	protected int numBuild;
+	protected int munnys;
+	protected char faction;
 	
 	public Player(String pN, int pNum, char fact) {
 		faction = fact;
 		playName = pN;
 		playNum = pNum;
-		cash = 6000;
+		munnys = 6000;
 		numBuild = 0;
 		numUnits = 0;
 	}
@@ -56,10 +56,10 @@ public class Player {
 	}
 	
 	public int getCash() {
-		return cash;
+		return munnys;
 	}
 	
 	public void setCash(int cash) {
-		this.cash = cash;
+		this.munnys = cash;
 	}
 }
