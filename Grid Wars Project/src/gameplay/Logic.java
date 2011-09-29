@@ -152,13 +152,6 @@ public class Logic {
 
 		}
 	}
-	
-	public void endTurn(int pNum) {
-		int numBuild = playerList.get(pNum).getNumBuild();
-		int munnys = numBuild * BINCOME + BASEINCOME;
-		int totalMunnys = playerList.get(pNum).getCash() + munnys; 
-		playerList.get(pNum).setCash(totalMunnys);
-	}
 
 	public Player getP1() {
 		return playerList.get(PLAYER1);
@@ -303,15 +296,6 @@ public class Logic {
 
 		unitBoard[pX][pY] = pUnit;
 	}
-
-	/******************************************************** 
-	 *	Move method
-	 *	Works by first going north of the player, then checking
-	 *	whether or not that spot is traversable.  At each spot,
-	 *	it checks movement-1 number of spots left and right.
-	 *	This amount decreases by one for every space away
-	 *	it is from the unit.
-	 *********************************************************/
 	private void move(Unit pUnit){
 		int movement = pUnit.getMove();
 
@@ -343,7 +327,7 @@ public class Logic {
 			else{
 				moves[pUnit.getX()+r][pUnit.getY()] = 'x';
 				// Checking Left
-				for(int j = 1; j < movement && pUnit.getY()+r<mapSize && pUnit.getY()-r>=0; j--){
+				for(int j = 1; j < movement && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
 					if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
 						moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
 					}
@@ -380,7 +364,7 @@ public class Logic {
 			else{
 				moves[pUnit.getX()][pUnit.getY()+c] = 'x';
 				// Checking Below
-				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j--){
+				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
 					if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
 						moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
 					}
@@ -420,56 +404,12 @@ public class Logic {
 	 *********************************************************/
 	private boolean possibleMove(Unit pUnit, int x, int y){
 		boolean retval = true;
-
-		if(tBoard[x][y].getType()=='m'&&pUnit.getType()!='i' ||
-				tBoard[x][y].getType()=='m'&&pUnit.getType()!='m'){
+		System.out.println(x +" " + y);
+		if((tBoard[x][y].getType()=='m' && pUnit.getType()!='i' )) {
 			retval = false;
 		}
 
 		return retval;
-	}
-
-	/**private void move(unit pUnit){
-		moveUnit(pUnit, pUnit.getMovement(), pUnit.getX(), pUnit.getY());
-	}*/
-
-	/******************************************************** 
-	 *	Move Method - WITH RECURSION
-	 *	This is if we want to test the limits of the phone.
-	 *********************************************************/
-	/**
-	private void move_Unit(unit pUnit, int movesLeft, int lastX, int lastY){
-		if(movesLeft == 0){
-		}
-		else if(tBoard[lastX][lastY] == 'x'){
-		}
-		else{
-			int unitX = lastX;
-			int unitY = lastY;
-			if(canMove(pUnit, lastX+1, lastY){
-				unitBoard[lastX+1][lastY];
-				move(pUnit, movesLeft-1, lastX+1, lastY);
-			}
-			if(canMove(pUnit, lastX-1, lastY){
-				unitBoard[lastX-1][lastY];
-				move(pUnit, movesLeft-1, lastX-1, lastY);
-			}
-			if(canMove(pUnit, lastX, lastY+1){
-				unitBoard[lastX][lastY+1];
-				move(pUnit, movesLeft-1, lastX, lastY+1);
-			}
-			if(canMove(pUnit, lastX, lastY-1){
-				unitBoard[lastX][lastY-1];
-				move(pUnit, movesLeft-1, lastX, lastY-1);
-			}
-		}
-	}
-	 */
-	
-	public static ArrayList getUnitList() {
-		//Get list of all available units
-		
-		return null;
 	}
 
 }

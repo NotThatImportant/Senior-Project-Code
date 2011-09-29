@@ -1,7 +1,5 @@
 package units;
 
-import java.util.ArrayList;
-
 public abstract class Unit {
 
 	public static final char AIRTYPE = 'a'; 
@@ -24,6 +22,15 @@ public abstract class Unit {
 	String name;
 	boolean attackCopter = true; 	
 	boolean attackPlane = false;
+	boolean canBuy = false;
+	
+	public boolean canBuy() {
+		return canBuy;
+	}
+	
+	public void setBuy(boolean buy) {
+		canBuy = buy;
+	}
 	
 	public boolean canAttackCopter() {
 		return attackCopter;
