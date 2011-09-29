@@ -22,6 +22,16 @@ public abstract class Unit {
 	int cost; 
 	boolean bonus = false;
 	String name;
+	boolean attackCopter = true; 	
+	boolean attackPlane = false;
+	
+	public boolean canAttackCopter() {
+		return attackCopter;
+	}
+	
+	public boolean canAttacKPlane() {
+		return attackPlane;
+	}
 	
 	public String getName() {
 		return name;

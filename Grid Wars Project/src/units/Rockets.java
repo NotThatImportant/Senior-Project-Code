@@ -14,7 +14,7 @@ public class Rockets extends Unit{
 		ammo = 5;
 		atkRange = 5;
 		armor = 2;
-		cost = 8000;
+		cost = 12000;
 		hp = 10;
 		name = "Rocket";
 		didMove = false;

@@ -15,5 +15,6 @@ public class Infantry extends Unit{
 		cost = 1000;
 		hp = 10;
 		name = "Infantry";
+		attackCopter = true;
 	}
 }

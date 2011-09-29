@@ -152,6 +152,13 @@ public class Logic {
 
 		}
 	}
+	
+	public void endTurn(int pNum) {
+		int numBuild = playerList.get(pNum).getNumBuild();
+		int munnys = numBuild * BINCOME + BASEINCOME;
+		int totalMunnys = playerList.get(pNum).getCash() + munnys; 
+		playerList.get(pNum).setCash(totalMunnys);
+	}
 
 	public Player getP1() {
 		return playerList.get(PLAYER1);

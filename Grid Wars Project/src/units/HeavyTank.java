@@ -12,7 +12,7 @@ public class HeavyTank extends Unit{
 		ammo = 5;
 		atkRange = 1;
 		armor = 4;
-		cost = 20000;
+		cost = 24000;
 		hp = 10;
 		name = "APC";
 	}

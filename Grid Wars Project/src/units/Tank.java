@@ -11,7 +11,7 @@ public class Tank extends Unit{
 		ammo = 10;
 		atkRange = 1;
 		armor = 3;
-		cost = 6000;
+		cost = 7000;
 		hp = 10;
 		name = "Tank";
 	}

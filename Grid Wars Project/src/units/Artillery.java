@@ -14,7 +14,7 @@ public class Artillery extends Unit{
 		ammo = 15;
 		atkRange = 3;
 		armor = 2;
-		cost = 5000;
+		cost = 6000;
 		hp = 10;
 		name = "Artillery";
 		didMove = false;

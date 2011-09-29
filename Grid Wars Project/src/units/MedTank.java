@@ -11,7 +11,7 @@ public class MedTank extends Unit{
 		ammo = 12;
 		atkRange = 1;
 		armor = 4;
-		cost = 12000;
+		cost = 14000;
 		hp = 10;
 		name = "Medium Tank";
 	}

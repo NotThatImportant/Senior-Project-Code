@@ -14,5 +14,6 @@ public class Recon extends Unit{
 		cost = 4000;
 		hp = 10;
 		name = "Recon";
+		attackCopter = true;
 	}
 }
