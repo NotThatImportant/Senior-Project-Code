@@ -11,7 +11,7 @@ public class AntiAir extends Unit{
 		ammo = 10;
 		atkRange = 1;
 		armor = 2;
-		cost = 7000;
+		cost = 8000;
 		hp = 10;
 		name = "Anti-Air";
 		bonus = true;
