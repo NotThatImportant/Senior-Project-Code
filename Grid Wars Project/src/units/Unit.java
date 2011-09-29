@@ -1,5 +1,7 @@
 package units;
 
+import java.util.ArrayList;
+
 public abstract class Unit {
 
 	public static final char AIRTYPE = 'a'; 
@@ -97,4 +99,6 @@ public abstract class Unit {
 	public boolean getBonus() {
 		return bonus;
 	}
+
+
 }

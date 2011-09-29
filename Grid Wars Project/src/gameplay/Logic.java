@@ -458,5 +458,11 @@ public class Logic {
 		}
 	}
 	 */
+	
+	public static ArrayList getUnitList() {
+		//Get list of all available units
+		
+		return null;
+	}
 
 }
