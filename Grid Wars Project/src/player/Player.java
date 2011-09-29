@@ -68,17 +68,15 @@ public class Player {
 	}
 	
 	public ArrayList<Unit> findUnitsICanAfford(){
-		ArrayList<Unit> unitsICanAfford = new ArrayList<Unit>();
 		ArrayList<Unit> unitList = findAllUnits();
 		
 		for (int i = 0; i < unitList.size(); i++) {
 			if (unitList.get(i).getCost() <= munnys) {
-				unitsICanAfford.add(unitList.get(i));
+				unitList.get(i).setBuy(true);
 			}
 		}
 		
-		
-		return unitsICanAfford;
+		return unitList;
 	}
 	
 	public ArrayList<Unit> findAllUnits(){
