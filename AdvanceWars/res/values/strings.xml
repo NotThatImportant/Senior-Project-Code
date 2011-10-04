@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Advance Wars</string>
+    <string name="single_player_button_label">Single Player</string>
+    <string name="multiplayer_button_label">Multiplayer</string>
+    <string name="settings_button_label">Settings</string>
+    <string name="main_menu_label">Main Menu</string>
+    <string name="about_button_label">About</string>
+    <string name="scores_button_label">Scores</string>
+    <string name="welcome_label">Welcome To Advance Wars</string>
+    <string name="new_player_button_label">Enter New Player Name</string>
+    <string name="previous_player_button_label">Select Player Name</string>
+    <string name="about_label">About Advance Wars</string>
+    <string name="about_description_label">Advance Wars game by Team ZuluXtreme 73.</string>
+    <string name="skip_button_label">Skip</string>
+</resources>
