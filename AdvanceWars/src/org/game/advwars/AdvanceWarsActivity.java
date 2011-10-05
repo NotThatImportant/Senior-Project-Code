@@ -35,11 +35,11 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
     	switch (v.getId())
     	{
     	case R.id.previous_player_name:
-    		Intent i = new Intent(this, About.class);
+    		Intent i = new Intent(this, UnderConstruction.class);
     		startActivity(i);
     		break;
     	case R.id.new_player_name:
-    		Intent i2 = new Intent(this, About.class);
+    		Intent i2 = new Intent(this, UnderConstruction.class);
     		startActivity(i2);
     		break;
     	case R.id.skip:

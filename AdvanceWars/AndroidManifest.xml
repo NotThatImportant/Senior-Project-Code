@@ -18,5 +18,21 @@
         android:screenOrientation="landscape"
         android:label="@string/about_title">
         </activity>
+        <activity android:name=".MainMenu"
+        android:screenOrientation="landscape"
+        android:label="@string/main_menu_title">
+        </activity>
+        <activity android:name=".SinglePlayer"
+        android:screenOrientation="landscape"
+        android:label="@string/single_player_title">
+        </activity>
+        <activity android:name=".Multiplayer"
+        android:screenOrientation="landscape"
+        android:label="@string/multiplayer_title">
+        </activity>
+        <activity android:name=".UnderConstruction"
+        android:screenOrientation="landscape"
+        android:label="@string/under_construction_title">
+        </activity>
     </application>
 </manifest>
