@@ -4,10 +4,10 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_gravity="center" android:text="@string/welcome_label" android:id="@+id/welcome"></TextView>
+    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_gravity="center" android:id="@+id/welcome" android:text="@string/welcome_title"></TextView>
     <ImageView android:layout_height="111dp" android:id="@+id/tank" android:layout_gravity="center" android:layout_width="183dp" android:src="@drawable/tank"></ImageView>
-    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/previous_player_name" android:layout_width="250dp" android:text="@string/previous_player_button_label"></Button>
-    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/new_player_name" android:layout_width="250dp" android:text="@string/new_player_button_label"></Button>
-    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="250dp" android:id="@+id/skip" android:text="@string/skip_button_label"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/previous_player_name" android:layout_width="250dp" android:text="@string/previous_player_button"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/new_player_name" android:layout_width="250dp" android:text="@string/new_player_button"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="250dp" android:id="@+id/skip" android:text="@string/skip_button"></Button>
     
 </LinearLayout>
