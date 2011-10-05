@@ -43,7 +43,7 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
     		startActivity(i2);
     		break;
     	case R.id.skip:
-    		Intent i3 = new Intent(this, About.class);
+    		Intent i3 = new Intent(this, MainMenu.class);
     		startActivity(i3);
     		break;
     	}

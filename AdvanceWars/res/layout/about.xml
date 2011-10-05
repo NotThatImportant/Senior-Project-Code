@@ -3,7 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent" android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/about" android:layout_gravity="center" android:text="@string/about_label"></TextView>
-    <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_gravity="center" android:text="@string/about_description_label"></TextView>
+    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:id="@+id/about" android:layout_gravity="center" android:text="@string/about_title"></TextView>
+    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceSmall" android:layout_width="wrap_content" android:layout_gravity="center" android:id="@+id/about_advance_wars" android:text="@string/about_description"></TextView>
     
 </LinearLayout>

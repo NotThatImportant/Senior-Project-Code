@@ -15,7 +15,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".About"
-        android:label="@string/about_label">
+        android:screenOrientation="landscape"
+        android:label="@string/about_title">
         </activity>
     </application>
 </manifest>

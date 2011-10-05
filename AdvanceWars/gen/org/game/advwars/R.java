@@ -16,36 +16,45 @@ public final class R {
     }
     public static final class id {
         public static final int about=0x7f050000;
+        public static final int about_advance_wars=0x7f050001;
+        public static final int campaign=0x7f05000e;
         public static final int main_menu=0x7f050007;
         public static final int multiplayer=0x7f050009;
         public static final int new_player_name=0x7f050005;
         public static final int previous_player_name=0x7f050004;
+        public static final int quick_match=0x7f05000d;
         public static final int scores=0x7f05000a;
         public static final int settings=0x7f05000b;
         public static final int single_player=0x7f050008;
         public static final int skip=0x7f050006;
         public static final int tank=0x7f050003;
-        public static final int textView1=0x7f050001;
+        public static final int tutorial=0x7f05000c;
         public static final int welcome=0x7f050002;
     }
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int main=0x7f030001;
         public static final int main_menu=0x7f030002;
+        public static final int single_player=0x7f030003;
     }
     public static final class string {
-        public static final int about_button_label=0x7f040005;
-        public static final int about_description_label=0x7f04000b;
-        public static final int about_label=0x7f04000a;
+        public static final int about_button=0x7f040005;
+        public static final int about_description=0x7f04000b;
+        public static final int about_title=0x7f04000a;
         public static final int app_name=0x7f040000;
-        public static final int main_menu_label=0x7f040004;
-        public static final int multiplayer_button_label=0x7f040002;
-        public static final int new_player_button_label=0x7f040008;
-        public static final int previous_player_button_label=0x7f040009;
-        public static final int scores_button_label=0x7f040006;
-        public static final int settings_button_label=0x7f040003;
-        public static final int single_player_button_label=0x7f040001;
-        public static final int skip_button_label=0x7f04000c;
-        public static final int welcome_label=0x7f040007;
+        public static final int campaign_button=0x7f040011;
+        public static final int main_menu_title=0x7f040004;
+        public static final int multiplayer_button=0x7f040002;
+        public static final int multiplayer_title=0x7f04000e;
+        public static final int new_player_button=0x7f040008;
+        public static final int previous_player_button=0x7f040009;
+        public static final int quick_match_button=0x7f040010;
+        public static final int scores_button=0x7f040006;
+        public static final int settings_button=0x7f040003;
+        public static final int single_player_button=0x7f040001;
+        public static final int single_player_title=0x7f04000d;
+        public static final int skip_button=0x7f04000c;
+        public static final int tutorial_button=0x7f04000f;
+        public static final int welcome_title=0x7f040007;
     }
 }
