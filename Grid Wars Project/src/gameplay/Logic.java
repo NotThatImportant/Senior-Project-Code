@@ -223,6 +223,7 @@ public class Logic {
 			}
 			damage = 0;
 			cdamage = 0;
+			p1.setHasAttacked(true);
 			return 0;
 		} else {
 			if (p2.getAmmo() > 0 ) {
@@ -241,8 +242,10 @@ public class Logic {
 				playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).getNumBuild() -1);
 				return 1;
 			}
+			p2.setHasAttacked(true);
 			return 0;
 		}
+		
 	}
 
 	public Tile getTile(int x, int y) {
@@ -375,7 +378,7 @@ public class Logic {
 			}
 		}
 
-		for(int i = 0; i < mapSize; i++)
+		for(int i = 0; i < mapSize; i++){
 			for(int j= 0; j < mapSize; j++){
 				boolean adj = false;
 				if(moves[i][j] == 'x'){
@@ -392,6 +395,8 @@ public class Logic {
 						moves[i][j] = '-';
 				}
 			}
+		}
+		pUnit.setHasMoved(true);
 	}
 
 
