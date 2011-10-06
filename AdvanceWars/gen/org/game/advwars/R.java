@@ -47,9 +47,10 @@ public final class R {
         public static final int map_selection=0x7f030006;
         public static final int multiplayer=0x7f030007;
         public static final int multiplayer_options=0x7f030008;
-        public static final int settings=0x7f030009;
-        public static final int single_player=0x7f03000a;
-        public static final int under_construction=0x7f03000b;
+        public static final int select_player_name=0x7f030009;
+        public static final int settings=0x7f03000a;
+        public static final int single_player=0x7f03000b;
+        public static final int under_construction=0x7f03000c;
     }
     public static final class string {
         public static final int about_button=0x7f040005;
@@ -72,6 +73,7 @@ public final class R {
         public static final int previous_player_button=0x7f040009;
         public static final int quick_match_button=0x7f040010;
         public static final int scores_button=0x7f040006;
+        public static final int select_player_name_title=0x7f04001d;
         public static final int settings_button=0x7f040003;
         public static final int settings_title=0x7f04001c;
         public static final int single_player_button=0x7f040001;
