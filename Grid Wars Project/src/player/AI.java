@@ -1,6 +1,5 @@
 package player;
 
-import java.util.ArrayList;
 
 import gameplay.Logic;
 import units.Unit;
