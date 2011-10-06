@@ -39,11 +39,17 @@ public final class R {
     }
     public static final class layout {
         public static final int about=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int main_menu=0x7f030002;
-        public static final int multiplayer=0x7f030003;
-        public static final int single_player=0x7f030004;
-        public static final int under_construction=0x7f030005;
+        public static final int enter_player_name=0x7f030001;
+        public static final int faction_selection=0x7f030002;
+        public static final int leader_board=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int main_menu=0x7f030005;
+        public static final int map_selection=0x7f030006;
+        public static final int multiplayer=0x7f030007;
+        public static final int multiplayer_options=0x7f030008;
+        public static final int settings=0x7f030009;
+        public static final int single_player=0x7f03000a;
+        public static final int under_construction=0x7f03000b;
     }
     public static final class string {
         public static final int about_button=0x7f040005;
@@ -53,15 +59,21 @@ public final class R {
         public static final int campaign_button=0x7f040011;
         public static final int connect_to_mp_game_button=0x7f040013;
         public static final int create_mp_game_button=0x7f040012;
+        public static final int enter_player_name_title=0x7f040017;
+        public static final int faction_selection_title=0x7f040018;
+        public static final int leader_board_title=0x7f040019;
         public static final int main_menu_title=0x7f040004;
+        public static final int map_selection_title=0x7f04001a;
         public static final int multiplayer_button=0x7f040002;
         public static final int multiplayer_options_button=0x7f040014;
+        public static final int multiplayer_options_title=0x7f04001b;
         public static final int multiplayer_title=0x7f04000e;
         public static final int new_player_button=0x7f040008;
         public static final int previous_player_button=0x7f040009;
         public static final int quick_match_button=0x7f040010;
         public static final int scores_button=0x7f040006;
         public static final int settings_button=0x7f040003;
+        public static final int settings_title=0x7f04001c;
         public static final int single_player_button=0x7f040001;
         public static final int single_player_title=0x7f04000d;
         public static final int skip_button=0x7f04000c;

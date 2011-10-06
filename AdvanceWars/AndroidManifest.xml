@@ -34,5 +34,29 @@
         android:screenOrientation="landscape"
         android:label="@string/under_construction_title">
         </activity>
+        <activity android:name=".EnterPlayerName"
+        android:screenOrientation="landscape"
+        android:label="@string/enter_player_name_title">
+        </activity>
+        <activity android:name=".FactionSelection"
+        android:screenOrientation="landscape"
+        android:label="@string/faction_selection_title">
+        </activity>
+        <activity android:name=".LeaderBoard"
+        android:screenOrientation="landscape"
+        android:label="@string/leader_board_title">
+        </activity>
+        <activity android:name=".MapSelection"
+        android:screenOrientation="landscape"
+        android:label="@string/map_selection_title">
+        </activity>
+        <activity android:name=".MultiplayerOptions"
+        android:screenOrientation="landscape"
+        android:label="@string/multiplayer_options_title">
+        </activity>
+        <activity android:name=".Settings"
+        android:screenOrientation="landscape"
+        android:label="@string/settings_title">
+        </activity>
     </application>
 </manifest>
