@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/main_menu" android:text="@string/main_menu_title"></TextView>
+    <Button android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/single_player" android:layout_width="250dp" android:text="@string/single_player_button"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/multiplayer" android:layout_width="250dp" android:text="@string/multiplayer_button"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/scores" android:layout_width="250dp" android:text="@string/scores_button"></Button>
+    <Button android:id="@+id/settings" android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="250dp" android:text="@string/settings_button"></Button>
+    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/about" android:layout_width="250dp" android:text="@string/about_button"></Button>
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Advance Wars</string>
+    <string name="single_player_button">Single Player</string>
+    <string name="multiplayer_button">Multiplayer</string>
+    <string name="settings_button">Settings</string>
+    <string name="main_menu_title">Main Menu</string>
+    <string name="about_button">About</string>
+    <string name="scores_button">Scores</string>
+    <string name="welcome_title">Welcome To Advance Wars</string>
+    <string name="new_player_button">Enter New Player Name</string>
+    <string name="previous_player_button">Select Player Name</string>
+    <string name="about_title">About Advance Wars</string>
+    <string name="about_description">Advance Wars game by Team ZuluXtreme 73.</string>
+    <string name="skip_button">Skip</string>
+    <string name="single_player_title">Single Player</string>
+    <string name="multiplayer_title">Multiplayer</string>
+    <string name="tutorial_button">Tutorial</string>
+    <string name="quick_match_button">Quick Match</string>
+    <string name="campaign_button">Campaign</string>
+    <string name="create_mp_game_button">Create a Game</string>
+    <string name="connect_to_mp_game_button">Connect to a Game</string>
+    <string name="multiplayer_options_button">Multiplayer Options</string>
+    <string name="under_construction_title">Under Construction</string>
+    <string name="under_construction_description">We are sorry. This screen has not been implemented yet. :-(</string>
+    <string name="enter_player_name_title">Enter Player Name</string>
+    <string name="faction_selection_title">Select Your Faction</string>
+    <string name="leader_board_title">Leader Board</string>
+    <string name="map_selection_title">Select Battle Map</string>
+    <string name="multiplayer_options_title">Multiplayer Options</string>
+    <string name="settings_title">Settings</string>
+    <string name="select_player_name_title">Select Player Name</string>
+</resources>

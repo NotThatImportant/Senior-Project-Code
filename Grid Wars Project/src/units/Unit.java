@@ -6,23 +6,25 @@ public abstract class Unit {
 	public static final char INFANTRYTYPE = 'i'; 
 	public static final char TANKTYPE = 't'; 
 
-	char type;
-	int owner;
-	int move;
-	int attack;
-	int fuel;
-	int ammo;
-	int armor;
-	int atkRange;
-	int[] movement;
-	int x, y;
-	int hp = 10;
-	int cost; 
-	boolean bonus = false;
-	String name;
-	boolean attackCopter = true; 	
-	boolean attackPlane = false;
-	boolean canBuy = false;
+	protected char type;
+	protected int owner;
+	protected int move;
+	protected int attack;
+	protected int fuel;
+	protected int ammo;
+	protected int armor;
+	protected int atkRange;
+	protected int[] movement;
+	protected int x, y;
+	protected int hp = 10;
+	protected int cost; 
+	protected boolean bonus = false;
+	protected String name;
+	protected boolean attackCopter = true; 	
+	protected boolean attackPlane = false;
+	protected boolean canBuy = false;
+	protected boolean hasMoved = false;
+	protected boolean hasAttacked = false;
 	
 	public boolean canBuy() {
 		return canBuy;
@@ -115,6 +117,26 @@ public abstract class Unit {
 
 	public boolean getBonus() {
 		return bonus;
+	}
+	
+	public int getOwner(){
+		return owner;
+	}
+	
+	public void setHasMoved(boolean hasMoved){
+		this.hasMoved = hasMoved;
+	}
+	
+	public void setHasAttacked(boolean hasAttacked){
+		this.hasAttacked = hasAttacked;
+	}
+	
+	public boolean getHasMoved(){
+		return hasMoved;
+	}
+	
+	public boolean getHasAttacked(){
+		return hasAttacked;
 	}
 
 
