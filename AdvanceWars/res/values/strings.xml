@@ -30,4 +30,5 @@
     <string name="multiplayer_options_title">Multiplayer Options</string>
     <string name="settings_title">Settings</string>
     <string name="select_player_name_title">Select Player Name</string>
+    <string name="new_player_name_button">Enter New Player Name</string>
 </resources>

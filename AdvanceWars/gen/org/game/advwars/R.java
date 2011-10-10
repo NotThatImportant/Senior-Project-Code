@@ -17,25 +17,27 @@ public final class R {
     public static final class id {
         public static final int about=0x7f050000;
         public static final int about_advance_wars=0x7f050001;
-        public static final int android_logo=0x7f050013;
-        public static final int campaign=0x7f050011;
-        public static final int connect_to_mp_game=0x7f05000d;
-        public static final int create_mp_game=0x7f05000c;
-        public static final int main_menu=0x7f050007;
-        public static final int mp_options=0x7f05000e;
-        public static final int multiplayer=0x7f050009;
-        public static final int new_player_name=0x7f050005;
-        public static final int previous_player_name=0x7f050004;
-        public static final int quick_match=0x7f050010;
-        public static final int scores=0x7f05000a;
-        public static final int settings=0x7f05000b;
-        public static final int single_player=0x7f050008;
-        public static final int skip=0x7f050006;
-        public static final int tank=0x7f050003;
-        public static final int tutorial=0x7f05000f;
-        public static final int under_construction=0x7f050012;
-        public static final int under_construction_description=0x7f050014;
-        public static final int welcome=0x7f050002;
+        public static final int android_logo=0x7f050015;
+        public static final int campaign=0x7f050013;
+        public static final int connect_to_mp_game=0x7f05000f;
+        public static final int create_mp_game=0x7f05000e;
+        public static final int enter_new_player_name=0x7f050004;
+        public static final int enter_player_name=0x7f050002;
+        public static final int main_menu=0x7f050009;
+        public static final int mp_options=0x7f050010;
+        public static final int multiplayer=0x7f05000b;
+        public static final int new_player_name=0x7f050003;
+        public static final int previous_player_name=0x7f050007;
+        public static final int quick_match=0x7f050012;
+        public static final int scores=0x7f05000c;
+        public static final int settings=0x7f05000d;
+        public static final int single_player=0x7f05000a;
+        public static final int skip=0x7f050008;
+        public static final int tank=0x7f050006;
+        public static final int tutorial=0x7f050011;
+        public static final int under_construction=0x7f050014;
+        public static final int under_construction_description=0x7f050016;
+        public static final int welcome=0x7f050005;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -70,6 +72,7 @@ public final class R {
         public static final int multiplayer_options_title=0x7f04001b;
         public static final int multiplayer_title=0x7f04000e;
         public static final int new_player_button=0x7f040008;
+        public static final int new_player_name_button=0x7f04001e;
         public static final int previous_player_button=0x7f040009;
         public static final int quick_match_button=0x7f040010;
         public static final int scores_button=0x7f040006;
