@@ -26,8 +26,6 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         previousPlayerName.setOnClickListener(this);
         View newPlayerName = findViewById(R.id.new_player_name);
         newPlayerName.setOnClickListener(this);
-        View skip = findViewById(R.id.skip);
-        skip.setOnClickListener(this);
     }
     
     public void onClick(View v)
@@ -41,10 +39,6 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
     	case R.id.new_player_name:
     		Intent i2 = new Intent(this, EnterPlayerName.class);
     		startActivity(i2);
-    		break;
-    	case R.id.skip:
-    		Intent i3 = new Intent(this, MainMenu.class);
-    		startActivity(i3);
     		break;
     	}
     }

@@ -8,6 +8,5 @@
     <ImageView android:layout_height="111dp" android:id="@+id/tank" android:layout_gravity="center" android:layout_width="183dp" android:src="@drawable/tank"></ImageView>
     <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/previous_player_name" android:layout_width="250dp" android:text="@string/previous_player_button"></Button>
     <Button android:layout_height="wrap_content" android:layout_gravity="center" android:id="@+id/new_player_name" android:layout_width="250dp" android:text="@string/new_player_button"></Button>
-    <Button android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="250dp" android:id="@+id/skip" android:text="@string/skip_button"></Button>
     
 </LinearLayout>
