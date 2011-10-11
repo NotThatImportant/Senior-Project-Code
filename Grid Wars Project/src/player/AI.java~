@@ -101,7 +101,7 @@ public class AI extends Player{
 				}
 			}
 		}
-		return unitsWithAttacks;
+		return unitsWithMoves;
 	}
 	
 	public void prodUnits() {
