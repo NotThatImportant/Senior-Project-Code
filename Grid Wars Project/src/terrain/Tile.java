@@ -20,8 +20,14 @@ public class Tile {
 			case 'g': height = 0;break;
 			case 'm': height = 2;break;
 			case 'r': height = 0;break;
-			case 'b': height = 3; owner = -1; break; 
-			case 'p': height = 3; owner = -1; break;
+			case 'h': height = 3; owner = 0; break; //player 1s HQ
+			case 'x': height = 2; owner = 0; break; //a starting base for p1
+			case 'X': height = 2; owner = 1; break; //a starting base for p2
+			case 'q': height = 2; owner = 0; break; //starting production p1
+			case 'Q': height = 2; owner = 1; break; //starting production p2
+			case 'H': height = 3; owner = 1; break; //player 2s HQ
+			case 'b': height = 2; owner = -1; break; 
+			case 'p': height = 2; owner = -1; break;
 			default: height = 0;break;
 		}
 	}
