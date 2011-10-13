@@ -57,8 +57,12 @@ public class AI extends Player{
 	}
 
 	private void attack() {
-		getPossibleAttacks();
-  
+		ArrayList<Unit> attackers = getPossibleAttacks();
+		for (int i = 0; i < attackers.size(); i++) {
+			Unit attacker = attackers.get(i);
+			
+			
+		}
 	}
 
 	private void moveCloserToEnemies() {
