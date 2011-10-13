@@ -6,6 +6,7 @@ import java.util.List;
 import gameplay.Logic;
 import units.Unit;
 import terrain.Tile;
+import java.lang.Math;
 
 public class AI extends Player{
 	private boolean availableMove;
@@ -44,11 +45,7 @@ public class AI extends Player{
 					//capture building
 				}
 				if(availableAttack){
-					ArrayList<Unit> uToAtk = getPossibleAttacks();
-					for(int i = 0; i < uToAtk.size(); i++) {
-						char[][] posMoves = log.getMoves(uToAtk.get(i));
-
-					}	
+					attack();	
 				}
 				//if no other captures or attacks but still moves
 				moveCloserToEnemies();
@@ -59,14 +56,27 @@ public class AI extends Player{
 		}
 	}
 
+	private void attack() {
+		getPossibleAttacks();
+  
+	}
+
 	private void moveCloserToEnemies() {
-		// TODO Auto-generated method stub
-		boolean notDone = true;
-		ArrayList<Unit> toMove;
+		boolean notDone = true; 
+		ArrayList<Unit> toMove; //units to be moved
+
 		int count = 0; 
-		Tile[][] tBoard = log.getTBoard();
-		int hx = 0;
-		int hy = 0;
+
+		Tile[][] tBoard = log.getTBoard(); //current tile board
+
+		int hx = 0; //enemy HQ x
+		int hy = 0; //enemy HQ y
+		int gx = -1; //The X coordinate to go to
+		int gy = -1; //The Y coordinate to go to
+
+		int x = -1;
+		int y = -1;
+		int currDist = 0;
 		
 		do { 
 			toMove = getPossibleMoves();
@@ -76,9 +86,9 @@ public class AI extends Player{
 			Unit moving = toMove.get(count);
 			int mx = moving.getX();
 			int my = moving.getY();
-			
 			char[][] pMoves = log.getMoves(toMove.get(count));
 				
+			//identifies enemies headquarters
 			for (int r = 0; r < log.getSize(); r++) {
 				for (int c = 0; c < log.getSize(); c++) {
 					if (tBoard[r][c].getType() == 'h') {
@@ -88,15 +98,52 @@ public class AI extends Player{
 				}
 			}
 			
-			
-			
+			//calculate the slope of the line to see 
+			currDist = getDistance(hx, hy, mx, my);
+
+			//move the current unit towards that point
 			for (int r = 0; r < pMoves.length; r++) {
+				gx = mx + r;
 				for (int c = 0; c < pMoves.length; c++) {
-					
+				      gy = my + c;
+
+				      if (currDist > getDistance(hx, hy, mx, gy)) {
+					    currDist = getDistance(hx, hy, mx, gy);
+					    x = mx; 
+					    y = gy;
+				      }
+				      if (currDist > getDistance(hx, hy, gx, my)) { 
+					    currDist = getDistance(hx, hy, gx, my);
+					    x = gx;
+					    y = my;
+				      }
+				      if (currDist > getDistance(hx, hy, gx, gy)) {
+					    currDist = getDistance(hx, hy, gx, gy);
+					    x = gx;
+					    y = gy;
+				      }
 				}
 			}
-			count++;
+			log.moveUnit(toMove.get(count), x, y);
+
+ 			count++;
+
+			if (count >= toMove.size()) 
+			    notDone = false;
 		} while (notDone);
+
+		
+	}
+
+	/**
+	 * Gets the distance from point a (x1, y1) to point b (x2, y2) 
+	 * For the AI this means a is the hQ and b is the unit
+	 */
+	private int getDistance(int x1, int y1, int x2, int y2) {
+		//while this returns a double we don't need to deal with decimals for our purposes
+		int distance = Math.sqrt( Math.pow((x2 - x1), 2) + Math.pow( (y2-y1), 2));
+
+		return distance;
 	}
 
 	public void getLogic(Logic pLog) {
