@@ -14,6 +14,6 @@ public class HeavyTank extends Unit{
 		armor = 4;
 		cost = 24000;
 		hp = 10;
-		name = "APC";
+		name = "Heavy Tank";
 	}
 }
