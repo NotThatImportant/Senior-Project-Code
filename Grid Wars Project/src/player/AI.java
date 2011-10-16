@@ -361,6 +361,8 @@ public class AI extends Player{
 	
 	/************************************************************************
 	 * Counts the number of "free" buildings on the map
+	 * This is used to tell the AI whether or not it should build more
+	 * units to capture or not
 	 * @return int num (of uncaptured buildings)
 	 ***********************************************************************/
 	private int getUncapturedBuildings(){
