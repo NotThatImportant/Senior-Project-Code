@@ -11,7 +11,7 @@ import android.widget.Button;
 public class EnterPlayerName extends Activity implements OnClickListener
 {
 	private EditText newPlayerName = null;
-	private String playerName = null;
+	private GUIGameValues ggv = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,18 +31,23 @@ public class EnterPlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		playerName = newPlayerName.getText().toString();
+		ggv.setPlayerName(newPlayerName.getText().toString());
 		
 		// 'sa' overrides input and proceeds regardless of value validity
-		if (playerName.equals("sa"))
+		if (ggv.getPlayerName().equals("sa"))
 		{
 			Intent i = new Intent(this, MainMenu.class);
 			startActivity(i);
 		}
+		else if (!ggv.getPlayerName().equals(""))
+		{
+			Intent i2 = new Intent(this, MainMenu.class);
+			startActivity(i2);
+		}
 		else
 		{
-			Intent i2 = new Intent(this, UnderConstruction.class);
-			startActivity(i2);
+			Intent i3 = new Intent(this, InvalidPlayerNameEntered.class);
+			startActivity(i3);
 		}
 	}
 }

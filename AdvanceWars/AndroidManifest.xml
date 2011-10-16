@@ -16,7 +16,8 @@
         </activity>
         <activity android:name=".About"
         android:screenOrientation="landscape"
-        android:label="@string/about_title">
+        android:label="@string/about_title"
+        android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity android:name=".MainMenu"
         android:screenOrientation="landscape"
@@ -37,6 +38,10 @@
         <activity android:name=".EnterPlayerName"
         android:screenOrientation="landscape"
         android:label="@string/enter_player_name_title">
+        </activity>
+        <activity android:name=".SelectPlayerName"
+        android:screenOrientation="landscape"
+        android:label="@string/select_player_name_title">
         </activity>
         <activity android:name=".FactionSelection"
         android:screenOrientation="landscape"
@@ -61,6 +66,16 @@
         <activity android:name=".SelectPlayerName"
         android:screenOrientation="landscape"
         android:label="@string/select_player_name_title">
+        </activity>
+        <activity android:name=".InvalidPlayerNameEntered"
+        android:screenOrientation="landscape"
+        android:label="@string/invalid_player_name_entered_title"
+        android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name=".InvalidPlayerNameSelected"
+        android:screenOrientation="landscape"
+        android:label="@string/invalid_player_name_selected_title"
+        android:theme="@android:style/Theme.Dialog">
         </activity>
     </application>
 </manifest>
