@@ -49,7 +49,7 @@ public class MainMenu extends Activity implements OnClickListener
     		startActivity(i3);
     		break;
     	case R.id.settings:
-    		Intent i4 = new Intent(this, UnderConstruction.class);
+    		Intent i4 = new Intent(this, Settings.class);
     		startActivity(i4);
     		break;
     	case R.id.about:

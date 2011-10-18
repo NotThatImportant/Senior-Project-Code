@@ -41,6 +41,14 @@
         <item>Mandy</item>
         <item>Sally</item>
     </string-array>
+    <string name="change_player_name_button">Change Player Name</string>
+    <string name="sound_on_radio_button">On</string>
+    <string name="difficulty">Set AI Difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="sound">Set in-game sounds:</string>
+    <string name="sound_off_radio_button">Off</string>
     
     
 </resources>
