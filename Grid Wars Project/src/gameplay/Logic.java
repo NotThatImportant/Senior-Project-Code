@@ -399,7 +399,6 @@ public class Logic {
 		pUnit.setHasMoved(true);
 	}
 
-
 	/******************************************************** 
 	 *	possibleMove is used by the move method.  It checks for 
 	 *	making sure that only infantry and mech infantry can
