@@ -9,10 +9,15 @@ import android.widget.TextView;
 
 public class MainMenu extends Activity implements OnClickListener
 {
+	private GUIGameValues ggv = new GUIGameValues();
+	
 	protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
+        Bundle extras = getIntent().getExtras();
+        this.ggv = (GUIGameValues) extras.getSerializable("ggv");
         
         // Set up click listeners for all buttons
         View singlePlayer = findViewById(R.id.single_player);
@@ -27,9 +32,8 @@ public class MainMenu extends Activity implements OnClickListener
         about.setOnClickListener(this);
         
         // Gets player name and displays it on main menu
-        GUIGameValues ggv = new GUIGameValues();
         final TextView textViewToChange = (TextView) findViewById(R.id.welcome_message);
-        textViewToChange.setText("Welcome " + ggv.getPlayerName());
+        textViewToChange.setText("Welcome " + this.ggv.getPlayerName());
     }
 	
     public void onClick(View v)

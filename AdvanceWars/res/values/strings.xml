@@ -49,6 +49,15 @@
     <string name="hard">Hard</string>
     <string name="sound">Set in-game sounds:</string>
     <string name="sound_off_radio_button">Off</string>
+    <string name="faction_selection_description">Please select your faction:</string>
+    <string name="map_selection_description">Please select battle map:</string>
+    <string name="faction_selection_button">Select Faction</string>
+    <string name="map_selection_button">Select Map</string>
+    <string-array name="factions">
+        <item>Map 1</item>
+        <item>Map 2</item>
+        <item>Map 3</item>
+    </string-array>
     
     
 </resources>
