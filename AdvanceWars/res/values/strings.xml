@@ -30,4 +30,25 @@
     <string name="settings_title">Settings</string>
     <string name="select_player_name_title">Select Player Name</string>
     <string name="new_player_name_button">Enter New Player Name</string>
+    <string name="authors">Dan Ayotte; Roger Mo; Matt Tyndall; Austin Padilla; Sinisa Malbasa</string>
+    <string name="invalid_player_name_entered_title">Invalid Player Name</string>
+    <string name="invalid_player_name_selected_title">Invalid Player Name Selection</string>
+    <string name="invalid_player_name_entered_description">Player name you entered is invalid. Please try again.</string>
+    <string name="invalid_player_name_selected_description">Player name you selected is invalid. Please try again.</string>
+    <string name="select_player_name_description">Select an existing player name:</string>
+    <string name="select_player_button">Confirm Player Name</string><string name="main_menu_welcome">Welcome To Advance Wars</string><string-array name="player_names">
+        <item>Billy</item>
+        <item>Mandy</item>
+        <item>Sally</item>
+    </string-array>
+    <string name="change_player_name_button">Change Player Name</string>
+    <string name="sound_on_radio_button">On</string>
+    <string name="difficulty">Set AI Difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="sound">Set in-game sounds:</string>
+    <string name="sound_off_radio_button">Off</string>
+    
+    
 </resources>
