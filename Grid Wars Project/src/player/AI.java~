@@ -16,6 +16,7 @@ public class AI extends Player{
 
 	private ArrayList<Unit> unitsWithMoves;
 	private ArrayList<Unit> unitsWithAttacks;
+	private ArrayList<Unit> capadex;
 
 	Logic log;
 	int size;
@@ -36,13 +37,10 @@ public class AI extends Player{
 		//Loop through possible actions
 		while(endTurn == false){
 
-			if(availablePurchase){
-				//buy a unit
-			}
 			if(availableMove){
 				//move units
 				if(availableCapture){
-					//capture building
+					capture();
 				}
 				if(availableAttack){
 					attack();	
@@ -51,9 +49,20 @@ public class AI extends Player{
 				moveCloserToEnemies();
 			}
 
+			if(availablePurchase){
+				buyUnit();
+			}
+
 			//if no more possible moves
 			endTurn = true;
 		}
+	}
+
+	private void capture() {
+		
+
+
+
 	}
 
 	private void attack() {
@@ -61,7 +70,7 @@ public class AI extends Player{
 		for (int i = 0; i < attackers.size(); i++) {
 			Unit attacker = attackers.get(i);
 			
-			if (
+			
 		}
 	}
 
@@ -135,8 +144,6 @@ public class AI extends Player{
 			if (count >= toMove.size()) 
 			    notDone = false;
 		} while (notDone);
-
-		
 	}
 
 	/**
@@ -253,10 +260,9 @@ public class AI extends Player{
 
 	public boolean canICapture(){
 		boolean captureAvailable = false;
-		//find captures
-		//if possibleCaptures.lenght > 0{
-		//capturesAvailable = true;
-
+		
+		capUnits = captureEmAll();
+		
 		return captureAvailable;
 	}
 
