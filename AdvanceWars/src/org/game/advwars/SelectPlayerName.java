@@ -10,10 +10,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class SelectPlayerName extends Activity implements OnItemSelectedListener//, OnClickListener
+public class SelectPlayerName extends Activity implements OnItemSelectedListener, android.view.View.OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();
 	
@@ -30,11 +31,8 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
         
         spinner.setOnItemSelectedListener(new SelectPlayerName());
         
-        //Button selectPlayerName = (Button) findViewById(R.id.confirm_player_name);
-        //selectPlayerName.setOnClickListener((android.view.View.OnClickListener) this);
-        
-        //View selectPlayerName = findViewById(R.id.select_player_name);
-        //selectPlayerName.setOnClickListener((android.view.View.OnClickListener) this);
+        Button selectPlayerName = (Button) findViewById(R.id.confirm_player_name);
+        selectPlayerName.setOnClickListener(this);
     }
 
 	@Override
@@ -51,8 +49,9 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 	{
 		// Do nothing	
 	}
-	
-	/*public void onClick(View v)
+
+	@Override
+	public void onClick(View v)
 	{
 		if (!this.ggv.getPlayerName().equals(""))
 		{
@@ -65,10 +64,4 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 			startActivity(i2);
 		}
 	}
-
-	@Override
-	public void onClick(DialogInterface dialog, int which)
-	{
-		// TODO Auto-generated method stub
-	}*/
 }
