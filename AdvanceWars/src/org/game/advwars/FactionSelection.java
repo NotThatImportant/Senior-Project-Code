@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class FactionSelection extends Activity implements OnItemSelectedListener, OnClickListener
 {
-	private String mapName = "";
+	private String faction = "";
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,8 +36,8 @@ public class FactionSelection extends Activity implements OnItemSelectedListener
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
 	{
-		mapName = parent.getItemAtPosition(pos).toString();
-	    Toast.makeText(parent.getContext(), "You selected " + mapName, Toast.LENGTH_LONG).show();
+		faction = parent.getItemAtPosition(pos).toString();
+	    Toast.makeText(parent.getContext(), "You selected " + faction, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
