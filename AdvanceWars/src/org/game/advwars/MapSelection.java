@@ -36,7 +36,7 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
 	@Override
 	public void onClick(View v)
 	{
-		Intent i = new Intent(this, UnderConstruction.class);
+		Intent i = new Intent(this, GameBoard.class);
 		startActivity(i);
 	}
 
