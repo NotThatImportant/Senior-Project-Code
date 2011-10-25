@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 public class GameBoard extends Activity
 {
-	//private GameBoardView gameBoardView;
+	private GameBoardView gameBoardView;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState)
@@ -13,6 +13,7 @@ public class GameBoard extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboard_layout);
         
-        //gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
+        gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
+        gameBoardView.update();
     }
 }

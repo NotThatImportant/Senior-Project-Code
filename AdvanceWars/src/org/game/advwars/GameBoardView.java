@@ -27,7 +27,7 @@ public class GameBoardView extends View
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 12);
-        initSnakeView();
+        initGameBoardView();
         a.recycle();
     }
 
@@ -37,11 +37,11 @@ public class GameBoardView extends View
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 12);
-        initSnakeView();
+        initGameBoardView();
         a.recycle();
     }
     
-    private void initSnakeView()
+    private void initGameBoardView()
     {
         setFocusable(true);
 
@@ -114,6 +114,17 @@ public class GameBoardView extends View
     public void update()
     {
           clearTiles();
-          //updateWalls();
+          updateWalls();
+    }
+    
+    private void updateWalls() {
+        for (int x = 0; x < mXTileCount; x++) {
+            setTile(0, x, 0);
+            setTile(0, x, mYTileCount - 1);
+        }
+        for (int y = 1; y < mYTileCount - 1; y++) {
+            setTile(0, 0, y);
+            setTile(0, mXTileCount - 1, y);
+        }
     }
 }
