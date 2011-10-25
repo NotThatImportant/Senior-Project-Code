@@ -19,7 +19,10 @@ public class GameBoardView extends View
     private static int mYOffset;
     private Bitmap[] mTileArray;
     private int[][] mTileGrid;
+    private float mX;
+    private float mY;
     private final Paint mPaint = new Paint();
+    private Canvas canvas;
 	
     public GameBoardView(Context context, AttributeSet attrs, int defStyle)
     {
@@ -49,7 +52,7 @@ public class GameBoardView extends View
         
         resetTiles(4);
         loadTile(0, r.getDrawable(R.drawable.grass));
-    	
+        loadTile(1, r.getDrawable(R.drawable.selected));
     }
 
     public void resetTiles(int tilecount)
@@ -73,7 +76,7 @@ public class GameBoardView extends View
     public void loadTile(int key, Drawable tile)
     {
         Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
+        canvas = new Canvas(bitmap);
         tile.setBounds(0, 0, mTileSize, mTileSize);
         tile.draw(canvas);
         
@@ -98,9 +101,12 @@ public class GameBoardView extends View
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-        for (int x = 0; x < mXTileCount; x += 1) {
-            for (int y = 0; y < mYTileCount; y += 1) {
-                if (mTileGrid[x][y] > 0) {
+        for (int x = 0; x < mXTileCount; x += 1)
+        {
+            for (int y = 0; y < mYTileCount; y += 1)
+            {
+                if (mTileGrid[x][y] > -1)
+                {
                     canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
                     		mXOffset + x * mTileSize,
                     		mYOffset + y * mTileSize,
@@ -114,10 +120,11 @@ public class GameBoardView extends View
     public void update()
     {
           clearTiles();
-          updateWalls();
+          //updateWalls();
     }
     
-    private void updateWalls() {
+    /*private void updateWalls()
+    {
         for (int x = 0; x < mXTileCount; x++) {
             setTile(0, x, 0);
             setTile(0, x, mYTileCount - 1);
@@ -126,5 +133,10 @@ public class GameBoardView extends View
             setTile(0, 0, y);
             setTile(0, mXTileCount - 1, y);
         }
+    }*/
+    
+    public void redrawBoard()
+    {
+    	onDraw(this.canvas);
     }
 }

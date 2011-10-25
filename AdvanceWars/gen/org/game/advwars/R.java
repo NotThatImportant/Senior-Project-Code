@@ -27,7 +27,8 @@ containing a value of this type.
         public static final int exclamation_point=0x7f020000;
         public static final int grass=0x7f020001;
         public static final int icon=0x7f020002;
-        public static final int tank=0x7f020003;
+        public static final int selected=0x7f020003;
+        public static final int tank=0x7f020004;
     }
     public static final class id {
         public static final int about=0x7f060000;
