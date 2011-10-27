@@ -19,6 +19,7 @@ public class AI extends Player{
 
 	private ArrayList<Unit> unitsWithMoves;
 	private ArrayList<Unit> unitsWithAttacks;
+	private ArrayList<Unit> unitsWithCaptures;
 
 	Logic log;
 	int size;
@@ -30,7 +31,7 @@ public class AI extends Player{
 	};
 
 	public AI(String pN, int pNum, char fact) {
-		super("Herp Derp 4000", 2, fact);	
+		super(pN, pNum, fact);	
 	}
 
 	public void startTurn(){
@@ -69,8 +70,7 @@ public class AI extends Player{
 		}
 	}
 
-	private void moveCloserToEnemies() {
-		// TODO Auto-generated method stub
+	protected void moveCloserToEnemies() {
 		boolean notDone = true;
 		ArrayList<Unit> toMove;
 		int count = 0; 
@@ -113,7 +113,7 @@ public class AI extends Player{
 	 * Gets the distance from point a (x1, y1) to point b (x2, y2) 
 	 * For the AI this means a is the hQ and b is the unit
 	 ***************************************************************/
-	private int getDistance(int x1, int y1, int x2, int y2) {
+	protected int getDistance(int x1, int y1, int x2, int y2) {
 		//while this returns a double we don't need to deal with decimals for our purposes
 		int distance = (int) Math.sqrt( Math.pow((x2 - x1), 2) + Math.pow( (y2-y1), 2));
 
@@ -133,7 +133,7 @@ public class AI extends Player{
 	 *  Does not take into consideration ranged attacks
 	 *  Consider for looping direction checks
 	 *************************************************************************/
-	public void attack(){
+	protected void attack(){
 		Unit[][] uBoard = log.getUB();
 		for(Unit currentUnit: unitsWithAttacks){
 			ArrayList<Unit> potentialUnitsToAttack = new ArrayList<Unit>();
@@ -195,18 +195,83 @@ public class AI extends Player{
 					}
 				}
 			else {
-				//no attack possible
+				//no attack possible, do nothing
+			}
+			
+		}
+	}
+	
+	/**************************************************************************
+	 * Method that controls the capture phase of an AI players turn
+	 * The basic structure of the capture phase is as follows:
+	 * -- Find buildings within capture range
+	 * ----- 1. find current tile
+	 * ----- 2. look at all surrounding tiles
+	 * ----- 3. create an array of buildings it can capture
+	 * ----- 4. compare the potential damage dealt to each
+	 * ----- 5. attack enemy you do most damage too
+	 *  Does not take into consideration ranged attacks
+	 *  Consider for looping direction checks
+	 *  
+	 *  if any of my units are positioned on a building
+	 *************************************************************************/
+	protected void capture(){
+		Tile[][] tBoard = log.getTBoard();
+		for(Unit currentUnit: unitsWithCaptures){
+			ArrayList<Tile> potentialBuildingsToCapture = new ArrayList<Tile>();
+			
+			int currUnitXPosition = currentUnit.getX();
+			int currUnitYPosition = currentUnit.getY();
+			
+			//look left
+			if(tBoard[currUnitXPosition -1][currUnitYPosition] != null && tBoard[currUnitXPosition -1][currUnitYPosition].getOwner() != getPNum()){
+				Tile buildingToCapture = tBoard[currUnitXPosition -1][currUnitYPosition];
+				potentialBuildingsToCapture.add(buildingToCapture);
+			}
+			//look right
+			if(tBoard[currUnitXPosition +1][currUnitYPosition] != null && tBoard[currUnitXPosition +1][currUnitYPosition].getOwner() != getPNum()){
+				Tile buildingToCapture = tBoard[currUnitXPosition +1][currUnitYPosition];
+				potentialBuildingsToCapture.add(buildingToCapture);
+			}
+			//look up
+			if(tBoard[currUnitXPosition][currUnitYPosition +1] != null && tBoard[currUnitXPosition][currUnitYPosition +1].getOwner() != getPNum()){
+				Tile buildingToCapture = tBoard[currUnitXPosition][currUnitYPosition +1];
+				potentialBuildingsToCapture.add(buildingToCapture);
+			}
+			//look down
+			if(tBoard[currUnitXPosition][currUnitYPosition -1] != null && tBoard[currUnitXPosition][currUnitYPosition -1].getOwner() != getPNum()){
+				Tile buildingToCapture = tBoard[currUnitXPosition][currUnitYPosition -1];
+				potentialBuildingsToCapture.add(buildingToCapture);
+			}
+			
+			//determine which building to capture if there is more than one possible
+			if(potentialBuildingsToCapture.size() > 1){
+				
+				//check to see what building would be best to capture
+				Tile bestBuildingToCapture = potentialBuildingsToCapture.get(0); //start with the first unit
+				
+//				for(possibleCaptures){ //start at second unit
+//					whatever determines what building to chose
+//				}
+				
+				log.captureBuilding(this, bestBuildingToCapture.getX(), bestBuildingToCapture.getY());
+			}
+			else if(potentialBuildingsToCapture.size() == 1){
+				log.captureBuilding(this, potentialBuildingsToCapture.get(0).getX(), potentialBuildingsToCapture.get(0).getY());
+			}
+			else {
+				//no capture possible, do nothing
 			}
 			
 		}
 	}
 
-	public void getLogic(Logic pLog) {
+	protected void getLogic(Logic pLog) {
 		log = pLog;
 		size = log.getSize();
 	}
 
-	public ArrayList<Unit> getPossibleMoves() {
+	protected ArrayList<Unit> getPossibleMoves() {
 		Unit[][] uBoard = log.getUB();
 
 		ArrayList<Unit> unitsWithMoves = new ArrayList<Unit>();
@@ -226,7 +291,7 @@ public class AI extends Player{
 		return unitsWithMoves;
 	}
 
-	public ArrayList<Unit> getPossibleAttacks() {
+	protected ArrayList<Unit> getPossibleAttacks() {
 		Unit[][] uBoard = log.getUB();
 
 		ArrayList<Unit> unitsWithAttacks = new ArrayList<Unit>();
@@ -249,7 +314,7 @@ public class AI extends Player{
 	/************************************************************************
 	 * AI decides what units to create
 	 ***********************************************************************/
-	public void prodUnits() {
+	protected void prodUnits() {
 		Tile[][] map = log.getTBoard();
 
 		for (int r = 0; r < size; r++) {
@@ -268,7 +333,7 @@ public class AI extends Player{
 	 * units to capture or not
 	 * @return int num (of uncaptured buildings)
 	 ***********************************************************************/
-	private int getUncapturedBuildings(){
+	protected int getUncapturedBuildings(){
 		Tile[][] mapBoard = log.getTBoard();
 		int num = 0;
 
@@ -293,7 +358,7 @@ public class AI extends Player{
 	 * 
 	 * @return int[] retVal:
 	 ***********************************************************************/
-	private int[] getUnitWeights() {
+	protected int[] getUnitWeights() {
 
 		// Element 
 		int[] retVal= new int[2];
@@ -330,7 +395,7 @@ public class AI extends Player{
 	 * Example:  Enemy has fighter jet.  Anti-Air, array index of 1, is inc'd
 	 * @return int[] units
 	 ***********************************************************************/
-	private int[] counterEnemyUnits(){
+	protected int[] counterEnemyUnits(){
 		int[] counters = new int[19];
 		Arrays.fill(counters, 0);
 		Unit[][] unitBoard = log.getUB();
@@ -463,7 +528,7 @@ public class AI extends Player{
 	 * Update unitsWithMoves arrayList and determine if moves are available
 	 * @return boolean canIMove
 	 ***********************************************************************/
-	public boolean canIMove(){
+	protected boolean canIMove(){
 		boolean moveAvailable = false;
 		//find moves
 		unitsWithMoves = getPossibleMoves();
@@ -477,7 +542,7 @@ public class AI extends Player{
 	 * Update unitsWithAttacks arrayList and determine if attacks are available
 	 * @return boolean canIAttack
 	 ***********************************************************************/
-	public boolean canIAttack(){
+	protected boolean canIAttack(){
 		boolean attackAvailable = false;
 		//find attacks
 		unitsWithAttacks = getPossibleAttacks();
@@ -487,7 +552,7 @@ public class AI extends Player{
 		return attackAvailable;
 	}
 
-	public boolean canIBuy(){
+	protected boolean canIBuy(){
 		boolean buyAvailable = false;
 		//find buys
 		if(findUnitsICanAfford().size() > 0){
@@ -497,7 +562,7 @@ public class AI extends Player{
 		return buyAvailable;
 	}
 
-	public boolean canICapture(){
+	protected boolean canICapture(){
 		boolean captureAvailable = false;
 		//find captures
 		//if possibleCaptures.lenght > 0{
