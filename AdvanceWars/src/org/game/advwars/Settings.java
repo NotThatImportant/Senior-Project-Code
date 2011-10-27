@@ -17,7 +17,7 @@ public class Settings extends Activity implements OnClickListener
         View changePlayerName = findViewById(R.id.change_player_name);
         changePlayerName.setOnClickListener(this);
         
-        RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.sound_radio_group);
+        /*RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.sound_radio_group);
         int checkedSoundRadioButton = soundRadioGroup.getCheckedRadioButtonId();
         
         switch (checkedSoundRadioButton)
@@ -44,7 +44,7 @@ public class Settings extends Activity implements OnClickListener
     	case R.id.hard:
     		// Do nothing for now
     		break;
-    	}
+    	}*/
     }
 
 	@Override

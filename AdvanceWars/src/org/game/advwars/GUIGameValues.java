@@ -1,5 +1,7 @@
 package org.game.advwars;
 
+import java.io.Serializable;
+
 /**
  * 
  * Keeps track of all game values that need to be accessed or stored by the GUI
@@ -7,7 +9,7 @@ package org.game.advwars;
  * @author Sinisa Malbasa
  *
  */
-public class GUIGameValues
+public class GUIGameValues implements Serializable
 {
 	private boolean soundOn;
 	private String playerName;
