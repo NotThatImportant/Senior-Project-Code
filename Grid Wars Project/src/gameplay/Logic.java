@@ -77,7 +77,7 @@ public class Logic {
 	 * 
 	 ************************************************************************/
 
-	private void createBoards(){
+	protected void createBoards(){
 		unitBoard =  new Unit[mapSize][mapSize];
 		for (int r = 0; r < mapSize; r++)
 			for (int c = 0; c < mapSize; c++) 
@@ -414,6 +414,10 @@ public class Logic {
 		}
 
 		return retval;
+	}
+	
+	public void setUnit(int x, int y, Unit pUnit){
+		unitBoard[x][y] = pUnit;
 	}
 
 }
