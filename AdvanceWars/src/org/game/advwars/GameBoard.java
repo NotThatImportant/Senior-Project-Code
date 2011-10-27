@@ -1,7 +1,9 @@
 package org.game.advwars;
 
 import android.app.Activity;
+import android.graphics.RectF;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -19,7 +21,6 @@ public class GameBoard extends Activity implements OnTouchListener
         setContentView(R.layout.gameboard_layout);
         
         gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
-        //gameBoardView.update();
         
         gameBoardView.setOnTouchListener(this);
     }
@@ -42,13 +43,27 @@ public class GameBoard extends Activity implements OnTouchListener
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-		x = (int) event.getX() / 3;
-		y = (int) event.getY() / 3;
-	
-		gameBoardView.setTile(1, x, y);
-		gameBoardView.redrawBoard();
-		v.invalidate();
+		RectF position = new RectF();
 		
-		return true;
+		
+		// Get screen dimensions in pixels, should be 400x240
+		Display display = getWindowManager().getDefaultDisplay();
+		int width = display.getWidth();
+		int height = display.getHeight();
+		
+		
+		x = (int) (width / event.getX());
+		y = (int) (height / event.getY());
+
+		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount())
+		{
+			gameBoardView.setTile(1, x, y);
+			gameBoardView.redrawBoard();
+			v.invalidate();
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

@@ -139,4 +139,14 @@ public class GameBoardView extends View
     {
     	onDraw(this.canvas);
     }
+    
+    public int getXTileCount()
+    {
+    	return mXTileCount;
+    }
+    
+    public int getYTileCount()
+    {
+    	return mYTileCount;
+    }
 }
