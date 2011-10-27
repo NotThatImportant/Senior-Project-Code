@@ -24,14 +24,30 @@ public class GameBoard extends Activity implements OnTouchListener
         gameBoardView.setOnTouchListener(this);
     }
 	
+	/*@Override
+	public boolean onTouchEvent(MotionEvent event)
+	{
+		if (event.getAction() == MotionEvent.ACTION_DOWN)
+        {
+			x = (int) event.getX() / 3;
+			y = (int) event.getY() / 3;
+		
+			gameBoardView.setTile(1, x, y);
+			gameBoardView.redrawBoard();
+        }
+		
+		return true;
+	}*/
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
 		x = (int) event.getX() / 3;
 		y = (int) event.getY() / 3;
-		
+	
 		gameBoardView.setTile(1, x, y);
 		gameBoardView.redrawBoard();
+		v.invalidate();
 		
 		return true;
 	}
