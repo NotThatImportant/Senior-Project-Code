@@ -97,7 +97,7 @@ public class DBConnector
 		}
 	}
 	
-	public void executeQuery(String query)
+	public void printQuery(String query)
 	{
 		try
 		{
@@ -134,6 +134,22 @@ public class DBConnector
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public ResultSet executeQuery(String query)
+	{
+		try
+		{
+			this.statement = this.connection.createStatement();
+			this.resultSet = this.statement.executeQuery(query);
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return this.resultSet;	
 	}
 	
 	public void createTable(String table, String columns)
