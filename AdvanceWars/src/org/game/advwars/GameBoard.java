@@ -7,6 +7,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 public class GameBoard extends Activity implements OnTouchListener
 {
@@ -43,22 +44,25 @@ public class GameBoard extends Activity implements OnTouchListener
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-		RectF position = new RectF();
-		
-		
 		// Get screen dimensions in pixels, should be 400x240
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth();
 		int height = display.getHeight();
 		
 		
-		x = (int) (width / event.getX());
-		y = (int) (height / event.getY());
+		x = (int) (event.getRawX()/12);
+		y = (int) (event.getRawY()/12) -3;
 
-		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount())
+
+		//Toast.makeText(v.getContext(), "You selected " + "x: " + event.getRawX() + "--> " + x + " y: " + event.getRawY() +"--> " + y, Toast.LENGTH_SHORT).show();
+		
+		
+		v.getWidth();
+		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount() &&
+				x >= 0 && y >= 0)
 		{
+			
 			gameBoardView.setTile(1, x, y);
-			gameBoardView.redrawBoard();
 			v.invalidate();
 			
 			return true;

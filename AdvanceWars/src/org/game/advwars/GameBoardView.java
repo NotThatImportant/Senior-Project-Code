@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -114,6 +115,14 @@ public class GameBoardView extends View
                 }
             }
         }
+        
+        /*mPaint.setColor(Color.RED);
+        canvas.drawLine(0, 0, 10, 0, mPaint);
+        
+        canvas.drawLine(0, 0, 0, 10, mPaint);
+        
+        mPaint.setColor(Color.BLUE);
+        canvas.drawLine(0, 10, 0, 100, mPaint);*/
 
     }
     
