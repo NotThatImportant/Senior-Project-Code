@@ -26,17 +26,18 @@ public class DBConnector
 	public DBConnector()
 	{
 		availableColumns = new ArrayList<String> ();
-		this.filepath = System.getProperty("user.home") + File.separator + "gridwars.sqlite";
+		//this.filepath = System.getProperty("user.home") + File.separator + "gridwars.sqlite";
+		this.filepath = "/data/data/org.game.advwars/databases/gridwars.sqlite";
 		
 		setupConnector();
 		getDatabaseTables();
 	}
 	
-	public DBConnector(String filepath)
+	public DBConnector(String databaseName)
 	{
 		availableColumns = new ArrayList<String> ();
-		this.filepath = filepath;
-		
+		this.filepath = "/data/data/org.game.advwars/databases/" + databaseName;
+
 		setupConnector();
 		getDatabaseTables();
 	}
@@ -145,7 +146,6 @@ public class DBConnector
 		}
 		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
