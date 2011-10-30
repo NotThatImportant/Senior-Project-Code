@@ -1,7 +1,6 @@
 package org.game.advwars;
 
-import dbconnector.DBConnector;
-import dbconnector.DBInsideConnector;
+import dbconnector.DBAndroidConnector;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,11 +33,8 @@ public class EnterPlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		DBInsideConnector dbc = new DBInsideConnector();
+		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
-		dbc.insertRawData("PlayerSettings", "'medium', 'true', 1, " + "'" + playerName + "'");
-		dbc.deleteRawData("PlayerSettings", "PID", "0");
-		dbc.closeDB();
 
 		// 'sa' overrides input and proceeds regardless of value validity
 		if (playerName.equals("sa"))
@@ -51,6 +47,9 @@ public class EnterPlayerName extends Activity implements OnClickListener
 		else if (!playerName.equals(""))
 		{
 			enterPlayerGGV.setPlayerName(playerName);
+			dbc.insertRawData("PlayerSettings", "'medium', 'true', 1, " + "'" + playerName + "'");
+			dbc.closeDB();
+
 			Intent i2 = new Intent(this, MainMenu.class);
 			i2.putExtra("ggv", enterPlayerGGV);
 			startActivity(i2);

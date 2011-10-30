@@ -11,18 +11,18 @@ import android.util.Log;
  * @author Sinisa Malbasa
  *
  */
-public class DBInsideConnector
+public class DBAndroidConnector
 {
 	private String dbPath;
 	private SQLiteDatabase db;
 	
-	public DBInsideConnector()
+	public DBAndroidConnector()
 	{
 		this.dbPath = "/data/data/org.game.advwars/databases/gridwars.sqlite";
 		this.db = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
 	}
 	
-	public DBInsideConnector(String packageName, String databaseName)
+	public DBAndroidConnector(String packageName, String databaseName)
 	{
 		this.dbPath = "/data/data/" + packageName+ "/databases/" + databaseName;
 		this.db = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
