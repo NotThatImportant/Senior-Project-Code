@@ -47,7 +47,7 @@ public class EnterPlayerName extends Activity implements OnClickListener
 		else if (!playerName.equals(""))
 		{
 			enterPlayerGGV.setPlayerName(playerName);
-			dbc.insertRawData("PlayerSettings", "'medium', 'true', 1, " + "'" + playerName + "'");
+			dbc.insertRawData("PlayerSettings", "'medium', 'true', 0, " + "'" + playerName + "'");
 			dbc.closeDB();
 
 			Intent i2 = new Intent(this, MainMenu.class);

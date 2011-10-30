@@ -1,7 +1,10 @@
 package org.game.advwars;
 
+import dbconnector.DBAndroidConnector;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,10 +26,36 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
         setContentView(R.layout.select_player_name);
         
         Spinner spinner = (Spinner) findViewById(R.id.player_name_selection);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.player_names, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);*/
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        
+        DBAndroidConnector db = new DBAndroidConnector();
+        SQLiteDatabase myDataBase = db.getDB();
+       
+        try
+        {
+        	Cursor cursor = myDataBase.rawQuery("select Player_Name from PlayerSettings", null);
+        	int playerNameIndex = cursor.getColumnIndexOrThrow("Player_Name");
+
+            if(cursor.moveToFirst())
+            {
+                do
+                {
+                    adapter.add(cursor.getString(playerNameIndex));
+                }
+                while(cursor.moveToNext());
+            }
+        }
+        finally
+        {
+            myDataBase.close();
+        }
         
         spinner.setOnItemSelectedListener(new SelectPlayerName());
         
