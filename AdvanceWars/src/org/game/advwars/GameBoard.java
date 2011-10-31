@@ -1,18 +1,29 @@
 package org.game.advwars;
 
 import android.app.Activity;
-import android.graphics.RectF;
+import android.graphics.PointF;
 import android.os.Bundle;
-import android.view.Display;
+import android.util.FloatMath;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 public class GameBoard extends Activity implements OnTouchListener
 {
-	private int x;
-	private int y;
+
+	 private static final String TAG = "GameBoard";
+	   // We can be in one of these 3 states
+	   static final int NONE = 0;
+	   static final int DRAG = 1;
+	   static final int ZOOM = 2;
+	   int mode = NONE;
+
+	   // Remember some things for zooming
+	   PointF start = new PointF();
+	   PointF mid = new PointF();
+	   float oldDist = 1f;
+	
 	private GameBoardView gameBoardView;
 	
 	@Override
@@ -44,31 +55,71 @@ public class GameBoard extends Activity implements OnTouchListener
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-		// Get screen dimensions in pixels, should be 400x240
-//		Display display = getWindowManager().getDefaultDisplay();
-//		int width = display.getWidth();
-//		int height = display.getHeight();
-		
-		
-//		x = (int) (event.getRawX()/12);
-//		y = (int) (event.getRawY()/12) -3;
 
+
+
+	      // Handle touch events here...
+	      switch (event.getAction() & MotionEvent.ACTION_MASK) {
+	      case MotionEvent.ACTION_DOWN:
+	         start.set(event.getX(), event.getY());
+	         Log.d(TAG, "mode=DRAG");
+	         mode = DRAG;
+	         break;
+	      case MotionEvent.ACTION_POINTER_DOWN:
+	         oldDist = spacing(event);
+	         Log.d(TAG, "oldDist=" + oldDist);
+	         if (oldDist > 10f) {
+	            midPoint(mid, event);
+	            mode = ZOOM;
+	            Log.d(TAG, "mode=ZOOM");
+	         }
+	         break;
+	      case MotionEvent.ACTION_UP:
+	      case MotionEvent.ACTION_POINTER_UP:
+	         mode = NONE;
+	         Log.d(TAG, "mode=NONE");
+	         break;
+	      case MotionEvent.ACTION_MOVE:
+	         if (mode == DRAG) {
+	            // ...
+	            gameBoardView.translateBoard(event.getX() - start.x,
+	                  event.getY() - start.y);
+	         }
+	         else if (mode == ZOOM) {
+	            float newDist = spacing(event);
+	            if (newDist > 10f) {
+	               float scale = newDist / oldDist;
+	               gameBoardView.scaleBoard(scale,  mid.x, mid.y);
+	            }
+	         }
+	         break;
+	      }
 
 		//Toast.makeText(v.getContext(), "y: " +event.getY()+ " \nRawY:" + event.getRawY(), Toast.LENGTH_SHORT).show();
 		
+	      
 		gameBoardView.selectPoint(event.getX(), event.getY());
 		
-//		v.getWidth();
-//		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount() &&
-//				x >= 0 && y >= 0)
-//		{
-//			
-//			gameBoardView.setTile(1, x, y);
-			v.invalidate();
-//			
-//			return true;
-//		}
-		
-		return false;
+
+		v.invalidate();
+			
+		return true;
 	}
+	
+	
+	  /** Determine the space between the first two fingers */
+	   private float spacing(MotionEvent event) {
+	      // ...
+	      float x = event.getX(0) - event.getX(1);
+	      float y = event.getY(0) - event.getY(1);
+	      return FloatMath.sqrt(x * x + y * y);
+	   }
+
+	   /** Calculate the mid point of the first two fingers */
+	   private void midPoint(PointF point, MotionEvent event) {
+	      // ...
+	      float x = event.getX(0) + event.getX(1);
+	      float y = event.getY(0) + event.getY(1);
+	      point.set(x / 2, y / 2);
+	   }
 }

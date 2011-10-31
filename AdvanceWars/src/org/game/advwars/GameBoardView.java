@@ -168,4 +168,14 @@ public class GameBoardView extends View
 			
 		setTile(1, tileX, tileY);
 	}
+
+	public void translateBoard(float f, float g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void scaleBoard(float scale, float x, float y) {
+		// TODO Auto-generated method stub
+		
+	}
 }
