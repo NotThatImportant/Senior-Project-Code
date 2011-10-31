@@ -45,28 +45,29 @@ public class GameBoard extends Activity implements OnTouchListener
 	public boolean onTouch(View v, MotionEvent event)
 	{
 		// Get screen dimensions in pixels, should be 400x240
-		Display display = getWindowManager().getDefaultDisplay();
-		int width = display.getWidth();
-		int height = display.getHeight();
+//		Display display = getWindowManager().getDefaultDisplay();
+//		int width = display.getWidth();
+//		int height = display.getHeight();
 		
 		
-		x = (int) (event.getRawX()/12);
-		y = (int) (event.getRawY()/12) -3;
+//		x = (int) (event.getRawX()/12);
+//		y = (int) (event.getRawY()/12) -3;
 
 
-		//Toast.makeText(v.getContext(), "You selected " + "x: " + event.getRawX() + "--> " + x + " y: " + event.getRawY() +"--> " + y, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(v.getContext(), "y: " +event.getY()+ " \nRawY:" + event.getRawY(), Toast.LENGTH_SHORT).show();
 		
+		gameBoardView.selectPoint(event.getX(), event.getY());
 		
-		v.getWidth();
-		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount() &&
-				x >= 0 && y >= 0)
-		{
-			
-			gameBoardView.setTile(1, x, y);
+//		v.getWidth();
+//		if (x < gameBoardView.getXTileCount() && y < gameBoardView.getYTileCount() &&
+//				x >= 0 && y >= 0)
+//		{
+//			
+//			gameBoardView.setTile(1, x, y);
 			v.invalidate();
-			
-			return true;
-		}
+//			
+//			return true;
+//		}
 		
 		return false;
 	}

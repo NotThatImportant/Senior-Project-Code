@@ -30,7 +30,7 @@ public class GameBoardView extends View
         super(context, attrs, defStyle);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
-        mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 12);
+        mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
         initGameBoardView();
         a.recycle();
     }
@@ -40,7 +40,7 @@ public class GameBoardView extends View
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
-        mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 12);
+        mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
         initGameBoardView();
         a.recycle();
     }
@@ -67,9 +67,12 @@ public class GameBoardView extends View
         mXTileCount = (int) Math.floor(w / mTileSize);
         mYTileCount = (int) Math.floor(h / mTileSize);
 
-        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
-        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
+//        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
+//        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
 
+        mXOffset = 0;
+        mYOffset = 0;
+        
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
     }
@@ -158,4 +161,11 @@ public class GameBoardView extends View
     {
     	return mYTileCount;
     }
+
+	public void selectPoint(float x, float y) {
+		int tileX = (int) x/mTileSize;
+		int tileY = (int) y/mTileSize;
+			
+		setTile(1, tileX, tileY);
+	}
 }
