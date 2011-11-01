@@ -70,8 +70,9 @@ public class GameBoardView extends View
 
         mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
         mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
-
-
+//
+//        mXOffset = 0;
+//        mYOffset = 0;
         
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
@@ -163,10 +164,14 @@ public class GameBoardView extends View
     }
 
 	public void selectPoint(float x, float y) {
+		x = x - mXOffset;
+		y = y - mYOffset;
 		int tileX = (int) x/mTileSize;
 		int tileY = (int) y/mTileSize;
-			
-		setTile(1, tileX, tileY);
+		
+		if(tileX < mXTileCount && tileY < mYTileCount &&
+				tileX >= 0 && tileY >= 0)
+			setTile(1, tileX, tileY);
 	}
 
 	public void translateBoard(float f, float g) {
