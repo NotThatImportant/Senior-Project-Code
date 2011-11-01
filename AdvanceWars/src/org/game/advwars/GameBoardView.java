@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -67,11 +68,10 @@ public class GameBoardView extends View
         mXTileCount = (int) Math.floor(w / mTileSize);
         mYTileCount = (int) Math.floor(h / mTileSize);
 
-//        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
-//        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
+        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
+        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
 
-        mXOffset = 0;
-        mYOffset = 0;
+
         
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
@@ -175,7 +175,15 @@ public class GameBoardView extends View
 	}
 
 	public void scaleBoard(float scale, float x, float y) {
-		// TODO Auto-generated method stub
+		mTileSize = (int) (mTileSize * scale);
 		
+		if(mTileSize < 10)
+			mTileSize = 10;
+		if(mTileSize > 50)
+			mTileSize = 50;
+		
+		initGameBoardView();
+		onSizeChanged(getWidth(), getHeight(), getWidth(), getHeight());
+		invalidate();
 	}
 }

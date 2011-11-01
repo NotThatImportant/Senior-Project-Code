@@ -17,6 +17,8 @@ public class GameBoard extends Activity implements OnTouchListener
 	   static final int NONE = 0;
 	   static final int DRAG = 1;
 	   static final int ZOOM = 2;
+	   static final int PRESS = 3;
+	   
 	   int mode = NONE;
 
 	   // Remember some things for zooming
@@ -63,7 +65,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	      case MotionEvent.ACTION_DOWN:
 	         start.set(event.getX(), event.getY());
 	         Log.d(TAG, "mode=DRAG");
-	         mode = DRAG;
+	         mode = PRESS;
 	         break;
 	      case MotionEvent.ACTION_POINTER_DOWN:
 	         oldDist = spacing(event);
@@ -76,10 +78,18 @@ public class GameBoard extends Activity implements OnTouchListener
 	         break;
 	      case MotionEvent.ACTION_UP:
 	      case MotionEvent.ACTION_POINTER_UP:
+	    	 if(mode == PRESS)
+	    		 gameBoardView.selectPoint(event.getX(), event.getY());
 	         mode = NONE;
 	         Log.d(TAG, "mode=NONE");
 	         break;
 	      case MotionEvent.ACTION_MOVE:
+	    	 if(mode == PRESS && 
+	    			 (Math.abs(event.getX() - start.x) > 20 ||
+	    					 Math.abs(event.getY() - start.y) > 20)){
+	    		 mode = DRAG;
+	    	 }
+	    	  
 	         if (mode == DRAG) {
 	            // ...
 	            gameBoardView.translateBoard(event.getX() - start.x,
@@ -98,7 +108,7 @@ public class GameBoard extends Activity implements OnTouchListener
 		//Toast.makeText(v.getContext(), "y: " +event.getY()+ " \nRawY:" + event.getRawY(), Toast.LENGTH_SHORT).show();
 		
 	      
-		gameBoardView.selectPoint(event.getX(), event.getY());
+		
 		
 
 		v.invalidate();
