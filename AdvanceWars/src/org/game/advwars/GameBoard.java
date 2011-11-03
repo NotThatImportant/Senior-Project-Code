@@ -92,8 +92,8 @@ public class GameBoard extends Activity implements OnTouchListener
 	    	  
 	         if (mode == DRAG) {
 	            // ...
-	            gameBoardView.translateBoard(event.getX() - start.x,
-	                  event.getY() - start.y);
+	            gameBoardView.translateBoard(-(event.getX() - start.x),
+	                  -(event.getY() - start.y));
 	         }
 	         else if (mode == ZOOM) {
 	            float newDist = spacing(event);

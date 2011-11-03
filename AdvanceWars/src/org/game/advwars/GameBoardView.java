@@ -1,5 +1,7 @@
 package org.game.advwars;
 
+import java.lang.reflect.Array;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -21,8 +23,8 @@ public class GameBoardView extends View
     private static int mYOffset;
     private Bitmap[] mTileArray;
     private int[][] mTileGrid;
-    private float mX;
-    private float mY;
+    private int mX;
+    private int mY;
     private final Paint mPaint = new Paint();
     private Canvas canvas;
 	
@@ -30,6 +32,20 @@ public class GameBoardView extends View
     {
         super(context, attrs, defStyle);
 
+        mX = 0;
+        mY = 0;
+        
+        mTileGrid = new int[100][100];
+        for (int x = 0; x < 100; x++) {
+            for (int y = 0; y < 100; y++) {
+            	if(x != 0 && y != 0 )
+            		setTile(0, x, y);
+            	else
+            		setTile(1, x, y);
+            }
+        }
+        
+        
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
         initGameBoardView();
@@ -39,7 +55,21 @@ public class GameBoardView extends View
     public GameBoardView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-
+        
+        mX = 0;
+        mY = 0;
+        
+        mTileGrid = new int[100][100];
+        for (int x = 0; x < 100; x++) {
+            for (int y = 0; y < 100; y++) {
+            	if(x != 0 && y != 0 )
+            		setTile(0, x, y);
+            	else
+            		setTile(1, x, y);
+            }
+        }
+        
+        
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
         initGameBoardView();
@@ -74,8 +104,8 @@ public class GameBoardView extends View
 //        mXOffset = 0;
 //        mYOffset = 0;
         
-        mTileGrid = new int[mXTileCount][mYTileCount];
-        clearTiles();
+        //mTileGrid = new int[mXTileCount][mYTileCount];
+       // clearTiles();
     }
     
     public void loadTile(int key, Drawable tile)
@@ -106,15 +136,15 @@ public class GameBoardView extends View
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-        for (int x = 0; x < mXTileCount; x += 1)
+        for (int x = mX; x < mXTileCount + mX && x < 100; x += 1)
         {
-            for (int y = 0; y < mYTileCount; y += 1)
+            for (int y = mY; y < mYTileCount + mY && y < 100; y += 1)
             {
                 if (mTileGrid[x][y] > -1)
                 {
                     canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
-                    		mXOffset + x * mTileSize,
-                    		mYOffset + y * mTileSize,
+                    		mXOffset + (x - mX) * mTileSize,
+                    		mYOffset + (y - mY) * mTileSize,
                     		mPaint);
                 }
             }
@@ -171,15 +201,32 @@ public class GameBoardView extends View
 		
 		if(tileX < mXTileCount && tileY < mYTileCount &&
 				tileX >= 0 && tileY >= 0)
-			setTile(1, tileX, tileY);
+			setTile(1, tileX + mX, tileY + mY);
 	}
 
-	public void translateBoard(float f, float g) {
-		// TODO Auto-generated method stub
+	public void translateBoard(float x, float y) {
+		mX += (x/mTileSize) * 0.2;
+		mY += (y/mTileSize) * 0.2;
 		
+		if(mX < 0)
+			mX = 0;
+		if(mX > 100)
+			mX = 100;
+		
+		if(mY < 0)
+			mY = 0;
+		if(mY > 100)
+			mY = 100;
+		
+		invalidate();
 	}
 
 	public void scaleBoard(float scale, float x, float y) {
+		if(scale < 0.2)
+			scale = 0.5f;
+		if(scale > 2)
+			scale = 2.0f;
+		
 		mTileSize = (int) (mTileSize * scale);
 		
 		if(mTileSize < 10)
