@@ -1,5 +1,6 @@
 package org.game.advwars;
 
+import database.DBAndroidCreator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -25,6 +26,8 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         previousPlayerName.setOnClickListener(this);
         View newPlayerName = findViewById(R.id.new_player_name);
         newPlayerName.setOnClickListener(this);
+        
+        DBAndroidCreator db = new DBAndroidCreator();
     }
     
     public void onClick(View v)
