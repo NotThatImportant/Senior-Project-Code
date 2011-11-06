@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * Class that is used to open SQLite database on Android devices.
+ * Class that is used to open SQLite database for Advance Wars game
  * 
  * @author Sinisa Malbasa
  *
@@ -18,7 +18,7 @@ public class DBAndroidConnector
 	
 	public DBAndroidConnector()
 	{
-		this.dbPath = "/data/data/org.game.advwars/databases/gridwars.sqlite";
+		this.dbPath = "/data/data/org.game.advwars/databases/advwarslocal.sqlite";
 		this.db = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
 	}
 	
