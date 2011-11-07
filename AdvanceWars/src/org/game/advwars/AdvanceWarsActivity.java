@@ -27,6 +27,7 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         View newPlayerName = findViewById(R.id.new_player_name);
         newPlayerName.setOnClickListener(this);
         
+        //Create DB if it doesn't exist
         DBAndroidCreator db = new DBAndroidCreator();
     }
     

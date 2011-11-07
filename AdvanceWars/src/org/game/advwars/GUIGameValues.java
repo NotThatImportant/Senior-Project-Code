@@ -13,11 +13,13 @@ public class GUIGameValues implements Serializable
 {
 	private boolean soundOn;
 	private String playerName;
+	private String difficulty;
 	
 	public GUIGameValues()
 	{
 		soundOn = true;
 		playerName = "";
+		difficulty = "medium";
 	}
 	
 	public void setPlayerName (String playerName)
@@ -50,5 +52,15 @@ public class GUIGameValues implements Serializable
 	public boolean getSound ()
 	{
 		return this.soundOn;
+	}
+	
+	public void setDifficulty (String difficulty)
+	{
+		this.difficulty = difficulty;
+	}
+	
+	public String getDifficulty ()
+	{
+		return this.difficulty;
 	}
 }

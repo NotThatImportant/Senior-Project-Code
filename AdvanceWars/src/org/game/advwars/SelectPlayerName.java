@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -26,10 +27,6 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
         setContentView(R.layout.select_player_name);
         
         Spinner spinner = (Spinner) findViewById(R.id.player_name_selection);
-        /*ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.player_names, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);*/
         
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -67,7 +64,8 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
 	{
 		playerName = parent.getItemAtPosition(pos).toString();
-	    Toast.makeText(parent.getContext(), "You selected " + playerName, Toast.LENGTH_LONG).show();
+		this.selectPlayerGGV.setPlayerName(playerName);
+	    Toast.makeText(parent.getContext(), "You selected " + playerName, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -78,19 +76,16 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 
 	@Override
 	public void onClick(View v)
-	{		
+	{
 		if (!playerName.equals(""))
 		{
-			this.selectPlayerGGV.setPlayerName(playerName);
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", selectPlayerGGV);
 			startActivity(i);
 		}
 		else
 		{
-			this.selectPlayerGGV.setPlayerName(playerName);
 			Intent i2 = new Intent(this, InvalidPlayerNameSelected.class);
-			i2.putExtra("ggv", selectPlayerGGV);
 			startActivity(i2);
 		}
 	}
