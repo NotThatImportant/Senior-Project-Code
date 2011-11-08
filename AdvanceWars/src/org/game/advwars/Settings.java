@@ -1,8 +1,12 @@
 package org.game.advwars;
 
+import dataconnectors.DBAndroidConnector;
+import dataconnectors.SaveData;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +15,12 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class Settings extends Activity implements OnClickListener, OnCheckedChangeListener
 {
+	private int soundOn;
+	private String difficulty;
+	private String playerName;
+	private SaveData sd = new SaveData();
+	private GUIGameValues ggv = new GUIGameValues();
+	
 	protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -18,6 +28,29 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
         
         View changePlayerName = findViewById(R.id.change_player_name);
         changePlayerName.setOnClickListener(this);
+        
+        DBAndroidConnector db = new DBAndroidConnector();
+        SQLiteDatabase myDataBase = db.getDB();
+        ggv = sd.loadGGVData();
+        playerName = ggv.getPlayerName();
+        
+        try
+        {
+        	Cursor cursor = myDataBase.rawQuery("select Sound_On from PlayerSettings where Player_Name = '" + playerName + "'", null);
+        	int soundOnIndex = cursor.getColumnIndexOrThrow("Sound_On");
+        	cursor.moveToFirst();
+        	soundOn = cursor.getInt(soundOnIndex);
+        	
+        	// TODO
+        }
+        catch (Exception ex)
+        {
+        	Log.e("AdvWars", ex.toString());
+        }
+        finally
+        {
+            myDataBase.close();
+        }
         
         RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.sound_radio_group);
         soundRadioGroup.setOnCheckedChangeListener(this);
