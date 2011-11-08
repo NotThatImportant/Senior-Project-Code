@@ -1,6 +1,6 @@
 package org.game.advwars;
 
-import database.DBAndroidCreator;
+import dataconnectors.DBAndroidCreator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;

@@ -1,6 +1,7 @@
 package org.game.advwars;
 
-import database.DBAndroidConnector;
+import dataconnectors.DBAndroidConnector;
+import dataconnectors.SaveData;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 {
 	private String playerName = "";
 	private GUIGameValues selectPlayerGGV = new GUIGameValues();
+	private SaveData sd = new SaveData();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -65,18 +67,22 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 	{
 		playerName = parent.getItemAtPosition(pos).toString();
 		this.selectPlayerGGV.setPlayerName(playerName);
+		sd.saveGGVData(selectPlayerGGV);
 	    Toast.makeText(parent.getContext(), "You selected " + playerName, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0)
 	{
-		// Do nothing	
+		// Do nothing
 	}
 
 	@Override
 	public void onClick(View v)
 	{
+		selectPlayerGGV = sd.loadGGVData();
+		playerName = selectPlayerGGV.getPlayerName();
+		
 		if (!playerName.equals(""))
 		{
 			Intent i = new Intent(this, MainMenu.class);

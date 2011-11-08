@@ -1,4 +1,4 @@
-package database;
+package dataconnectors;
 
 import android.content.ContentValues;
 import android.database.SQLException;

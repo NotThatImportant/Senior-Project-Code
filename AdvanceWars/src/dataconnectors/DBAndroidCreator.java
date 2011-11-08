@@ -1,4 +1,4 @@
-package database;
+package dataconnectors;
 
 import java.io.File;
 import android.database.sqlite.SQLiteDatabase;
