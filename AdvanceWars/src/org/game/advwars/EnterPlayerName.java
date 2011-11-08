@@ -56,9 +56,7 @@ public class EnterPlayerName extends Activity implements OnClickListener
 		}
 		else
 		{
-			enterPlayerGGV.setPlayerName(playerName);
 			Intent i3 = new Intent(this, InvalidPlayerNameEntered.class);
-			i3.putExtra("ggv", enterPlayerGGV);
 			startActivity(i3);
 		}
 	}

@@ -193,7 +193,8 @@ public class GameBoardView extends View
     	return mYTileCount;
     }
 
-	public void selectPoint(float x, float y) {
+	public void selectPoint(float x, float y)
+	{
 		x = x - mXOffset;
 		y = y - mYOffset;
 		int tileX = (int) x/mTileSize;
@@ -204,7 +205,8 @@ public class GameBoardView extends View
 			setTile(1, tileX + mX, tileY + mY);
 	}
 
-	public void translateBoard(float x, float y) {
+	public void translateBoard(float x, float y)
+	{
 		mX += (x/mTileSize) * 0.2;
 		mY += (y/mTileSize) * 0.2;
 		
@@ -221,7 +223,8 @@ public class GameBoardView extends View
 		invalidate();
 	}
 
-	public void scaleBoard(float scale, float x, float y) {
+	public void scaleBoard(float scale, float x, float y)
+	{
 		if(scale < 0.2)
 			scale = 0.5f;
 		if(scale > 2)
