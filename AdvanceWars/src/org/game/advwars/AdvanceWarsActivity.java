@@ -1,14 +1,14 @@
 package org.game.advwars;
 
+import dataconnectors.DBAndroidCreator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-
 /**
- * Main Android class
+ * Startup class
  * @author Sinisa Malbasa
  *
  */
@@ -26,6 +26,9 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         previousPlayerName.setOnClickListener(this);
         View newPlayerName = findViewById(R.id.new_player_name);
         newPlayerName.setOnClickListener(this);
+        
+        //Create DB if it doesn't exist
+        DBAndroidCreator db = new DBAndroidCreator();
     }
     
     public void onClick(View v)
@@ -33,7 +36,7 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
     	switch (v.getId())
     	{
     	case R.id.previous_player_name:
-    		Intent i = new Intent(this, UnderConstruction.class);
+    		Intent i = new Intent(this, SelectPlayerName.class);
     		startActivity(i);
     		break;
     	case R.id.new_player_name:

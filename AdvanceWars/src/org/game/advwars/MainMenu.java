@@ -5,13 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 public class MainMenu extends Activity implements OnClickListener
 {
+	private GUIGameValues ggv = new GUIGameValues();
+	
 	protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        
+        Bundle extras = getIntent().getExtras();
+        this.ggv = (GUIGameValues) extras.getSerializable("ggv");
         
         // Set up click listeners for all buttons
         View singlePlayer = findViewById(R.id.single_player);
@@ -24,6 +30,10 @@ public class MainMenu extends Activity implements OnClickListener
         settings.setOnClickListener(this);
         View about = findViewById(R.id.about);
         about.setOnClickListener(this);
+        
+        // Gets player name and displays it on main menu
+        final TextView textViewToChange = (TextView) findViewById(R.id.welcome_message);
+        textViewToChange.setText("Welcome " + this.ggv.getPlayerName());
     }
 	
     public void onClick(View v)
@@ -43,7 +53,7 @@ public class MainMenu extends Activity implements OnClickListener
     		startActivity(i3);
     		break;
     	case R.id.settings:
-    		Intent i4 = new Intent(this, UnderConstruction.class);
+    		Intent i4 = new Intent(this, Settings.class);
     		startActivity(i4);
     		break;
     	case R.id.about:

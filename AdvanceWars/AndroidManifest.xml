@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.game.advwars"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.0"
+      android:debuggable="true">
     <uses-sdk android:minSdkVersion="8" />
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -16,7 +17,8 @@
         </activity>
         <activity android:name=".About"
         android:screenOrientation="landscape"
-        android:label="@string/about_title">
+        android:label="@string/about_title"
+        android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity android:name=".MainMenu"
         android:screenOrientation="landscape"
@@ -37,6 +39,10 @@
         <activity android:name=".EnterPlayerName"
         android:screenOrientation="landscape"
         android:label="@string/enter_player_name_title">
+        </activity>
+        <activity android:name=".SelectPlayerName"
+        android:screenOrientation="landscape"
+        android:label="@string/select_player_name_title">
         </activity>
         <activity android:name=".FactionSelection"
         android:screenOrientation="landscape"
@@ -61,6 +67,19 @@
         <activity android:name=".SelectPlayerName"
         android:screenOrientation="landscape"
         android:label="@string/select_player_name_title">
+        </activity>
+        <activity android:name=".InvalidPlayerNameEntered"
+        android:screenOrientation="landscape"
+        android:label="@string/invalid_player_name_entered_title"
+        android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name=".InvalidPlayerNameSelected"
+        android:screenOrientation="landscape"
+        android:label="@string/invalid_player_name_selected_title"
+        android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity android:name=".GameBoard"
+        android:screenOrientation="landscape">
         </activity>
     </application>
 </manifest>

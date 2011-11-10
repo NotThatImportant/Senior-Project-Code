@@ -1,5 +1,6 @@
 package org.game.advwars;
 
+import dataconnectors.DBAndroidConnector;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +11,9 @@ import android.widget.Button;
 
 public class EnterPlayerName extends Activity implements OnClickListener
 {
-	private EditText newPlayerName = null;
 	private String playerName = null;
+	private EditText newPlayerName = null;
+	private GUIGameValues enterPlayerGGV = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -31,18 +33,31 @@ public class EnterPlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
-		
+
 		// 'sa' overrides input and proceeds regardless of value validity
 		if (playerName.equals("sa"))
 		{
+			enterPlayerGGV.setPlayerName(playerName);
 			Intent i = new Intent(this, MainMenu.class);
+			i.putExtra("ggv", enterPlayerGGV);
 			startActivity(i);
+		}
+		else if (!playerName.equals(""))
+		{
+			enterPlayerGGV.setPlayerName(playerName);
+			dbc.executeQuery("insert into 'PlayerSettings' ('Player_Name', 'Difficulty', 'Sound_On') values ('" + playerName + "', 'medium', '1');");
+			dbc.closeDB();
+
+			Intent i2 = new Intent(this, MainMenu.class);
+			i2.putExtra("ggv", enterPlayerGGV);
+			startActivity(i2);
 		}
 		else
 		{
-			Intent i2 = new Intent(this, UnderConstruction.class);
-			startActivity(i2);
+			Intent i3 = new Intent(this, InvalidPlayerNameEntered.class);
+			startActivity(i3);
 		}
 	}
 }

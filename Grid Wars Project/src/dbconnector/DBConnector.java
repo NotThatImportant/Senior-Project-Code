@@ -5,6 +5,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+/**
+ * Default path where Android stores database file:
+ *'/data/data/packagename/databases'
+ * 
+ * @author Sinisa Malbasa
+ *
+ */
 public class DBConnector
 {
 	private int numOfColumns = 0;
@@ -20,16 +27,17 @@ public class DBConnector
 	{
 		availableColumns = new ArrayList<String> ();
 		this.filepath = System.getProperty("user.home") + File.separator + "gridwars.sqlite";
+		//this.filepath = "/data/data/org.game.advwars/databases/gridwars.sqlite";
 		
 		setupConnector();
 		getDatabaseTables();
 	}
 	
-	public DBConnector(String filepath)
+	public DBConnector(String databaseName)
 	{
 		availableColumns = new ArrayList<String> ();
-		this.filepath = filepath;
-		
+		this.filepath = "/data/data/org.game.advwars/databases/" + databaseName;
+
 		setupConnector();
 		getDatabaseTables();
 	}
@@ -90,7 +98,7 @@ public class DBConnector
 		}
 	}
 	
-	public void executeQuery(String query)
+	public void printQuery(String query)
 	{
 		try
 		{
@@ -127,6 +135,21 @@ public class DBConnector
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public ResultSet executeQuery(String query)
+	{
+		try
+		{
+			this.statement = this.connection.createStatement();
+			this.resultSet = this.statement.executeQuery(query);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return this.resultSet;	
 	}
 	
 	public void createTable(String table, String columns)

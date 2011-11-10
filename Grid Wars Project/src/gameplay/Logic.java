@@ -77,7 +77,7 @@ public class Logic {
 	 * 
 	 ************************************************************************/
 
-	private void createBoards(){
+	protected void createBoards(){
 		unitBoard =  new Unit[mapSize][mapSize];
 		for (int r = 0; r < mapSize; r++)
 			for (int c = 0; c < mapSize; c++) 
@@ -153,40 +153,20 @@ public class Logic {
 		}
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public Player getP1() {
 		return playerList.get(PLAYER1);
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public Player getP2() {
 		return playerList.get(PLAYER2);
 	}
 
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public void econDay(Player p) {
 		int econ = p.getNumBuild() * BINCOME + BASEINCOME;
 		p.setCash(p.getCash() + econ);
 	} 
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public Unit getUnit(int x, int y) {
 		Unit u = null;
 		if (unitBoard[x][y] != null) 
@@ -194,11 +174,6 @@ public class Logic {
 		return u;
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public int damage(Unit p1, Unit p2) {
 		int damage = 0; 
 		int neg = 0;
@@ -217,22 +192,12 @@ public class Logic {
 		return tD;
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public int changeHP(int dmg, Unit p) {
 		int hp = p.getHP() - dmg;
 		p.setHP(hp);
 		return hp;
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public int battle(Unit p1, Unit p2, int attackFirst) {
 		int damage = 0;
 		int cdamage = 0;
@@ -283,20 +248,10 @@ public class Logic {
 		
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public Tile getTile(int x, int y) {
 		return tBoard[x][y];
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public void produceUnit(Player p, Unit pU, Tile pT) {
 		int x = pT.getX();
 		int y = pT.getY();
@@ -310,11 +265,6 @@ public class Logic {
 		}	
 	}
 
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
 	public boolean didWin(Player p) {
 
 		if (p.getPNum() == PLAYER1) {
@@ -348,13 +298,10 @@ public class Logic {
 		unitBoard[oX][oY] = null;
 
 		unitBoard[pX][pY] = pUnit;
+		
+		pUnit.setHasMoved(true);
 	}
-
-	/************************************************************************
-	 * 
-	 * 
-	 * 
-	 ************************************************************************/
+	
 	private void move(Unit pUnit){
 		int movement = pUnit.getMove();
 
@@ -452,9 +399,9 @@ public class Logic {
 				}
 			}
 		}
-		pUnit.setHasMoved(true);
+		
+		//pUnit.setHasMoved(true);
 	}
-
 
 	/******************************************************** 
 	 *	possibleMove is used by the move method.  It checks for 
@@ -471,6 +418,10 @@ public class Logic {
 		}
 
 		return retval;
+	}
+	
+	public void setUnit(int x, int y, Unit pUnit){
+		unitBoard[x][y] = pUnit;
 	}
 
 }
