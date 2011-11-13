@@ -2,7 +2,8 @@ package units;
 
 public class AntiAir extends Unit{
 	public AntiAir(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 2;
 		type = TANKTYPE;

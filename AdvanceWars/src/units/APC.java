@@ -2,7 +2,8 @@ package units;
 
 public class APC extends Unit{
 	public APC(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 0;
 		type = TANKTYPE;

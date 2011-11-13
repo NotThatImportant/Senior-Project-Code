@@ -2,7 +2,8 @@ package units;
 
 public class Recon extends Unit{
 	public Recon(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 1;
 		type = TANKTYPE;

@@ -16,17 +16,33 @@ public abstract class Unit {
 	protected int atkRange;
 	protected int[] movement;
 	protected int x, y;
-	protected int hp = 10;
+	protected int hp;
 	protected int cost; 
-	protected boolean bonus = false;
+	protected boolean bonus;
 	protected String name;
-	protected boolean attackCopter = true; 	
-	protected boolean attackPlane = false;
-	protected boolean canBuy = false;
-	protected boolean hasMoved = false;
-	protected boolean hasAttacked = false;
-	protected boolean hasCaptured = false;
-	protected boolean startedCapture = false;
+	protected boolean attackCopter; 	
+	protected boolean attackPlane;
+	protected boolean canBuy;
+	protected boolean hasMoved;
+	protected boolean hasAttacked;
+	protected boolean hasCaptured;
+	protected boolean startedCapture;
+	
+	public Unit() {
+		startedCapture = false;
+		hasCaptured = false;
+		hasAttacked = false;
+		hasMoved = false;
+		canBuy = false;
+		attackPlane = false;
+		attackCopter = true;
+		bonus = false; 
+		hp = 10;
+	}
+	
+	public void setOwner(int own) {
+		owner = own;
+	}
 	
 	public boolean canBuy() {
 		return canBuy;

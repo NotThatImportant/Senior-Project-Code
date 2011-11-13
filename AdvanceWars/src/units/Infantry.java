@@ -3,7 +3,8 @@ package units;
 public class Infantry extends Unit{
 	
 	public Infantry(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 1;
 		type = INFANTRYTYPE;

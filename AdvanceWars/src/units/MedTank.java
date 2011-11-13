@@ -2,7 +2,8 @@ package units;
 
 public class MedTank extends Unit{
 	public MedTank(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 4;
 		type = TANKTYPE;

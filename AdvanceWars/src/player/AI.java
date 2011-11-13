@@ -102,7 +102,7 @@ public class AI extends Player{
 				}
 			}
 		
-		if()
+
 		log.moveUnit(t, safeX, safeY);
 	}
 	

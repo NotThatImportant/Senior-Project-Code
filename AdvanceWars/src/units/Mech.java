@@ -3,7 +3,8 @@ package units;
 public class Mech extends Unit{
 
 	public Mech(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 1;
 		type = INFANTRYTYPE;

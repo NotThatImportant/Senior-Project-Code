@@ -2,10 +2,9 @@ package units;
 
 public class Artillery extends Unit{
 	
-	private boolean didMove; 
-	
 	public Artillery(int owner){
-		this.owner = owner;
+		super();
+		setOwner(owner);
 		
 		attack = 3;
 		type = TANKTYPE;
@@ -17,16 +16,5 @@ public class Artillery extends Unit{
 		cost = 6000;
 		hp = 10;
 		name = "Artillery";
-		didMove = false;
-	}
-	
-	public void madeMove() {
-		didMove = true;
-	}
-	
-	public boolean didMove() {
-		boolean temp = didMove;
-		didMove = true;
-		return temp;
 	}
 }
