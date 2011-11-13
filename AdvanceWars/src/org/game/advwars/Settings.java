@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -30,85 +29,19 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
         View changePlayerName = findViewById(R.id.change_player_name);
         changePlayerName.setOnClickListener(this);
         
-        RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.sound_radio_group);
-        soundRadioGroup.setOnCheckedChangeListener(this);
-        
-        RadioGroup difficultyRadioGroup = (RadioGroup) findViewById(R.id.difficulty_radio_group);
-        difficultyRadioGroup.setOnCheckedChangeListener(this);
-        
         DBAndroidConnector db = new DBAndroidConnector();
         SQLiteDatabase myDataBase = db.getDB();
         ggv = sd.loadGGVData();
         playerName = ggv.getPlayerName();
         
-        // Get sound preference from database and set it on/off
         try
         {
-        	Cursor soundCursor = myDataBase.rawQuery("select Sound_On from PlayerSettings where Player_Name = '" + playerName + "'", null);
-        	int soundOnIndex = soundCursor.getColumnIndexOrThrow("Sound_On");
-        	soundCursor.moveToFirst();
-        	soundOn = soundCursor.getInt(soundOnIndex);
+        	Cursor cursor = myDataBase.rawQuery("select Sound_On from PlayerSettings where Player_Name = '" + playerName + "'", null);
+        	int soundOnIndex = cursor.getColumnIndexOrThrow("Sound_On");
+        	cursor.moveToFirst();
+        	soundOn = cursor.getInt(soundOnIndex);
         	
-        	RadioButton soundOnRB = (RadioButton)findViewById(R.id.sound_on);
-    		RadioButton soundOffRB = (RadioButton)findViewById(R.id.sound_off);
-        	
-        	if (soundOn == 0)
-        	{
-        		soundOnRB.setChecked(false);
-        		soundOffRB.setChecked(true);
-        	}
-        	else if (soundOn == 1)
-        	{
-        		soundOnRB.setChecked(true);
-        		soundOffRB.setChecked(false);
-        	}
-        	else
-        	{
-        		soundOnRB.setChecked(false);
-        		soundOffRB.setChecked(false);
-        	}
-        }
-        catch (Exception ex)
-        {
-        	Log.e("AdvWars", ex.toString());
-        }
-        
-        // Get difficulty preference from database and set it to easy, medium, or hard
-        try
-        {
-        	Cursor difficultyCursor = myDataBase.rawQuery("select Difficulty from PlayerSettings where Player_Name = '" + playerName + "'", null);
-        	int difficultyIndex = difficultyCursor.getColumnIndexOrThrow("Difficulty");
-        	difficultyCursor.moveToFirst();
-        	difficulty = difficultyCursor.getString(difficultyIndex);
-        	
-        	RadioButton easyRB = (RadioButton)findViewById(R.id.easy);
-    		RadioButton mediumRB = (RadioButton)findViewById(R.id.medium);
-    		RadioButton hardRB = (RadioButton)findViewById(R.id.hard);
-        	
-        	if (difficulty.equals("easy"))
-        	{
-        		easyRB.setChecked(true);
-        		mediumRB.setChecked(false);
-        		hardRB.setChecked(false);
-        	}
-        	else if (difficulty.equals("medium"))
-        	{
-        		easyRB.setChecked(false);
-        		mediumRB.setChecked(true);
-        		hardRB.setChecked(false);
-        	}
-        	else if (difficulty.equals("hard"))
-        	{
-        		easyRB.setChecked(false);
-        		mediumRB.setChecked(false);
-        		hardRB.setChecked(true);
-        	}
-        	else
-        	{
-        		easyRB.setChecked(false);
-        		mediumRB.setChecked(false);
-        		hardRB.setChecked(false);
-        	}
+        	// TODO
         }
         catch (Exception ex)
         {
@@ -118,6 +51,12 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
         {
             myDataBase.close();
         }
+        
+        RadioGroup soundRadioGroup = (RadioGroup) findViewById(R.id.sound_radio_group);
+        soundRadioGroup.setOnCheckedChangeListener(this);
+        
+        RadioGroup difficultyRadioGroup = (RadioGroup) findViewById(R.id.difficulty_radio_group);
+        difficultyRadioGroup.setOnCheckedChangeListener(this);
     }
 
 	@Override
@@ -135,34 +74,22 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)
 	{
-		DBAndroidConnector db = new DBAndroidConnector();
-        SQLiteDatabase myDB = db.getDB();
-        GUIGameValues tempGGV = new GUIGameValues();
-        SaveData tempSD = new SaveData();
-        tempGGV = sd.loadGGVData();
-        playerName = tempGGV.getPlayerName();
-		
         switch (group.getCheckedRadioButtonId())
     	{
     	case R.id.sound_on:
-    		myDB.execSQL("update PlayerSettings set Sound_On = 1 where Player_Name = '" + playerName + "';");
-    		myDB.close();
+    		Log.i("AdvWars", "Sound on");
     		break;
     	case R.id.sound_off:
-    		myDB.execSQL("update PlayerSettings set Sound_On = 0 where Player_Name = '" + playerName + "';");
-    		myDB.close();
+    		Log.i("AdvWars", "Sound off");
     		break;
     	case R.id.easy:
-    		myDB.execSQL("update PlayerSettings set Difficulty = 'easy' where Player_Name = '" + playerName + "';");
-    		myDB.close();
+    		Log.i("AdvWars", "Easy");
     		break;
     	case R.id.medium:
-    		myDB.execSQL("update PlayerSettings set Difficulty = 'medium' where Player_Name = '" + playerName + "';");
-    		myDB.close();
+    		Log.i("AdvWars", "Medium");
     		break;
     	case R.id.hard:
-    		myDB.execSQL("update PlayerSettings set Difficulty = 'hard' where Player_Name = '" + playerName + "';");
-    		myDB.close();
+    		Log.i("AdvWars", "Hard");
     		break;
     	}
 	}
