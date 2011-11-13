@@ -25,6 +25,8 @@ public abstract class Unit {
 	protected boolean canBuy = false;
 	protected boolean hasMoved = false;
 	protected boolean hasAttacked = false;
+	protected boolean hasCaptured = false;
+	protected boolean startedCapture = false;
 	
 	public boolean canBuy() {
 		return canBuy;
@@ -137,6 +139,22 @@ public abstract class Unit {
 	
 	public boolean getHasAttacked(){
 		return hasAttacked;
+	}
+	
+	public void setHasCaptured(boolean hasCaptured){
+		this.hasCaptured = hasCaptured;
+	}
+	
+	public boolean getHasCaptured(){
+		return hasCaptured;
+	}
+	
+	public void setStartedCapture(boolean startedCapture){
+		this.startedCapture = startedCapture;
+	}
+	
+	public boolean getStartedCapture(){
+		return startedCapture;
 	}
 
 
