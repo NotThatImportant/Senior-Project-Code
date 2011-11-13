@@ -298,7 +298,10 @@ public class Logic {
 		unitBoard[oX][oY] = null;
 
 		unitBoard[pX][pY] = pUnit;
+		
+		pUnit.setHasMoved(true);
 	}
+	
 	private void move(Unit pUnit){
 		int movement = pUnit.getMove();
 
@@ -396,7 +399,8 @@ public class Logic {
 				}
 			}
 		}
-		pUnit.setHasMoved(true);
+		
+		//pUnit.setHasMoved(true);
 	}
 
 	/******************************************************** 
