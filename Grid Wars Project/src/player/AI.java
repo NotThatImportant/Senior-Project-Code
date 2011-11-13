@@ -2,11 +2,9 @@ package player;
 
 
 import gameplay.Logic;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import gameplay.Logic;
+import terrain.Tile;
 import units.APC;
 import units.AntiAir;
 import units.Artillery;
@@ -14,8 +12,6 @@ import units.Bomber;
 import units.ChopperA;
 import units.ChopperB;
 import units.FighterJet;
-import units.Unit;
-import terrain.Tile;
 import units.Unit;
 
 public class AI extends Player{
