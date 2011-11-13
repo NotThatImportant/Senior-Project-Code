@@ -91,11 +91,12 @@ public class AI extends Player{
 					if(isItSafe(i, j)){
 						safeX = i;
 						safeY = j;
-						
+						foundSafe = true;
 					}
 				}
 			}
 		
+		if()
 		log.moveUnit(t, safeX, safeY);
 	}
 	
