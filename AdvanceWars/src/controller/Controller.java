@@ -8,11 +8,10 @@ import units.*;
 import terrain.Tile;
 
 public class Controller {
-	
+
 	private final int MOVE = 0;
 	private final int ATTACK = 1;
 	private final int CAPTURE = 2;
-	private final int JOIN = 3;
 
 	Player firstPlayer;
 	Player secondPlayer;
@@ -23,16 +22,13 @@ public class Controller {
 	int x, y;
 
 	char selected = 'n';
-	int[] axis; //axis[0] = x and axis[1] = y
 
 	public Controller(Player p1, Player p2, boolean isAIOn, String mapName) {
 		firstPlayer = p1;
 		secondPlayer = p2;
 		aiOn = isAIOn;
 		store = new Store();
-		
-		axis = new int[2];
-		
+
 		if (aiOn) {
 			secondPlayer = new AI(secondPlayer.getPName(), 2, secondPlayer.getFact());
 		}
@@ -42,12 +38,13 @@ public class Controller {
 
 		playerTurn = whoGoesFirst();	
 	}
-
+	
 	/**
 	 * This is a simple method that simply tells the GUI whos turn it is. 
 	 * 
 	 * @return
 	 */
+	
 	public int whosTurn() {
 		return playerTurn;
 	}
@@ -61,17 +58,18 @@ public class Controller {
 	 * @param y
 	 * @return
 	 */
+	
 	public ArrayList<String> selectCoordinates(int x, int y) {
 		ArrayList<String> actions = new ArrayList<String>();
-		
-		axis[0] = x;
-		axis[1] = y;
+
+		this.x = x;
+		this.y = y;
 
 		if (log.getUB()[x][y] != null)
-			actions = unitActions(actions, x, y);
+			actions = unitActions(actions);
 
 		else if (log.getTBoard()[x][y].getType() == 'q' || log.getTBoard()[x][y].getType() == 'Q')
-			actions = produceActions(actions, x, y);
+			actions = produceActions(actions);
 
 		else
 			return null;
@@ -90,7 +88,8 @@ public class Controller {
 	 * @param y
 	 * @return
 	 */
-	private ArrayList<String> produceActions(ArrayList<String> pActions, int x, int y) {
+	
+	private ArrayList<String> produceActions(ArrayList<String> pActions) {
 		Tile[][] board = log.getTBoard();
 		ArrayList<String> actions = new ArrayList<String>();
 
@@ -103,10 +102,13 @@ public class Controller {
 				}
 			}
 		}
-			
-			return actions;
+
+		return actions;
 	}
 
+	/**
+	 * This method is called at the end of a turn to update money. 
+	 */
 	
 	public void endTurn() {
 		if (playerTurn == 0) {
@@ -119,55 +121,148 @@ public class Controller {
 		}
 	}
 
-	public void unitTakeAction(int unitType, int action) {
+	public char[][] unitTakeAction(int unitType, int action) {
+		char[][] canDo = null;
+		
 		if (action == MOVE) {
-			
-		} else if (action == JOIN) {
-			
+			canDo = move();
 		} else if (action == ATTACK) {
-			
+			canDo = attack();
 		} else if (action == CAPTURE) {
-			
+			capture();
 		} else {
-			//ERROR WILL ROBINSON ERROR!
+			return null;
 		}
+		return canDo;
+	}
+
+	private char[][] attack() {
+		char[][] move = move();
+		Unit[][] ub = log.getUB();
+		char[][] canAttack = new char[log.getTBoard().length][log.getTBoard().length];
+		
+		for (int r = 0; r < canAttack.length; r++) {
+			for (int c = 0; c < canAttack.length; c++) {
+				
+				//if there is a unit there that does not belong to you and you can move there...
+				//TODO move[r][c] isn't correct you should say if you can move within attack range
+				//of that unit NOT if you can move to the same tile as that unit!
+				
+				if (ub[r][c] != null && playerTurn != ub[r][c].getOwner() && move[r][c] == 'x') {
+					canAttack[r][c] = 'a';
+				}
+			}
+		}
+		
+		return canAttack;
 	}
 	
+	public void attackUnit(int r, int c) {
+		Unit toAttack = log.getUnit(r, c);
+		Unit attacker = log.getUnit(x, y);
+		
+		if (playerTurn == 0) 
+			log.battle(attacker, toAttack, playerTurn);
+		else
+			log.battle(toAttack, attacker, playerTurn);
+		
+	}
+
+	public void capture() {
+		//TODO log.capture() or log.finish capture or whatever needs to be here and thats it
+	}
+	
+//	/**
+//	 * Returns x on a char board of what buildings are in reach to capture
+//	 * 
+//	 * @return
+//	 */
+//	private char[][] capture() {
+//		char[][] moves = move();
+//		Tile[][] tiles = log.getTBoard();
+//		
+//		char[][] canCapture = new char[tiles.length][tiles.length];
+//		
+//		for (int r = 0; r < tiles.length; r++) {
+//			for (int c = 0; c < tiles.length;c++) {
+//				canCapture[r][c] = '-';
+//			}
+//		}
+//		
+//		for (int r = 0; r < tiles.length; r++) {
+//			for (int c = 0; c < tiles.length; c++) {
+//				if (playerTurn == 0) {
+//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
+//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' || 
+//							tiles[r][c].getType() == 'X') {
+//						if (moves[r][c] == 'x') //legal move 
+//							canCapture[r][c] = 'c';
+//					}
+//				} else {
+//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
+//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' || 
+//							tiles[r][c].getType() == 'x') {
+//						if (moves[r][c] == 'x') //legal move 
+//							canCapture[r][c] = 'c';
+//					}
+//				}
+//			}
+//		}
+//		
+//		return canCapture;
+//	}
+
 	//so the player decides to produce a unit, so we call this method and we send back an array 
 	//of strings so that the GUI can display array of strings in a menu as possible buys. 
 	//then the GUI will send back a String or something that will tell us which unit to 
 	//produce.
 	public ArrayList<String> prodUnit() {
 		ArrayList<String> toProduce = new ArrayList<String>();
-		
+
 		int munny = 0; 
 		if (playerTurn == 0) {
 			munny = log.getP1().getCash();
 		} else {
 			munny = log.getP2().getCash();
 		}
-		
+
 		ArrayList<Unit> canBuild = new ArrayList<Unit>();
 		canBuild = store.buyGroundUnit(munny);
-		
+
 		for (int i = 0; i < canBuild.size(); i++) {
 			toProduce.add(canBuild.get(i).getName());
 		}
-		
+
 		return toProduce;
 	}
+
+	/**
+	 * Last part of the producing unit method. Pretty much this is called by the GUI once it knows
+	 * what unit it wants to make. 
+	 * 
+	 * @param toProd
+	 */
 	
 	public void produceUnit(String toProd) {
 		Tile tile = log.getTile(x, y);
 		Unit prod = store.whatUnit(toProd);
-		
+
 		if (playerTurn == 0) 
 			log.produceUnit(log.getP1(), prod, tile);
 		else 
 			log.produceUnit(log.getP2(), prod, tile);
 	}
 
-	private ArrayList<String> unitActions(ArrayList<String> actions, int x, int y) {
+	/**
+	 * This gives you the actions in a string ArrayList that are for the 
+	 * 
+	 * @param actions
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	
+	private ArrayList<String> unitActions(ArrayList<String> actions) {
 		Unit selUnit = log.getUnit(x, y);
 		Logic tempLog = log;
 		char[][] possibleMoves = tempLog.getMoves(selUnit);
@@ -217,6 +312,11 @@ public class Controller {
 		return actions;
 	}
 
+	/**
+	 * Randomly decides who gets to go first.
+	 * 
+	 * @return
+	 */
 	private int whoGoesFirst() {
 		Random rand = new Random();
 		int answer = 0;
@@ -226,28 +326,15 @@ public class Controller {
 
 		return answer;
 	}
-
+	
 	/**
 	 * I really think this method should be called when they click on a unit in the first
 	 * place as with the game.   So if they were to click on a unit, all possible moves that
 	 * unit can take are highlighted on screen before they choose to move
 	 * @return
 	 */
-	public char[][] move(){
+	private char[][] move(){
 		Unit[][] temp = log.getUB();
 		return log.getMoves(temp[x][y]);
 	}
-
-//	/**
-//	 * I really think this method should be called when they click on a unit in the first
-//	 * place as with the game.   So if they were to click on a unit, all possible moves that
-//	 * unit can take are highlighted on screen before they choose to move
-//	 * @return
-//	 */
-//	private char[][] move(int x, int y){
-//		Unit[][] temp = log.getUB();
-//		return log.getMoves(temp[x][y]);
-//	}
-
-
 }
