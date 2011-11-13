@@ -51,27 +51,11 @@ public class AI extends Player{
 					  }	
 				}
 				//if no other captures or attacks but still moves
-				moveCloserToEnemies();
+				//moveCloserToEnemies();
 			}
 			
 			//if no more possible moves
 			endTurn = true;
-		}
-	}
-
-	private void moveCloserToEnemies() {
-		boolean notFinished = true; 
-		ArrayList<Unit> toMove = getPossibleMoves();
-		int counter = 0;
-  
-		while (notFinished) {
-			char[][] moves = log.getMoves(toMove.get(counter)); 
-			Unit neEnemy = 
-
-
-  
-			counter++;
-			toMove = getPossibleMoves();
 		}
 	}
 	
@@ -117,7 +101,7 @@ public class AI extends Player{
 				}
 			}
 		}
-		return unitsWithAttacks;
+		return unitsWithMoves;
 	}
 	
 	public void prodUnits() {
