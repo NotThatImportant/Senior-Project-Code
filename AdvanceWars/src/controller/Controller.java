@@ -80,11 +80,8 @@ public class Controller {
 
 
 	/**
-<<<<<<< HEAD
-	 * This method produces all of the actions for the unit producing buildlings. At the moment
-=======
+
 	 * This method produces all of the actions for the unit producing buildings. At the moment
->>>>>>> origin/master
 	 * this is limited to only ground forces. 
 	 * 
 	 * @param pActions

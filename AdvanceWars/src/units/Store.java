@@ -24,7 +24,6 @@ public class Store {
 		toBuyGround.add(new Infantry(-1));
 		toBuyGround.add(new Mech(-1));
 		toBuyGround.add(new MedTank(-1));
-//		toBuyGround.add(new Missile(-1));
 		toBuyGround.add(new Recon(-1));
 		toBuyGround.add(new Rockets(-1));
 		toBuyGround.add(new Tank(-1));
