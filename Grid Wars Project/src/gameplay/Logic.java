@@ -151,6 +151,7 @@ public class Logic {
 				tBoard[pX][pY].setBC(p.getPNum());
 
 		}
+		unitBoard[pX][pY].setStartedCapture(Boolean.TRUE);
 	}
 
 	public Player getP1() {

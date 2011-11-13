@@ -1,12 +1,13 @@
 package player;
 
 
+import gameplay.Logic;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import gameplay.Logic;
-import units.Unit;
+
 import terrain.Tile;
+import units.Unit;
 
 public class AI extends Player{
 	private boolean availableMove;
@@ -46,23 +47,20 @@ public class AI extends Player{
 		//Loop through possible actions
 		while(endTurn == false){
 
-			if(availablePurchase){
-				//buy a unit
-			}
 			if(availableMove){
 				//move units
 				if(availableCapture){
 					//capture building
 				}
 				if(availableAttack){
-					ArrayList<Unit> uToAtk = getPossibleAttacks();
-					for(int i = 0; i < uToAtk.size(); i++) {
-						char[][] posMoves = log.getMoves(uToAtk.get(i));
-
-					}	
+					attack();	
 				}
 				//if no other captures or attacks but still moves
 				moveCloserToEnemies();
+			}
+			
+			if(availablePurchase){
+				//buy a unit
 			}
 
 			//if no more possible moves
@@ -309,6 +307,30 @@ public class AI extends Player{
 			}
 		}
 		return unitsWithAttacks;
+	}
+	
+	protected ArrayList<Unit> getPossibleCaptures() {
+		Unit[][] uBoard = log.getUB();
+		Tile[][] tBoard = log.getTBoard();
+
+		ArrayList<Unit> unitsWithCaptures = new ArrayList<Unit>();
+
+		//search unit board for units
+		for(int row = 0; row < size; row++) {
+			for (int col = 0; col < size; col++) {
+				//checks if current tile isn't empty and if I own the unit
+				if (uBoard[row][col] != null && uBoard[row][col].getOwner() == getPNum()) { //must check tile type!!
+					//checks to see if the unit has already captured this turn
+					if(!uBoard[row][col].getHasCaptured()){
+						//Check to see whether the tile that unit is on is an unclaimed base 'b' or unclaimed production 'p'
+						if(tBoard[row][col].getType() == 'b' || tBoard[row][col].getType() == 'p'){
+							unitsWithCaptures.add(uBoard[row][col]); //adds unit to our available captures
+						}
+					}
+				}
+			}
+		}
+		return unitsWithCaptures;
 	}
 
 	/************************************************************************
@@ -565,9 +587,10 @@ public class AI extends Player{
 	protected boolean canICapture(){
 		boolean captureAvailable = false;
 		//find captures
-		//if possibleCaptures.lenght > 0{
-		//capturesAvailable = true;
-
+		unitsWithCaptures = getPossibleCaptures();
+		if(unitsWithCaptures.size() > 0){
+			captureAvailable = true;
+		}
 		return captureAvailable;
 	}
 
