@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+
 public class Settings extends Activity implements OnClickListener, OnCheckedChangeListener
 {
 	private int soundOn;
