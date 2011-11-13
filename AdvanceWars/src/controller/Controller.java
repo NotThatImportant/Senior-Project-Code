@@ -19,7 +19,7 @@ public class Controller {
 	boolean aiOn;
 	Logic log;
 	int playerTurn;
-
+	Store store;
 	int x, y;
 
 	char selected = 'n';
@@ -29,7 +29,8 @@ public class Controller {
 		firstPlayer = p1;
 		secondPlayer = p2;
 		aiOn = isAIOn;
-
+		store = new Store();
+		
 		axis = new int[2];
 		
 		if (aiOn) {
@@ -138,7 +139,6 @@ public class Controller {
 	//produce.
 	public ArrayList<String> prodUnit() {
 		ArrayList<String> toProduce = new ArrayList<String>();
-		Store store = new Store();
 		
 		int munny = 0; 
 		if (playerTurn == 0) {
@@ -158,7 +158,13 @@ public class Controller {
 	}
 	
 	public void produceUnit(String toProd) {
+		Tile tile = log.getTile(x, y);
+		Unit prod = store.whatUnit(toProd);
 		
+		if (playerTurn == 0) 
+			log.produceUnit(log.getP1(), prod, tile);
+		else 
+			log.produceUnit(log.getP2(), prod, tile);
 	}
 
 	private ArrayList<String> unitActions(ArrayList<String> actions, int x, int y) {

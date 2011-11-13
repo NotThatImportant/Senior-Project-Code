@@ -29,6 +29,17 @@ public class Store {
 		toBuyGround.add(new Tank(-1));
 	}
 	
+	public Unit whatUnit(String name) {
+		Unit rightOne = null;
+		
+		for (int i = 0; i < toBuyGround.size(); i++) {
+			if (toBuyGround.get(i).getName().equals(name)) 
+				rightOne = toBuyGround.get(i);
+		}
+		
+		return rightOne;
+	}
+	
 	/*This will give you a list of the units you can buy with ground units*/
 	public ArrayList<Unit> buyGroundUnit(int cash) {
 		ArrayList<Unit> canBuy = new ArrayList<Unit>();
