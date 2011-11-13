@@ -8,20 +8,30 @@ import units.*;
 import terrain.Tile;
 
 public class Controller {
+	
+	private final int MOVE = 0;
+	private final int ATTACK = 1;
+	private final int CAPTURE = 2;
+	private final int JOIN = 3;
 
 	Player firstPlayer;
 	Player secondPlayer;
 	boolean aiOn;
 	Logic log;
 	int playerTurn;
+
 	int x, y;
+
 	char selected = 'n';
+	int[] axis; //axis[0] = x and axis[1] = y
 
 	public Controller(Player p1, Player p2, boolean isAIOn, String mapName) {
 		firstPlayer = p1;
 		secondPlayer = p2;
 		aiOn = isAIOn;
 
+		axis = new int[2];
+		
 		if (aiOn) {
 			secondPlayer = new AI(secondPlayer.getPName(), 2, secondPlayer.getFact());
 		}
@@ -52,6 +62,9 @@ public class Controller {
 	 */
 	public ArrayList<String> selectCoordinates(int x, int y) {
 		ArrayList<String> actions = new ArrayList<String>();
+		
+		axis[0] = x;
+		axis[1] = y;
 
 		if (log.getUB()[x][y] != null)
 			actions = unitActions(actions, x, y);
@@ -67,7 +80,11 @@ public class Controller {
 
 
 	/**
+<<<<<<< HEAD
 	 * This method produces all of the actions for the unit producing buildlings. At the moment
+=======
+	 * This method produces all of the actions for the unit producing buildings. At the moment
+>>>>>>> origin/master
 	 * this is limited to only ground forces. 
 	 * 
 	 * @param pActions
@@ -102,6 +119,49 @@ public class Controller {
 			log.econDay(firstPlayer);
 			playerTurn = 0;
 		}
+	}
+
+	public void unitTakeAction(int unitType, int action) {
+		if (action == MOVE) {
+			
+		} else if (action == JOIN) {
+			
+		} else if (action == ATTACK) {
+			
+		} else if (action == CAPTURE) {
+			
+		} else {
+			//ERROR WILL ROBINSON ERROR!
+		}
+	}
+	
+	//so the player decides to produce a unit, so we call this method and we send back an array 
+	//of strings so that the GUI can display array of strings in a menu as possible buys. 
+	//then the GUI will send back a String or something that will tell us which unit to 
+	//produce.
+	public ArrayList<String> prodUnit() {
+		ArrayList<String> toProduce = new ArrayList<String>();
+		Store store = new Store();
+		
+		int munny = 0; 
+		if (playerTurn == 0) {
+			munny = log.getP1().getCash();
+		} else {
+			munny = log.getP2().getCash();
+		}
+		
+		ArrayList<Unit> canBuild = new ArrayList<Unit>();
+		canBuild = store.buyGroundUnit(munny);
+		
+		for (int i = 0; i < canBuild.size(); i++) {
+			toProduce.add(canBuild.get(i).getName());
+		}
+		
+		return toProduce;
+	}
+	
+	public void produceUnit(String toProd) {
+		
 	}
 
 	private ArrayList<String> unitActions(ArrayList<String> actions, int x, int y) {
@@ -145,7 +205,8 @@ public class Controller {
 				actions.add("Capture");
 			}
 		} else {
-			if (tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'p') {
+			if (tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P') {
+
 				actions.add("Capture");
 			}
 		}
@@ -173,5 +234,17 @@ public class Controller {
 		Unit[][] temp = log.getUB();
 		return log.getMoves(temp[x][y]);
 	}
+
+//	/**
+//	 * I really think this method should be called when they click on a unit in the first
+//	 * place as with the game.   So if they were to click on a unit, all possible moves that
+//	 * unit can take are highlighted on screen before they choose to move
+//	 * @return
+//	 */
+//	private char[][] move(int x, int y){
+//		Unit[][] temp = log.getUB();
+//		return log.getMoves(temp[x][y]);
+//	}
+
 
 }

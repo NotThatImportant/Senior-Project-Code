@@ -6,6 +6,15 @@ import gameplay.Logic;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import gameplay.Logic;
+import units.APC;
+import units.AntiAir;
+import units.Artillery;
+import units.Bomber;
+import units.ChopperA;
+import units.ChopperB;
+import units.FighterJet;
+import units.Unit;
 import terrain.Tile;
 import units.Unit;
 
@@ -14,7 +23,7 @@ public class AI extends Player{
 	private boolean availableAttack;
 	private boolean availablePurchase;
 	private boolean availableCapture;
-	
+
 	//only attack a unit if it can deal at least this amount of damage
 	private final Integer ATTACK_DAMAGE_THRESHOLD = 3;  
 
@@ -24,7 +33,7 @@ public class AI extends Player{
 
 	Logic log;
 	int size;
-	
+
 	enum types {
 		ANTIAIR, APC, ARTILLERY, BATTLESHIP, BOMBER, CHOPPERA, CHOPPERB,
 		CRUISER, FIGHTERJET, HEAVYTANK, INFANTRY, LANDER, MECH, MEDTANK,
@@ -50,10 +59,10 @@ public class AI extends Player{
 			if(availableMove){
 				//move units
 				if(availableCapture){
-					//capture building
+					capture();
 				}
 				if(availableAttack){
-					attack();	
+					attack();
 				}
 				//if no other captures or attacks but still moves
 				moveCloserToEnemies();
@@ -63,6 +72,9 @@ public class AI extends Player{
 				//buy a unit
 			}
 
+			if(availablePurchase)
+				prodUnits();
+
 			//if no more possible moves
 			endTurn = true;
 		}
@@ -70,23 +82,19 @@ public class AI extends Player{
 
 	protected void moveCloserToEnemies() {
 		boolean notDone = true;
-		ArrayList<Unit> toMove;
+		ArrayList<Unit> toMove = getPossibleMoves();
+		ArrayList<Unit> hasMoved = new ArrayList<Unit>();
 		int count = 0; 
 		Tile[][] tBoard = log.getTBoard();
 		int hx = 0;
 		int hy = 0;
-		
+
 		do { 
-			toMove = getPossibleMoves();
-			
 			//pmoves represents the + and - of where the unit can move 
 			//at its current X and Y location!
-			Unit moving = toMove.get(count);
-			int mx = moving.getX();
-			int my = moving.getY();
-			
 			char[][] pMoves = log.getMoves(toMove.get(count));
-				
+
+			//Sets hx and hy which gets the location of enemies HQ
 			for (int r = 0; r < log.getSize(); r++) {
 				for (int c = 0; c < log.getSize(); c++) {
 					if (tBoard[r][c].getType() == 'h') {
@@ -95,18 +103,31 @@ public class AI extends Player{
 					}
 				}
 			}
-			
-			
-			
+
+			int closestX = 0;
+			int closestY = 0;
+			int bestMove = 999;
+			//this method will move each until closer to the HQ
 			for (int r = 0; r < pMoves.length; r++) {
 				for (int c = 0; c < pMoves.length; c++) {
-					
+					if(pMoves[r][c] == 'x'){
+						if(getDistance(r, c,hx,hy) <= bestMove){
+							closestX = r;
+							closestY = c;
+							bestMove = getDistance(closestX, closestY, hx, hy);
+						}
+					}
 				}
 			}
+			
+			log.moveUnit(toMove.get(count), closestX, closestY);
+			hasMoved.add(toMove.get(count));
+			
+			
 			count++;
 		} while (notDone);
 	}
-	
+
 	/***************************************************************
 	 * Gets the distance from point a (x1, y1) to point b (x2, y2) 
 	 * For the AI this means a is the hQ and b is the unit
@@ -118,7 +139,7 @@ public class AI extends Player{
 		return distance;
 	}
 
-	
+
 	/**************************************************************************
 	 * Method that controls the attack phase of an AI players turn
 	 * The basic structure of the attack phase is as follows:
@@ -131,15 +152,15 @@ public class AI extends Player{
 	 *  Does not take into consideration ranged attacks
 	 *  Consider for looping direction checks
 	 *************************************************************************/
-	protected void attack(){
+	protected void attack() {
 		Unit[][] uBoard = log.getUB();
 		for(Unit currentUnit: unitsWithAttacks){
 			ArrayList<Unit> potentialUnitsToAttack = new ArrayList<Unit>();
 			ArrayList<Integer> damageToUnit = new ArrayList<Integer>();
-			
+
 			int currUnitXPosition = currentUnit.getX();
 			int currUnitYPosition = currentUnit.getY();
-			
+
 			//look left
 			if(uBoard[currUnitXPosition -1][currUnitYPosition] != null && uBoard[currUnitXPosition -1][currUnitYPosition].getOwner() != getPNum()){
 				Unit unitToAttack = uBoard[currUnitXPosition -1][currUnitYPosition];
@@ -168,37 +189,37 @@ public class AI extends Player{
 				potentialUnitsToAttack.add(unitToAttack);
 				damageToUnit.add(potentialDamage);
 			}
-			
+
 			//determine which unit to attack if there is more than one possible
 			if(potentialUnitsToAttack.size() > 1){
-				
+
 				//check to see what attack would be most effective
 				Unit bestUnitToAttack = potentialUnitsToAttack.get(0); //start with the first unit
 				Integer bestPotentialDamageInflicted = damageToUnit.get(0);  //get first units damage
-				
+
 				for(int i = 1; i < potentialUnitsToAttack.size(); i++){ //start at second unit
 					if(damageToUnit.get(i) >  bestPotentialDamageInflicted){
 						bestUnitToAttack = potentialUnitsToAttack.get(i); //change unit to attack;
 						bestPotentialDamageInflicted = damageToUnit.get(i); //change potentialDamageInflicted
 					}
 				}
-				
+
 				if(bestPotentialDamageInflicted >= ATTACK_DAMAGE_THRESHOLD){
 					log.battle(currentUnit, bestUnitToAttack, currentUnit.getOwner());
 				}
 			}
 			else if(potentialUnitsToAttack.size() == 1){
-					if(damageToUnit.get(0) >= ATTACK_DAMAGE_THRESHOLD){
-						log.battle(currentUnit, potentialUnitsToAttack.get(0), currentUnit.getOwner());
-					}
+				if(damageToUnit.get(0) >= ATTACK_DAMAGE_THRESHOLD){
+					log.battle(currentUnit, potentialUnitsToAttack.get(0), currentUnit.getOwner());
 				}
+			}
 			else {
 				//no attack possible, do nothing
 			}
-			
+
 		}
 	}
-	
+
 	/**************************************************************************
 	 * Method that controls the capture phase of an AI players turn
 	 * The basic structure of the capture phase is as follows:
@@ -217,10 +238,10 @@ public class AI extends Player{
 		Tile[][] tBoard = log.getTBoard();
 		for(Unit currentUnit: unitsWithCaptures){
 			ArrayList<Tile> potentialBuildingsToCapture = new ArrayList<Tile>();
-			
+
 			int currUnitXPosition = currentUnit.getX();
 			int currUnitYPosition = currentUnit.getY();
-			
+
 			//look left
 			if(tBoard[currUnitXPosition -1][currUnitYPosition] != null && tBoard[currUnitXPosition -1][currUnitYPosition].getOwner() != getPNum()){
 				Tile buildingToCapture = tBoard[currUnitXPosition -1][currUnitYPosition];
@@ -241,17 +262,17 @@ public class AI extends Player{
 				Tile buildingToCapture = tBoard[currUnitXPosition][currUnitYPosition -1];
 				potentialBuildingsToCapture.add(buildingToCapture);
 			}
-			
+
 			//determine which building to capture if there is more than one possible
 			if(potentialBuildingsToCapture.size() > 1){
-				
+
 				//check to see what building would be best to capture
 				Tile bestBuildingToCapture = potentialBuildingsToCapture.get(0); //start with the first unit
-				
-//				for(possibleCaptures){ //start at second unit
-//					whatever determines what building to chose
-//				}
-				
+
+				//				for(possibleCaptures){ //start at second unit
+				//					whatever determines what building to chose
+				//				}
+
 				log.captureBuilding(this, bestBuildingToCapture.getX(), bestBuildingToCapture.getY());
 			}
 			else if(potentialBuildingsToCapture.size() == 1){
@@ -260,7 +281,7 @@ public class AI extends Player{
 			else {
 				//no capture possible, do nothing
 			}
-			
+
 		}
 	}
 
@@ -336,16 +357,69 @@ public class AI extends Player{
 	/************************************************************************
 	 * AI decides what units to create
 	 ***********************************************************************/
-	protected void prodUnits() {
+	protected ArrayList<Unit> prodUnits() {
 		Tile[][] map = log.getTBoard();
+		ArrayList<Unit> wantToBuild = new ArrayList<Unit>();
+		ArrayList<Unit> canBuild = new ArrayList<Unit>();
 
 		for (int r = 0; r < size; r++) {
 			for (int c = 0; c < size; c++) {
 				if (map[r][c].getType() == 'p' &&
 						map[r][c].getOwner() == playNum) {
-					getUnitWeights();
+					int[] unitsToBuild = counterEnemyUnits();
+					int most = 0, secondMost = 0, thirdMost = 0, fourthMost = 0;
+					for(int i = 0; i < unitsToBuild.length; i++){
+						if(unitsToBuild[i] > most){
+							fourthMost = thirdMost;
+							thirdMost = secondMost;
+							secondMost = most;
+							most = unitsToBuild[i];
+						}
+					}
+					wantToBuild.add(createMeAUnit(most));
+					wantToBuild.add(createMeAUnit(secondMost));
+					wantToBuild.add(createMeAUnit(thirdMost));
+					wantToBuild.add(createMeAUnit(fourthMost));
 				}
 			}
+		}
+		return canBuild;
+	}
+
+	private Unit createMeAUnit(int type){
+		if(type==types.ANTIAIR.ordinal()){
+			return new AntiAir(-1);
+		}
+		else if(type == types.APC.ordinal()){
+			return new APC(-1);
+		}else if(type == types.ARTILLERY.ordinal()){
+			return new Artillery(-1);
+		}else if(type == types.BOMBER.ordinal()){
+			return new Bomber();
+		}else if(type == types.CHOPPERA.ordinal()){
+			return new ChopperA();
+		}else if(type == types.CHOPPERB.ordinal()){
+			return new ChopperB();
+		}else if(type == types.FIGHTERJET.ordinal()){
+			return new FighterJet(-1);
+		}else if(type == types.HEAVYTANK.ordinal()){
+			return new APC(-1);
+		}else if(type == types.INFANTRY.ordinal()){
+			return new APC(-1);
+		}else if(type == types.MECH.ordinal()){
+			return new APC(-1);
+		}else if(type == types.MEDTANK.ordinal()){
+			return new APC(-1);
+		}else if(type == types.MISSILE.ordinal()){
+			return new APC(-1);
+		}else if(type == types.RECON.ordinal()){
+			return new APC(-1);
+		}else if(type == types.ROCKETS.ordinal()){
+			return new APC(-1);
+		}else if(type == types.TANK.ordinal()){
+			return new APC(-1);
+		}else{
+			return null;
 		}
 	}
 
@@ -364,12 +438,12 @@ public class AI extends Player{
 				if(mapBoard[i][j].getType() == 'b' &&mapBoard[i][j].getOwner()==-1){
 					num++;
 				}
-		}
+			}
 
 
 		return num;
 	}
-	
+
 	/************************************************************************
 	 * Calculates the difference in unit weights and counts
 	 * retVal[0] is the difference in unit weights.  
@@ -408,7 +482,7 @@ public class AI extends Player{
 
 		return retVal;
 	}
-	
+
 	/************************************************************************
 	 * AI looks at building units to counter enemy units.
 	 * Array holds ints for each unit in alphabetical order.
@@ -435,7 +509,7 @@ public class AI extends Player{
 							counters[types.MEDTANK.ordinal()]++;
 							counters[types.HEAVYTANK.ordinal()]++;
 							counters[types.BATTLESHIP.ordinal()]++;
-						//}else if(unitType == "APC"){
+							//}else if(unitType == "APC"){
 							//Do we really need to counter APCs?!?!
 						}else if(unitType == "Artillery"){
 							counters[types.TANK.ordinal()]++;
