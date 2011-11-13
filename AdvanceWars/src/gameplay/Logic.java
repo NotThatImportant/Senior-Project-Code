@@ -3,7 +3,6 @@ package gameplay;
 import java.util.ArrayList;
 
 import player.*;
-
 import units.*;
 import terrain.Tile;
 import maps.MapReader;

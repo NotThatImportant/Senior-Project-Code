@@ -1,12 +1,8 @@
 package player;
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
 import gameplay.Logic;
-
 import org.junit.Test;
-
 import terrain.Tile;
 import units.HeavyTank;
 import units.Infantry;
