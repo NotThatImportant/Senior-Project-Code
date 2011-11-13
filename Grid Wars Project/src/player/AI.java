@@ -69,6 +69,62 @@ public class AI extends Player{
 			endTurn = true;
 		}
 	}
+	
+	
+	private void moveToUncaptured(Unit t, boolean desperation){
+		char[][] moveBoard = log.getMoves(t);
+		char[][] buildingsBoard = getUncapturedBuildings();
+		boolean foundSafe = false;
+		int safeX = 0, safeY = 0;
+		
+		for(int k = 0; k < log.getSize(); k++)
+			for(int u = 0; u < log.getSize(); u++){
+				if(buildingsBoard[k][u] == 'x'){
+					safeX = k;
+					safeY = u;
+				}
+			}
+		
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				if(moveBoard[i][j] == buildingsBoard[i][j] && moveBoard[i][j] == 'x'){
+					if(isItSafe(i, j)){
+						safeX = i;
+						safeY = j;
+						
+					}
+				}
+			}
+		
+		log.moveUnit(t, safeX, safeY);
+	}
+	
+	
+	private boolean isItSafe(int x, int y){
+		Unit[][] unitBoard = log.getUB();
+		boolean retVal = true;
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				if(unitBoard[i][j] != null && unitBoard[i][j].getOwner()!=getPNum()){
+					char[][] moves = log.getMoves(unitBoard[i][j]);
+					if(moves[x][y] == 'x'){
+						if(x > 0 && moves[x-1][y] == 'x'){
+							retVal = false;
+						}else if(x < log.getSize()-1 && moves[x+1][y] == 'x'){
+							retVal = false;
+						}else if(y > 0 && moves[x][y-1] == 'x'){
+							retVal = false;
+						}else if(y < log.getSize()-1 && moves[x][y+1] == 'x'){
+							retVal = false;
+						}
+					}
+				}
+			}
+		
+		return retVal;
+	}
+	
+	
 
 	protected void moveCloserToEnemies() {
 		boolean notDone = true;
@@ -333,19 +389,22 @@ public class AI extends Player{
 	 * units to capture or not
 	 * @return int num (of uncaptured buildings)
 	 ***********************************************************************/
-	protected int getUncapturedBuildings(){
+	protected char[][] getUncapturedBuildings(){
 		Tile[][] mapBoard = log.getTBoard();
-		int num = 0;
+		char[][] openBuildings = new char[log.getSize()][log.getSize()];
 
 		for(int i = 0; i < log.getSize(); i++)
 			for(int j = 0; j < log.getSize(); j++){
 				if(mapBoard[i][j].getType() == 'b' &&mapBoard[i][j].getOwner()==-1){
-					num++;
+					openBuildings[i][j] = 'x';
+				}
+				else{
+					openBuildings[i][j] = '-';
 				}
 		}
 
 
-		return num;
+		return openBuildings;
 	}
 	
 	/************************************************************************
