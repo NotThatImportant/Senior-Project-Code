@@ -30,7 +30,7 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         //Create DB if it doesn't exist
         DBAndroidCreator db = new DBAndroidCreator();
     }
-    
+
     public void onClick(View v)
     {
     	switch (v.getId())

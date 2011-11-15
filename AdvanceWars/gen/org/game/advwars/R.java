@@ -10,6 +10,7 @@ package org.game.advwars;
 public final class R {
     public static final class array {
         public static final int factions=0x7f050001;
+        public static final int in_game_menu=0x7f050003;
         public static final int maps=0x7f050002;
         public static final int player_names=0x7f050000;
     }
@@ -30,6 +31,7 @@ containing a value of this type.
         public static final int icon_backup=0x7f020003;
         public static final int selected=0x7f020004;
         public static final int tank=0x7f020005;
+        public static final int water=0x7f020006;
     }
     public static final class id {
         public static final int about=0x7f060000;

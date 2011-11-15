@@ -63,6 +63,11 @@
         <item>Map 3</item>
     </string-array>
     <string name="map_selection_button">Select Map</string>
+    <string-array name="in_game_menu">
+        <item >End Turn</item>
+        <item >Save Game</item>
+        <item >Quit Game</item>
+    </string-array>
     
     
 </resources>

@@ -1,10 +1,13 @@
 package org.game.advwars;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -53,6 +56,31 @@ public class GameBoard extends Activity implements OnTouchListener
 		
 		return true;
 	}*/
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_MENU)
+        {
+        	openMainMenuDialog();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    
+    private void openMainMenuDialog()
+    {
+    	new AlertDialog.Builder(this)
+    	.setTitle(R.string.app_name)
+    	.setItems(R.array.in_game_menu,
+    	new DialogInterface.OnClickListener(){
+    		public void onClick(DialogInterface dialogInterface, int i)
+    		{
+    			Log.i("AdvWars", "Menu clicked.");
+    		}
+    	})
+    	.show();
+    }
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
