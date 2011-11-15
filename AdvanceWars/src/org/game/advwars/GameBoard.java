@@ -2,7 +2,9 @@ package org.game.advwars;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.FloatMath;
@@ -73,10 +75,28 @@ public class GameBoard extends Activity implements OnTouchListener
     	new AlertDialog.Builder(this)
     	.setTitle(R.string.app_name)
     	.setItems(R.array.in_game_menu,
-    	new DialogInterface.OnClickListener(){
+    	new DialogInterface.OnClickListener()
+    	{
     		public void onClick(DialogInterface dialogInterface, int i)
     		{
-    			Log.i("AdvWars", "Menu clicked.");
+    			if (i == 0)
+    			{
+    				// End turn
+    			}
+    			else if (i == 1)
+    			{
+    				// Save game
+    			}
+    			else if (i == 2)
+    			{
+    				//Intent intent = new Intent(this, MainMenu.class);
+    				//startActivity(intent);
+    			}
+    			else
+    			{
+    				//Intent intent2 = new Intent(this, MainMenu.class);
+    	    		//startActivity(intent2);
+    			}
     		}
     	})
     	.show();
