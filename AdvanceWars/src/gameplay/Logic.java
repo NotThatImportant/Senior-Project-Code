@@ -174,7 +174,7 @@ public class Logic {
 		return u;
 	}
 
-	private int damage(Unit p1, Unit p2) {
+	public int damage(Unit p1, Unit p2) {
 		int damage = 0; 
 		int neg = 0;
 		int hBonus = tBoard[p1.getX()][p1.getY()].getHeight();
