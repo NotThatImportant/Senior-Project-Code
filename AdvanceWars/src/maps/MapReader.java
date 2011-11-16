@@ -15,7 +15,7 @@ public class MapReader {
 		int c = 0;
 		
 		try {
-			file = new File("maps/" + pFileName + ".txt");
+			file = new File("/data/data/org.game.advwars/maps/" + pFileName + ".txt");
 			FileInputStream fstream = new FileInputStream(file);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));

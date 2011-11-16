@@ -1,5 +1,7 @@
 package org.game.advwars;
 
+import player.Player;
+import controller.Controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,24 +42,13 @@ public class GameBoard extends Activity implements OnTouchListener
         setContentView(R.layout.gameboard_layout);
         
         gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
-        
         gameBoardView.setOnTouchListener(this);
+        
+        Player p1 = new Player("Player1", 0, 'b');
+        Player p2 = new Player("Player2", 1, 'r');
+        Controller c = new Controller(p1, p2, true, "map 1.txt");
+        gameBoardView.setMap(c.getBoard());
     }
-	
-	/*@Override
-	public boolean onTouchEvent(MotionEvent event)
-	{
-		if (event.getAction() == MotionEvent.ACTION_DOWN)
-        {
-			x = (int) event.getX() / 3;
-			y = (int) event.getY() / 3;
-		
-			gameBoardView.setTile(1, x, y);
-			gameBoardView.redrawBoard();
-        }
-		
-		return true;
-	}*/
 	
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)

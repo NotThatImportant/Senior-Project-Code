@@ -337,4 +337,26 @@ public class Controller {
 		Unit[][] temp = log.getUB();
 		return log.getMoves(temp[x][y]);
 	}
+	
+	public char[][] getBoard()
+	{
+		int size = log.getTBoard().length;
+		Tile[][] tiles = log.getTBoard();
+		char[][] tileBoard = new char[size][size];
+		
+		for(int i = 0; i < size; i++)
+		{
+			for(int j = 0; j < size; j++)
+			{
+				tileBoard[i][j] = tiles[i][j].getType();
+			}
+		}
+		
+		return tileBoard;
+	}
+	
+	public Unit[][] getUnitBoard()
+	{
+		return log.getUB();
+	}
 }

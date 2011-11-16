@@ -22,7 +22,7 @@ public class GameBoardView extends View
     private static int mXOffset;
     private static int mYOffset;
     private Bitmap[] mTileArray;
-    private int[][] mTileGrid;
+    private char[][] mTileGrid;
     private int mX;
     private int mY;
     private final Paint mPaint = new Paint();
@@ -35,15 +35,15 @@ public class GameBoardView extends View
         mX = 0;
         mY = 0;
         
-        mTileGrid = new int[100][100];
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-            	if(x != 0 && y != 0 )
-            		setTile(0, x, y);
-            	else
-            		setTile(1, x, y);
-            }
-        }
+//        mTileGrid = new char[100][100];
+//        for (int x = 0; x < 100; x++) {
+//            for (int y = 0; y < 100; y++) {
+//            	if(x != 0 && y != 0 )
+//            		setTile(0, x, y);
+//            	else
+//            		setTile(1, x, y);
+//            }
+//        }
         
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
@@ -59,15 +59,15 @@ public class GameBoardView extends View
         mX = 0;
         mY = 0;
         
-        mTileGrid = new int[100][100];
-        for (int x = 0; x < 100; x++) {
-            for (int y = 0; y < 100; y++) {
-            	if(x != 0 && y != 0 )
-            		setTile(0, x, y);
-            	else
-            		setTile(1, x, y);
-            }
-        }
+//        mTileGrid = new int[100][100];
+//        for (int x = 0; x < 100; x++) {
+//            for (int y = 0; y < 100; y++) {
+//            	if(x != 0 && y != 0 )
+//            		setTile(0, x, y);
+//            	else
+//            		setTile(1, x, y);
+//            }
+//        }
         
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
@@ -84,7 +84,9 @@ public class GameBoardView extends View
         
         resetTiles(4);
         loadTile(0, r.getDrawable(R.drawable.grass));
-        loadTile(1, r.getDrawable(R.drawable.selected));
+        loadTile(1, r.getDrawable(R.drawable.tank));
+        loadTile(2, r.getDrawable(R.drawable.selected));
+        loadTile(3, r.getDrawable(R.drawable.water));
     }
 
     public void resetTiles(int tilecount)
@@ -122,12 +124,12 @@ public class GameBoardView extends View
     {
         for (int x = 0; x < mXTileCount; x++) {
             for (int y = 0; y < mYTileCount; y++) {
-                setTile(0, x, y);
+                setTile('g', x, y);
             }
         }
     }
     
-    public void setTile(int tileindex, int x, int y)
+    public void setTile(char tileindex, int x, int y)
     {
         mTileGrid[x][y] = tileindex;
     }
@@ -136,17 +138,16 @@ public class GameBoardView extends View
     public void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-        for (int x = mX; x < mXTileCount + mX && x < 100; x += 1)
+        for (int x = mX; x < mXTileCount + mX && x < mTileGrid.length; x += 1)
         {
-            for (int y = mY; y < mYTileCount + mY && y < 100; y += 1)
+            for (int y = mY; y < mYTileCount + mY && y < mTileGrid[x].length; y += 1)
             {
-                if (mTileGrid[x][y] > -1)
-                {
-                    canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
+               
+                    canvas.drawBitmap(mTileArray[getTileByType(mTileGrid[x][y])], 
                     		mXOffset + (x - mX) * mTileSize,
                     		mYOffset + (y - mY) * mTileSize,
                     		mPaint);
-                }
+                
             }
         }
         
@@ -160,7 +161,22 @@ public class GameBoardView extends View
 
     }
     
-    public void update()
+    private int getTileByType(char c) {
+		int result = 0;
+		
+		if(c == 'g')
+			result = 0;
+		else if(c == 'm')
+			result = 1;
+		else if (c == 'r')
+			result = 2;
+		else if (c == 'w')
+			result = 3;
+		
+		return result;
+	}
+
+	public void update()
     {
           clearTiles();
           //updateWalls();
@@ -193,7 +209,7 @@ public class GameBoardView extends View
     	return mYTileCount;
     }
 
-	public void selectPoint(float x, float y)
+	public int[] selectPoint(float x, float y)
 	{
 		x = x - mXOffset;
 		y = y - mYOffset;
@@ -201,8 +217,13 @@ public class GameBoardView extends View
 		int tileY = (int) y/mTileSize;
 		
 		if(tileX < mXTileCount && tileY < mYTileCount &&
-				tileX >= 0 && tileY >= 0)
-			setTile(1, tileX + mX, tileY + mY);
+				tileX >= 0 && tileY >= 0){
+			int[] coor = new int[2];
+			coor[0] = tileX + mX;
+			coor[1] = tileY + mY;
+			return coor;
+		}
+		return null;
 	}
 
 	public void translateBoard(float x, float y)
@@ -240,5 +261,10 @@ public class GameBoardView extends View
 		initGameBoardView();
 		onSizeChanged(getWidth(), getHeight(), getWidth(), getHeight());
 		invalidate();
+	}
+
+	public void setMap(char[][] board)
+	{
+		mTileGrid = board;
 	}
 }
