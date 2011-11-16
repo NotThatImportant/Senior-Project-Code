@@ -337,4 +337,38 @@ public class Controller {
 		Unit[][] temp = log.getUB();
 		return log.getMoves(temp[x][y]);
 	}
+	
+	public char[][] getConvertedUnits(){
+		Unit[][] uB = log.getUB();
+		char[][] retBoard = new char[log.getSize()][log.getSize()];
+		
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				String name = uB[i][j].getName();
+				
+				if(name.equals("Anti-Air")){
+					retBoard[i][j] = 'A';
+				}else if(name.equals("Artillery")){
+					retBoard[i][j] = 'a';
+				}else if(name.equals("HeavyTank")){
+					retBoard[i][j] = 'h';
+				}else if(name.equals("Infantry")){
+					retBoard[i][j] = 'i';
+				}else if(name.equals("Mech")){
+					retBoard[i][j] = 'M';
+				}else if(name.equals("Medium Tank")){
+					retBoard[i][j] = 'm';
+				}else if(name.equals("Recon")){
+					retBoard[i][j] = 'R';
+				}else if(name.equals("Rocket")){
+					retBoard[i][j] = 'r';
+				}else if(name.equals("Tank")){
+					retBoard[i][j] = 't';
+				}
+			}
+		
+		
+		return retBoard;
+		
+	}
 }
