@@ -53,9 +53,8 @@
     <string name="map_selection_description">Please select battle map:</string>
     <string name="faction_selection_button">Select Faction</string>
     <string-array name="factions">
-        <item>Faction 1</item>
-        <item>Faction 2</item>
-        <item>Faction 3</item>
+        <item>Blue</item>
+        <item>Red</item>
     </string-array>
     <string-array name="maps">
         <item>Map 1</item>
