@@ -2,6 +2,8 @@ package org.game.advwars;
 
 import java.io.File;
 
+import dataconnectors.SaveData;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
 {
 	private String mapName = "";
 	private String[] maps = null;
+	private SaveData sd = new SaveData();
+	private GUIGameValues mapSelectionGGV = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,10 +42,10 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);       
         
-        spinner.setOnItemSelectedListener(new FactionSelection());
+        spinner.setOnItemSelectedListener(new MapSelection());
         
-        Button selectPlayerName = (Button) findViewById(R.id.select_map);
-        selectPlayerName.setOnClickListener(this);
+        Button selectMap = (Button) findViewById(R.id.select_map);
+        selectMap.setOnClickListener(this);
     }
 
 	@Override
@@ -54,8 +58,11 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
 	{
+		mapSelectionGGV = sd.loadGGVData();
 		mapName = parent.getItemAtPosition(pos).toString();
-	    Toast.makeText(parent.getContext(), "You selected " + mapName, Toast.LENGTH_LONG).show();
+		mapSelectionGGV.setMap(mapName);
+		sd.saveGGVData(mapSelectionGGV);
+	    Toast.makeText(parent.getContext(), "You selected " + mapName, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
