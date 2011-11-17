@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import org.apache.commons.logging.Log;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Startup class
@@ -29,6 +35,36 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         
         //Create DB if it doesn't exist
         DBAndroidCreator db = new DBAndroidCreator();
+
+        //Create the dumb map so it will stop crashing....
+        File file = new File("/data/data/org.game.advwars/maps/", "MapName.txt");
+
+           file.mkdirs();
+            android.util.Log.w("Warn", "File does not exist... creating " + file.getAbsolutePath());
+            FileOutputStream fOut = null;
+            try {
+
+
+                file.createNewFile();
+
+
+                fOut = openFileOutput(file.getName(), MODE_WORLD_READABLE);
+                OutputStreamWriter osw = new OutputStreamWriter(fOut);
+
+
+               osw.write("wwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\nwwwwwwwwww\n");
+
+
+               osw.flush();
+               osw.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+
+
+        android.util.Log.w("Warn", "Does file exist?  " + file.exists());
     }
 
     public void onClick(View v)

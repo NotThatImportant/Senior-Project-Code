@@ -83,9 +83,9 @@ public class GameBoardView extends View
         Resources r = this.getContext().getResources();
         
         resetTiles(4);
-        loadTile(0, r.getDrawable(R.drawable.grass));
-        loadTile(1, r.getDrawable(R.drawable.tank));
-        loadTile(2, r.getDrawable(R.drawable.selected));
+        loadTile(0, r.getDrawable(R.drawable.ground));
+        loadTile(1, r.getDrawable(R.drawable.mountain));
+        loadTile(2, r.getDrawable(R.drawable.road));
         loadTile(3, r.getDrawable(R.drawable.water));
     }
 

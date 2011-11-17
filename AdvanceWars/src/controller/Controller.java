@@ -33,7 +33,7 @@ public class Controller {
 			secondPlayer = new AI(secondPlayer.getPName(), 2, secondPlayer.getFact());
 		}
 
-		log = new Logic ("MapName", firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(), 
+		log = new Logic ("Map1", firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(),
 				secondPlayer.getPName(), aiOn);
 
 		playerTurn = whoGoesFirst();	
