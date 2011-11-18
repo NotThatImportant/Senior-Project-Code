@@ -1,6 +1,5 @@
 package org.game.advwars;
 
-import dataconnectors.SaveData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 public class FactionSelection extends Activity implements OnItemSelectedListener, OnClickListener
 {
 	private String faction = "";
-	private SaveData sd = new SaveData();
-	private GUIGameValues factionSelectionGGV = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -32,18 +29,15 @@ public class FactionSelection extends Activity implements OnItemSelectedListener
         
         spinner.setOnItemSelectedListener(new FactionSelection());
         
-        Button selectFaction = (Button) findViewById(R.id.select_faction);
-        selectFaction.setOnClickListener(this);
+        Button selectPlayerName = (Button) findViewById(R.id.select_faction);
+        selectPlayerName.setOnClickListener(this);
     }
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
 	{
-		factionSelectionGGV = sd.loadGGVData();
 		faction = parent.getItemAtPosition(pos).toString();
-		factionSelectionGGV.setFaction(faction);
-		sd.saveGGVData(factionSelectionGGV);
-	    Toast.makeText(parent.getContext(), "You selected " + faction, Toast.LENGTH_SHORT).show();
+	    Toast.makeText(parent.getContext(), "You selected " + faction, Toast.LENGTH_LONG).show();
 	}
 
 	@Override

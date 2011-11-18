@@ -1,6 +1,5 @@
 package player;
 
-
 import gameplay.Logic;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +26,9 @@ public class AI extends Player{
 	private ArrayList<Unit> unitsWithAttacks;
 	private ArrayList<Unit> unitsWithCaptures;
 
+	ArrayList<String> moveLogger;
+	String move; //UNIT oldX oldY newX newY Action
+	
 	Logic log;
 	int size;
 
@@ -38,8 +40,18 @@ public class AI extends Player{
 
 	public AI(String pN, int pNum, char fact) {
 		super(pN, pNum, fact);	
+		move = "";
+		moveLogger = new ArrayList<String>();
+	}
+	
+	public ArrayList<String> getActions() {
+		return moveLogger;
 	}
 
+	/***************************************************************
+	 * 
+	 * 
+	 ***************************************************************/
 	public void startTurn(){
 		boolean endTurn = false;
 
@@ -49,11 +61,31 @@ public class AI extends Player{
 		availablePurchase = canIBuy();
 		availableCapture = canICapture();
 
+		ArrayList<Unit> toMove = getPossibleMoves();
+
 		//Loop through possible actions
-		while(endTurn == false){
+		for(Unit actionUnit: toMove){
 
 			if(availableMove){
 				//move units
+				boolean moved = false;
+
+				// We have more econ, let's be aggressive
+				if(countEconBuildings() >0){
+					if(moveCloserToEnemies(actionUnit, false) == true){
+						moved = true;
+					}				
+					if(!moved){
+						moved = moveToUncaptured(actionUnit, false);
+					}
+					
+					if(!moved){
+						
+					}
+					
+				
+				}
+
 				if(availableCapture){
 					capture();
 				}
@@ -61,9 +93,9 @@ public class AI extends Player{
 					attack();
 				}
 				//if no other captures or attacks but still moves
-				moveCloserToEnemies();
+				moveCloserToEnemies(actionUnit);
 			}
-			
+
 			if(availablePurchase){
 				//buy a unit
 			}
@@ -72,41 +104,241 @@ public class AI extends Player{
 				prodUnits();
 
 			//if no more possible moves
+			if();
 			endTurn = true;
 		}
 	}
+
 	
 	
-	private void moveToUncaptured(Unit t, boolean desperation){
-		char[][] moveBoard = log.getMoves(t);
+
+	/***************************************************************
+	 * 
+	 * @return 
+	 ***************************************************************/
+	private boolean hasFriendliesNearby(int x, int y){
+		boolean retVal = false;
+		Unit[][] uB = log.getUB();
+		int pNum = getPNum();
+
+		if((x-1) >= 0){
+			if(uB[x-1][y] != null && uB[x-1][y].getOwner()==pNum){
+				retVal = true;
+			}
+			if((y-1) >= 0){
+				if(uB[x-1][y-1] != null && uB[x-1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+			if((y+1)< log.getSize()){
+				if(uB[x-1][y+1] != null && uB[x-1][y+1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+		}
+		if((x-2) >= 0){
+			if(uB[x-2][y] != null && uB[x-2][y].getOwner()==pNum){
+				retVal = true;
+			}
+
+		}
+		if((x+1) < log.getSize()){
+			if(uB[x+1][y] != null && uB[x+1][y].getOwner()==pNum){
+				retVal = true;
+			}
+			if((y-1) >= 0){
+				if(uB[x-1][y-1] != null && uB[x-1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+			if((y+1)< log.getSize()){
+				if(uB[x-1][y+1] != null && uB[x-1][y+1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+		}
+		if((x+2) < log.getSize()){
+			if(uB[x+2][y] != null && uB[x+2][y].getOwner()==pNum){
+				retVal = true;
+			}
+		}
+
+		/////////////
+
+		if((y-1) >= 0){
+			if(uB[x][y-1] != null && uB[x][y-1].getOwner()==pNum){
+				retVal = true;
+			}
+			if((x-1) >= 0){
+				if(uB[x-1][y-1] != null && uB[x-1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+			if((x+1)< log.getSize()){
+				if(uB[x+1][y-1] != null && uB[x+1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+		}
+		if((y-2) >= 0){
+			if(uB[x][y-2] != null && uB[x][y-2].getOwner()==pNum){
+				retVal = true;
+			}
+
+		}
+		if((y+1) < log.getSize()){
+			if(uB[x][y+1] != null && uB[x][y+1].getOwner()==pNum){
+				retVal = true;
+			}
+			if((x-1) >= 0){
+				if(uB[x-1][y-1] != null && uB[x-1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+			if((x+1)< log.getSize()){
+				if(uB[x+1][y-1] != null && uB[x+1][y-1].getOwner()==pNum){
+					retVal = true;
+				}
+			}
+		}
+		if((x+2) < log.getSize()){
+			if(uB[x+2][y] != null && uB[x+2][y].getOwner()==pNum){
+				retVal = true;
+			}
+		}
+
+		return retVal;
+
+	}
+
+
+
+	/***************************************************************
+	 * 
+	 * 
+	 * @return 
+	 ***************************************************************/
+	private boolean moveInPacks(Unit pUnit){
+		char[][] moves = log.getMoves(pUnit);
+		int origX, origY;
+		boolean hasMoved = false;
+
+		int[] unitLoc = getUnitLocation(pUnit);
+		origX = unitLoc[0];
+		origY = unitLoc[1];
+
+
+
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				if(moves[i][j] == 'x')
+					if(hasFriendliesNearby(i, j)){
+						int[] hqLoc = getHQLoc();
+						if(getDistance(origX, origY, hqLoc[0], hqLoc[1]) <
+								getDistance(i, j, hqLoc[0], hqLoc[1])){
+							log.moveUnit(pUnit, i, j);
+							hasMoved = true;
+						}
+					}
+			}
+
+		return hasMoved;
+	}
+
+	/***************************************************************
+	 * 
+	 * 
+	 * @return 
+	 ***************************************************************/
+	private int[] getHQLoc(){
+		int[] retVal = new int[2];
+		Tile[][] tBoard = log.getTBoard();
+
+		l1: for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				if((tBoard[i][j].getType() == 'H' || tBoard[i][j].getType()=='h')
+						&& tBoard[i][j].getOwner() == getPNum()){
+					retVal[0] = i;
+					retVal[1] = j;
+					break l1;
+				}
+			}
+
+		return retVal;
+	}
+
+
+	/***************************************************************
+	 * Moves the unit to an uncaptured building.
+	 * The parameter 'desperation' is for the AI to specify whether
+	 * it's desperate to capture a building or not.  If it is, it will
+	 * ignore the fact that the building location is not safe from enemy
+	 * units.
+	 * If desperation is false, the AI will not move to that building
+	 * location if it's not safe.  By safe, I mean not one enemy unit
+	 * will be able to reach that building within a turn.  This includes
+	 * the four spots N,E,S,W around the building as well.
+	 * 
+	 * @return ArrayList<Unit> - list of units moved.
+	 ***************************************************************/
+	private boolean moveToUncaptured(Unit pUnit, boolean desperation){
+		char[][] moveBoard = log.getMoves(pUnit);
 		char[][] buildingsBoard = getUncapturedBuildings();
 		boolean foundSafe = false;
 		int safeX = 0, safeY = 0;
-		
-		for(int k = 0; k < log.getSize(); k++)
+		boolean moved = false;
+
+
+
+		int closest = 999;
+		l1: for(int k = 0; k < log.getSize(); k++)
 			for(int u = 0; u < log.getSize(); u++){
 				if(buildingsBoard[k][u] == 'x'){
 					safeX = k;
 					safeY = u;
+					break l1;
 				}
 			}
+
+//		for(int i = 0; i < log.getSize(); i++)
+//			for(int j = 0; j < log.getSize(); j++){
+//				if(moveBoard[i][j] == buildingsBoard[i][j] && moveBoard[i][j] == 'x'){
+//					if(isItSafe(i, j)){
+//						safeX = i;
+//						safeY = j;
+//						foundSafe = true;
+//					}
+//				}
+//			}
 		
-		for(int i = 0; i < log.getSize(); i++)
-			for(int j = 0; j < log.getSize(); j++){
-				if(moveBoard[i][j] == buildingsBoard[i][j] && moveBoard[i][j] == 'x'){
-					if(isItSafe(i, j)){
-						safeX = i;
-						safeY = j;
-						foundSafe = true;
-					}
-				}
-			}
+		
+		foundSafe = moveTowardLocation 
+		
 		
 
-		log.moveUnit(t, safeX, safeY);
+		if(foundSafe == true){
+			log.moveUnit(pUnit, safeX, safeY);
+			moved = true;
+		}
+		else if(desperation == true){
+			log.moveUnit(pUnit, safeX, safeY);
+			moved = true;
+		}
+
+
+		return moved;
 	}
 	
-	
+
+	/***************************************************************
+	 * This tells the AI if moving to that certain location is safe.
+	 * Mainly used for deciding whether or not to go try to capture 
+	 * a building, but it could be used for all other moves as well.
+	 * In the chess game of war, this method should really be expanded
+	 * to the number of turns it will take an enemy to reach the 
+	 * specified location.  Right now it only looks one turn into the
+	 * future.
+	 ***************************************************************/
 	private boolean isItSafe(int x, int y){
 		Unit[][] unitBoard = log.getUB();
 		boolean retVal = true;
@@ -127,58 +359,149 @@ public class AI extends Player{
 					}
 				}
 			}
-		
+
+		return retVal;
+	}
+
+
+
+
+
+	private int[] getUnitLocation(Unit pUnit){
+		int[] retVal = new int[2];
+		Unit[][] uB = log.getUB();
+
+		l1: for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++)
+				if(uB[i][j] == pUnit){
+					retVal[0] = i;
+					retVal[1] = j;
+					break l1;
+				}
+
 		return retVal;
 	}
 	
 	
+	protected boolean moveTowardLocation(Unit pUnit, int dX, int dY, boolean desperation){
+		boolean hasMoved = false;
+		Tile[][] tBoard = log.getTBoard();
+		char[][] pMoves = log.getMoves(pUnit);
+		
 
-	protected void moveCloserToEnemies() {
-		boolean notDone = true;
-		ArrayList<Unit> toMove = getPossibleMoves();
-		ArrayList<Unit> hasMoved = new ArrayList<Unit>();
-		int count = 0; 
+		int closestX = 0;
+		int closestY = 0;
+		Unit[][] uB = log.getUB();
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++)
+				if(uB[i][j] == pUnit){
+					closestX = i;
+					closestY = j;
+				}
+		
+		boolean foundMove = false;
+		int bestMove = 999;
+		//this method will move each until closer to the specified position
+		l1: for (int r = 0; r < pMoves.length; r++) {
+			for (int c = 0; c < pMoves.length; c++) {
+				if(pMoves[r][c] == 'x'){
+					if(desperation==false && isItSafe(r,c))
+						if(getDistance(r, c,dX,dY) <= bestMove){
+							foundMove = true;
+							closestX = r;
+							closestY = c;
+							bestMove = getDistance(closestX, closestY, dX, dY);
+							if(r == dX && c == dY){
+								break l1;
+							}
+						}
+						else if(desperation==true){
+							foundMove = true;
+							closestX = r;
+							closestY = c;
+							bestMove = getDistance(closestX, closestY, dX, dY);
+							if(r == dX && c == dY){
+								break l1;
+							}
+						}
+				}
+			}
+		}
+		
+		if(foundMove){
+			log.moveUnit(pUnit, closestX, closestY);
+			hasMoved = true;
+		}
+
+		return hasMoved;
+	}
+
+
+	/***************************************************************
+	 * Moves the unit 
+	 * For the AI this means a is the hQ and b is the unit
+	 ***************************************************************/
+	protected boolean moveCloserToEnemies(Unit pUnit, boolean desperation) {
+		boolean hasMoved = false;
+		//ArrayList<Unit> toMove = getPossibleMoves(); 
 		Tile[][] tBoard = log.getTBoard();
 		int hx = 0;
 		int hy = 0;
 
-		do { 
-			//pmoves represents the + and - of where the unit can move 
-			//at its current X and Y location!
-			char[][] pMoves = log.getMoves(toMove.get(count));
+		//pmoves represents the + and - of where the unit can move 
+		//at its current X and Y location!
+		char[][] pMoves = log.getMoves(pUnit);
 
-			//Sets hx and hy which gets the location of enemies HQ
-			for (int r = 0; r < log.getSize(); r++) {
-				for (int c = 0; c < log.getSize(); c++) {
-					if (tBoard[r][c].getType() == 'h') {
-						hx = r;
-						hy = c;
-					}
+		//Sets hx and hy which gets the location of enemies HQ
+		for (int r = 0; r < log.getSize(); r++) {
+			for (int c = 0; c < log.getSize(); c++) {
+				if (tBoard[r][c].getType() == 'h') {
+					hx = r;
+					hy = c;
 				}
 			}
+		}
 
-			int closestX = 0;
-			int closestY = 0;
-			int bestMove = 999;
-			//this method will move each until closer to the HQ
-			for (int r = 0; r < pMoves.length; r++) {
-				for (int c = 0; c < pMoves.length; c++) {
-					if(pMoves[r][c] == 'x'){
+		int closestX = 0;
+		int closestY = 0;
+		Unit[][] uB = log.getUB();
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++)
+				if(uB[i][j] == pUnit){
+					closestX = i;
+					closestY = j;
+				}
+
+
+		boolean foundMove = false;
+		int bestMove = 999;
+		//this method will move each until closer to the HQ
+		for (int r = 0; r < pMoves.length; r++) {
+			for (int c = 0; c < pMoves.length; c++) {
+				if(pMoves[r][c] == 'x'){
+					if(desperation==false && isItSafe(r,c))
 						if(getDistance(r, c,hx,hy) <= bestMove){
+							foundMove = true;
 							closestX = r;
 							closestY = c;
 							bestMove = getDistance(closestX, closestY, hx, hy);
 						}
-					}
+						else if(desperation==true){
+							foundMove = true;
+							closestX = r;
+							closestY = c;
+							bestMove = getDistance(closestX, closestY, hx, hy);
+						}
 				}
 			}
-			
-			log.moveUnit(toMove.get(count), closestX, closestY);
-			hasMoved.add(toMove.get(count));
-			
-			
-			count++;
-		} while (notDone);
+		}
+		if(foundMove){
+			log.moveUnit(pUnit, closestX, closestY);
+			hasMoved = true;
+		}
+
+		return hasMoved;
+
 	}
 
 	/***************************************************************
@@ -382,7 +705,7 @@ public class AI extends Player{
 		}
 		return unitsWithAttacks;
 	}
-	
+
 	protected ArrayList<Unit> getPossibleCaptures() {
 		Unit[][] uBoard = log.getUB();
 		Tile[][] tBoard = log.getTBoard();
@@ -408,11 +731,18 @@ public class AI extends Player{
 	}
 
 	/************************************************************************
-	 * AI decides what units to create
+	 * AI decides what units to create.
+	 * It first creates a wishlist of all the units it would like to have
+	 * Then goes through that list and adds the units that it has enough money
+	 * to make into the canBuild list.
 	 ***********************************************************************/
 	protected ArrayList<Unit> prodUnits() {
 		Tile[][] map = log.getTBoard();
+
+		// AI wish list
 		ArrayList<Unit> wantToBuild = new ArrayList<Unit>();
+
+		// List of units the AI has enough money to build
 		ArrayList<Unit> canBuild = new ArrayList<Unit>();
 
 		for (int r = 0; r < size; r++) {
@@ -439,6 +769,15 @@ public class AI extends Player{
 		return canBuild;
 	}
 
+
+	/************************************************************************
+	 * This method actually builds a certain unit specified by that parameter
+	 * This is used by the prodUnits method as a way of keeping track of the 
+	 * units it would like to build.  Whether or not it has enough money
+	 * is not taken into consideration.  
+	 * 
+	 * @return Unit - The unit the AI wants to build
+	 ***********************************************************************/
 	private Unit createMeAUnit(int type){
 		if(type==types.ANTIAIR.ordinal()){
 			return new AntiAir(-1);
@@ -475,6 +814,7 @@ public class AI extends Player{
 			return null;
 		}
 	}
+
 
 	/************************************************************************
 	 * Counts the number of "free" buildings on the map
@@ -538,6 +878,32 @@ public class AI extends Player{
 
 		return retVal;
 	}
+
+	/************************************************************************
+	 * Counts the number of AI economy buildings vs the opponent's.
+	 * Returns negative if AI has less, Positive if AI has more.
+	 * 0 for equal
+	 * 
+	 * @return int - Disparity in economy buildings
+	 ***********************************************************************/
+	protected int countEconBuildings(){
+		int retVal = 0;
+		Tile[][] board = log.getTBoard();
+
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				if(board[i][j].getType() == 'x' || board[i][j].getType() == 'X'){
+					if(board[i][j].getOwner() == getPNum()){
+						retVal++;
+					}
+					else{
+						retVal--;
+					}
+				}
+			}
+		return retVal;
+	}
+
 
 	/************************************************************************
 	 * AI looks at building units to counter enemy units.

@@ -2,7 +2,6 @@ package org.game.advwars;
 
 import player.Player;
 import controller.Controller;
-import dataconnectors.SaveData;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,7 +15,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 public class GameBoard extends Activity implements OnTouchListener
 {
@@ -36,10 +34,6 @@ public class GameBoard extends Activity implements OnTouchListener
 	   float oldDist = 1f;
 	
 	private GameBoardView gameBoardView;
-	private GUIGameValues ggvGlobal = new GUIGameValues();
-	private SaveData sd = new SaveData();
-	private char p1Char;
-	private char p2Char;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState)
@@ -47,26 +41,12 @@ public class GameBoard extends Activity implements OnTouchListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameboard_layout);
         
-        // Load player values
-        ggvGlobal = sd.loadGGVData();
-        
-        if (ggvGlobal.getFaction().equals("Blue"))
-        {
-        	p1Char = 'b';
-        	p2Char = 'r';
-        }
-        else
-        {
-        	p1Char = 'r';
-        	p2Char = 'b';
-        }
-        
         gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
         gameBoardView.setOnTouchListener(this);
         
-        Player p1 = new Player("Player1", 0, p1Char);
-        Player p2 = new Player("Player2", 1, p2Char);
-        Controller c = new Controller(p1, p2, true, ggvGlobal.getMap());
+        Player p1 = new Player("Player1", 0, 'b');
+        Player p2 = new Player("Player2", 1, 'r');
+        Controller c = new Controller(p1, p2, true, "map 1.txt");
         gameBoardView.setMap(c.getBoard());
     }
 	

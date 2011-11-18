@@ -39,6 +39,38 @@ public class Controller {
 		playerTurn = whoGoesFirst();	
 	}
 	
+	public void aiTurn() {
+		ArrayList<String> aiActions = ((AI) secondPlayer).getActions();
+		for (int i = 0; i < aiActions.size(); i++) {
+			String action = aiActions.get(i);
+			String[] brDown = action.split(",");
+			String uAct = brDown[0];
+			
+			if (uAct.equals("Move")) {
+				int oldX = Integer.parseInt(brDown[1]);
+				int oldY = Integer.parseInt(brDown[2]);
+				int newX = Integer.parseInt(brDown[3]);
+				int newY = Integer.parseInt(brDown[4]);
+				log.setUnit(newX, newY, log.getUnit(oldX, oldY));
+			} else if (uAct.equals("Attack")) {
+				int oldX = Integer.parseInt(brDown[1]);
+				int oldY = Integer.parseInt(brDown[2]);
+				Unit attacker = log.getUnit(oldX, oldY);
+				int otherX = Integer.parseInt(brDown[3]);
+				int otherY = Integer.parseInt(brDown[4]);
+				Unit defender = log.getUnit(otherX, otherY);
+				
+				log.battle(defender, attacker, playerTurn);				
+			} else if (uAct.equals("Capture")) {
+				int oldX = Integer.parseInt(brDown[1]);
+				int oldY = Integer.parseInt(brDown[2]);
+				
+				log.captureBuilding(log.getP2(), oldX, oldY);
+			}
+			
+		}
+	}
+	
 	/**
 	 * This is a simple method that simply tells the GUI whos turn it is. 
 	 * 
@@ -169,48 +201,11 @@ public class Controller {
 	}
 
 	public void capture() {
-		//TODO log.capture() or log.finish capture or whatever needs to be here and thats it
+		if (playerTurn == 1)
+			log.captureBuilding(log.getP1(), x, y);
+		else
+			log.captureBuilding(log.getP2(), x, y);
 	}
-	
-//	/**
-//	 * Returns x on a char board of what buildings are in reach to capture
-//	 * 
-//	 * @return
-//	 */
-//	private char[][] capture() {
-//		char[][] moves = move();
-//		Tile[][] tiles = log.getTBoard();
-//		
-//		char[][] canCapture = new char[tiles.length][tiles.length];
-//		
-//		for (int r = 0; r < tiles.length; r++) {
-//			for (int c = 0; c < tiles.length;c++) {
-//				canCapture[r][c] = '-';
-//			}
-//		}
-//		
-//		for (int r = 0; r < tiles.length; r++) {
-//			for (int c = 0; c < tiles.length; c++) {
-//				if (playerTurn == 0) {
-//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
-//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' || 
-//							tiles[r][c].getType() == 'X') {
-//						if (moves[r][c] == 'x') //legal move 
-//							canCapture[r][c] = 'c';
-//					}
-//				} else {
-//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
-//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' || 
-//							tiles[r][c].getType() == 'x') {
-//						if (moves[r][c] == 'x') //legal move 
-//							canCapture[r][c] = 'c';
-//					}
-//				}
-//			}
-//		}
-//		
-//		return canCapture;
-//	}
 
 	//so the player decides to produce a unit, so we call this method and we send back an array 
 	//of strings so that the GUI can display array of strings in a menu as possible buys. 
@@ -312,6 +307,17 @@ public class Controller {
 		return actions;
 	}
 
+	public int getMunny(int pNum) {
+		int munny = 0;
+		
+		if (pNum == 0) 
+			munny = log.getP1().getCash();
+		else
+			munny = log.getP2().getCash();
+		
+		return munny;
+	}
+	
 	/**
 	 * Randomly decides who gets to go first.
 	 * 
@@ -359,37 +365,44 @@ public class Controller {
 	{
 		return log.getUB();
 	}
+	
+	/**
+	 * 
+	 * @param pNum
+	 * @return
+	 */
 		
-	public char[][] getConvertedUnits(){
+	public ArrayList<String> getConvertedUnits(int pNum) {
 		Unit[][] uB = log.getUB();
-		char[][] retBoard = new char[log.getSize()][log.getSize()];
+		ArrayList<String> toSend = new ArrayList<String>();
+		String construct = "";
 		
-		for(int i = 0; i < log.getSize(); i++)
-			for(int j = 0; j < log.getSize(); j++){
-				String name = uB[i][j].getName();
-				
-				if(name.equals("Anti-Air")){
-					retBoard[i][j] = 'A';
-				}else if(name.equals("Artillery")){
-					retBoard[i][j] = 'a';
-				}else if(name.equals("HeavyTank")){
-					retBoard[i][j] = 'h';
-				}else if(name.equals("Infantry")){
-					retBoard[i][j] = 'i';
-				}else if(name.equals("Mech")){
-					retBoard[i][j] = 'M';
-				}else if(name.equals("Medium Tank")){
-					retBoard[i][j] = 'm';
-				}else if(name.equals("Recon")){
-					retBoard[i][j] = 'R';
-				}else if(name.equals("Rocket")){
-					retBoard[i][j] = 'r';
-				}else if(name.equals("Tank")){
-					retBoard[i][j] = 't';
+		for (int r = 0; r < uB.length; r++) {
+			for (int c = 0; c < uB.length; c++) {
+				if (uB[r][c] != null && uB[r][c].getOwner() == pNum) {
+					if (uB[r][c].getName().equals("Anti-Air")) {
+						
+					} else if (uB[r][c].getName().equals("Artillery")) {
+						
+					} else if (uB[r][c].getName().equals("HeavyTank")) {
+						
+					} else if (uB[r][c].getName().equals("Infantry")) {
+						
+					} else if (uB[r][c].getName().equals("Mech")) {
+						
+					} else if (uB[r][c].getName().equals("Medium Tank")) {
+						
+					} else if (uB[r][c].getName().equals("Recon")) {
+						
+					} else if (uB[r][c].getName().equals("Rocket")) {
+						
+					} else if (uB[r][c].getName().equals("Tank")) {
+						
+					}
 				}
 			}
+		}
 		
-		
-		return retBoard;
+		return tripleIntArray;
 	}
 }

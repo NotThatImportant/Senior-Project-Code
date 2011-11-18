@@ -140,16 +140,9 @@ public class Logic {
 	 * @param p
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
-		if (tBoard[pX][pY].getType() == 'p' || 
-				tBoard[pX][pY].getType() == 'b' && 
-				tBoard[pX][pY].getOwner() != p.getPNum()) {
-
-			if (tBoard[pX][pY].getBC() == p.getPNum()) 
-				tBoard[pX][pY].setOwner(p.getPNum());
-			else 
-				tBoard[pX][pY].setBC(p.getPNum());
-
-		}
+		if (unitBoard[pX][pY].getStartedCapture() == true) 
+			tBoard[pX][pY].setOwner(p.getPNum());
+		
 		unitBoard[pX][pY].setStartedCapture(Boolean.TRUE);
 	}
 
@@ -266,18 +259,26 @@ public class Logic {
 	}
 
 	public boolean didWin(Player p) {
-
+		boolean gotIt = false;
 		if (p.getPNum() == PLAYER1) {
-			if (playerList.get(PLAYER2).getNumUnits() <= 0)  {
-				return true;
+			
+			for (int r = 0; r < tBoard.length; r++) {
+				for (int c = 0; c < tBoard.length; c++) {
+					if (tBoard[r][c].getType() == 'Q' && tBoard[r][c].getOwner() == p.getPNum())
+						gotIt = true;
+				}
 			}
 		}
 		else {
-			if (playerList.get(PLAYER2).getNumUnits() <= 0)
-				return true;
+			for (int r = 0; r < tBoard.length; r++) {
+				for (int c = 0; c < tBoard.length; c++) {
+					if (tBoard[r][c].getType() == 'q' && tBoard[r][c].getOwner() == p.getPNum())
+						gotIt = true;
+				}
+			}
 		}
 
-		return false;
+		return gotIt;
 	}
 
 	/************************************************************************

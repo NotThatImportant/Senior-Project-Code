@@ -34,9 +34,8 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         //Create map directory if it doesn't exist
         MapCreator mc = new MapCreator();
         
-        // Add maps here...
-        mc.newMap("Map1", "mmmmmmmmmm\nmmmmmmbmmm\nmmmmmmrmmm\nmmggggrggm\nmggrrrrggm\nmggrgggggm\nmggrgggggm\nmggrgggggm\nmmmbmmmmmm\nmmmmmmmmmm", true);
-        mc.newMap("Map2", "mmmmmmmmmm\nmmmmmmbmmm\nmmmmmmrmmm\nmmggggrggm\nmggrrrrggm\nmggrgggggm\nmggrgggggm\nmggrgggggm\nmmmbmmmmmm\nmmmmmmmmmm", true);
+        // Add map
+        mc.newMap("TestMap", "This is a test map.", true);
     }
 
     public void onClick(View v)
