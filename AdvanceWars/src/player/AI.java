@@ -1212,6 +1212,11 @@ public class AI extends Player{
 		new AI("Herp, Derp", 2, 'b');
 	}
 
+	public ArrayList<String> getActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

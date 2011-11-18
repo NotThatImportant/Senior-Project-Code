@@ -14,12 +14,16 @@ public class GUIGameValues implements Serializable
 	private boolean soundOn;
 	private String playerName;
 	private String difficulty;
+	private String mapName;
+	private String faction;
 	
 	public GUIGameValues()
 	{
 		soundOn = true;
 		playerName = "";
 		difficulty = "medium";
+		mapName = "";
+		faction = "";
 	}
 	
 	public void setPlayerName (String playerName)
@@ -62,5 +66,25 @@ public class GUIGameValues implements Serializable
 	public String getDifficulty ()
 	{
 		return this.difficulty;
+	}
+	
+	public void setMap (String map)
+	{
+		this.mapName = map;
+	}
+	
+	public String getMap ()
+	{
+		return this.mapName;
+	}
+	
+	public void setFaction (String faction)
+	{
+		this.faction = faction;
+	}
+	
+	public String getFaction ()
+	{
+		return this.faction;
 	}
 }

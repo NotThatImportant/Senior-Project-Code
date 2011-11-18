@@ -59,10 +59,9 @@ public class DBAndroidCreator
 	
 	private void createDefaultTables()
 	{
-		// Create PlayerSettings table for now
+		// Create default database tables, add as necessary
 		this.db.execSQL("create table if not exists PlayerSettings (_id integer primary key autoincrement, Player_Name text not null, Difficulty text not null, Sound_On integer not null);");
-		
-		// Add more tables as necessary here...
+		this.db.execSQL("create table if not exists Scores (_id integer primary key autoincrement, Player_Name text not null, Wins integer not null, Losses integer not null);");
 	}
 	
 	private void closeDB()
