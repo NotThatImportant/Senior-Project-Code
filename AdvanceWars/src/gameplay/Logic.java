@@ -49,16 +49,19 @@ public class Logic {
 
 	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
 			String p2Name, boolean wantAI){
+
 		mr = new MapReader(mapName);
+
 		mapSize = mr.getSize();
 		createBoards();
 		playerList = new ArrayList<Player>();
 		Player p1 = new Player(p1Name, 1, p1Fact);
 		Player p2 = null;
-		if (wantAI == true) 
-			herpDerp = new AI("Herp Derp", 2, 'r');
-		else 
-			p2 = new Player(p2Name, 2, p2Fact);
+		//if (wantAI == true) 
+		//	herpDerp = new AI(p2Name, 2, 'r');
+		//else 
+		//	p2 = new Player(p2Name, 2, p2Fact);
+
 
 		playerList.add(p1);
 
@@ -67,6 +70,31 @@ public class Logic {
 		else
 			playerList.add(p2);
 	}
+
+	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
+			String p2Name, AI pAI){
+
+		mr = new MapReader(mapName);
+
+		mapSize = mr.getSize();
+		createBoards();
+		playerList = new ArrayList<Player>();
+		Player p1 = new Player(p1Name, 1, p1Fact);
+		Player p2 = null;
+		//if (wantAI == true) 
+		//	herpDerp = new AI(p2Name, 2, 'r');
+		//else 
+		//	p2 = new Player(p2Name, 2, p2Fact);
+
+		herpDerp = pAI;
+		playerList.add(p1);
+
+
+		playerList.add(herpDerp);
+
+	}
+
+
 
 	/************************************************************************
 	 * 
@@ -140,9 +168,16 @@ public class Logic {
 	 * @param p
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
-		if (unitBoard[pX][pY].getStartedCapture() == true) 
-			tBoard[pX][pY].setOwner(p.getPNum());
-		
+		if (tBoard[pX][pY].getType() == 'p' || 
+				tBoard[pX][pY].getType() == 'b' && 
+				tBoard[pX][pY].getOwner() != p.getPNum()) {
+
+			if (tBoard[pX][pY].getBC() == p.getPNum()) 
+				tBoard[pX][pY].setOwner(p.getPNum());
+			else 
+				tBoard[pX][pY].setBC(p.getPNum());
+
+		}
 		unitBoard[pX][pY].setStartedCapture(Boolean.TRUE);
 	}
 
@@ -238,47 +273,45 @@ public class Logic {
 			p2.setHasAttacked(true);
 			return 0;
 		}
-		
+
 	}
 
 	public Tile getTile(int x, int y) {
 		return tBoard[x][y];
 	}
 
-	public void produceUnit(Player p, Unit pU, Tile pT) {
+	public boolean produceUnit(Player p, Unit pU, Tile pT) {
 		int x = pT.getX();
 		int y = pT.getY();
+		boolean retVal = false;
 
 		if (unitBoard[x][y] == null) {
-			unitBoard[x][y] = pU;
-			p.setCash(p.getCash() - pU.getCost());
-			p.setNumUnits(p.getNumUnits()+1);
-			unitBoard[x][y].setX(x);
-			unitBoard[x][y].setY(y);
-		}	
+			if(p.getCash() >= pU.getCost()){
+				unitBoard[x][y] = pU;
+				p.setCash(p.getCash() - pU.getCost());
+				p.setNumUnits(p.getNumUnits()+1);
+				unitBoard[x][y].setX(x);
+				unitBoard[x][y].setY(y);
+				retVal = true;
+			}
+		}
+
+		return retVal;
 	}
 
 	public boolean didWin(Player p) {
-		boolean gotIt = false;
+
 		if (p.getPNum() == PLAYER1) {
-			
-			for (int r = 0; r < tBoard.length; r++) {
-				for (int c = 0; c < tBoard.length; c++) {
-					if (tBoard[r][c].getType() == 'Q' && tBoard[r][c].getOwner() == p.getPNum())
-						gotIt = true;
-				}
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)  {
+				return true;
 			}
 		}
 		else {
-			for (int r = 0; r < tBoard.length; r++) {
-				for (int c = 0; c < tBoard.length; c++) {
-					if (tBoard[r][c].getType() == 'q' && tBoard[r][c].getOwner() == p.getPNum())
-						gotIt = true;
-				}
-			}
+			if (playerList.get(PLAYER2).getNumUnits() <= 0)
+				return true;
 		}
 
-		return gotIt;
+		return false;
 	}
 
 	/************************************************************************
@@ -299,10 +332,10 @@ public class Logic {
 		unitBoard[oX][oY] = null;
 
 		unitBoard[pX][pY] = pUnit;
-		
+
 		pUnit.setHasMoved(true);
 	}
-	
+
 	private void move(Unit pUnit){
 		int movement = pUnit.getMove();
 
@@ -400,7 +433,7 @@ public class Logic {
 				}
 			}
 		}
-		
+
 		//pUnit.setHasMoved(true);
 	}
 
@@ -420,7 +453,7 @@ public class Logic {
 
 		return retval;
 	}
-	
+
 	public void setUnit(int x, int y, Unit pUnit){
 		unitBoard[x][y] = pUnit;
 	}

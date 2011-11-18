@@ -1,8 +1,11 @@
 package player;
 
+
 import gameplay.Logic;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
+
 import terrain.Tile;
 import units.APC;
 import units.AntiAir;
@@ -11,6 +14,11 @@ import units.Bomber;
 import units.ChopperA;
 import units.ChopperB;
 import units.FighterJet;
+import units.HeavyTank;
+import units.Infantry;
+import units.Mech;
+import units.MedTank;
+import units.Rockets;
 import units.Unit;
 
 public class AI extends Player{
@@ -26,9 +34,9 @@ public class AI extends Player{
 	private ArrayList<Unit> unitsWithAttacks;
 	private ArrayList<Unit> unitsWithCaptures;
 
-	ArrayList<String> moveLogger;
-	String move; //UNIT oldX oldY newX newY Action
-	
+	private ArrayList<String> moveLogger; 
+	String move;
+
 	Logic log;
 	int size;
 
@@ -40,20 +48,21 @@ public class AI extends Player{
 
 	public AI(String pN, int pNum, char fact) {
 		super(pN, pNum, fact);	
+		
+		
+
 		move = "";
 		moveLogger = new ArrayList<String>();
-	}
-	
-	public ArrayList<String> getActions() {
-		return moveLogger;
+		
+		test();
+
 	}
 
 	/***************************************************************
-	 * 
+	 *  
 	 * 
 	 ***************************************************************/
 	public void startTurn(){
-		boolean endTurn = false;
 
 		//determine possible actions
 		availableMove = canIMove();
@@ -65,6 +74,7 @@ public class AI extends Player{
 
 		//Loop through possible actions
 		for(Unit actionUnit: toMove){
+			moveLogger.clear();
 
 			if(availableMove){
 				//move units
@@ -75,42 +85,74 @@ public class AI extends Player{
 					if(moveCloserToEnemies(actionUnit, false) == true){
 						moved = true;
 					}				
+
 					if(!moved){
-						moved = moveToUncaptured(actionUnit, false);
+						if(countUncapturedBuildings() == 0)
+							moved = moveToUncaptured(actionUnit, true, false);
+						else
+							moved = moveToUncaptured(actionUnit, false, false);
 					}
-					
+
 					if(!moved){
-						
+						moved = moveCloserToEnemies(actionUnit, true);
 					}
-					
-				
+					if(!moved){
+						if(countUncapturedBuildings() == 0)
+							moved = moveToUncaptured(actionUnit, true, false);
+						else
+							moved = moveToUncaptured(actionUnit, false, false);
+					}
+
+
 				}
 
-				if(availableCapture){
-					capture();
-				}
-				if(availableAttack){
-					attack();
-				}
-				//if no other captures or attacks but still moves
-				moveCloserToEnemies(actionUnit);
+
 			}
-
-			if(availablePurchase){
-				//buy a unit
+		}
+		if(availableCapture){
+			capture();
+		}
+		if(availableAttack){
+			attack();
+		}
+		if(availablePurchase){
+			ArrayList<Unit> unitsToBuild = prodUnits();
+			Tile[][] tBoard= log.getTBoard();
+			Unit[][] uBoard = log.getUB();
+			ArrayList<Tile> emptyProdBldg = new ArrayList<Tile>();
+			for(int i = 0; i < log.getSize(); i++)
+				for(int j = 0; j < log.getSize(); j++){
+					if(tBoard[i][j].getType() == 'Q' && uBoard[i][j] ==null){
+						emptyProdBldg.add(tBoard[i][j]);
+					}
+				}
+			int counter = 0;
+			boolean success = false;
+			Tile t = emptyProdBldg.get(counter);
+			for(Unit bU: unitsToBuild){
+				success = log.produceUnit(this, bU, emptyProdBldg.get(counter));
+				move = "produce,"+bU.getName()+","+t.getX()+","+t.getY();
+				moveLogger.add(move);
+				if(success)
+					counter++;
 			}
-
-			if(availablePurchase)
-				prodUnits();
-
-			//if no more possible moves
-			if();
-			endTurn = true;
+			
 		}
 	}
 
-	
-	
+	private int countUncapturedBuildings(){
+		char[][] temp = getUncapturedBuildings();
+		int count = 0;
+
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++)
+				if(temp[i][j] == 'x')
+					count++;
+
+		return count;
+
+	}
+
 
 	/***************************************************************
 	 * 
@@ -162,8 +204,6 @@ public class AI extends Player{
 				retVal = true;
 			}
 		}
-
-		/////////////
 
 		if((y-1) >= 0){
 			if(uB[x][y-1] != null && uB[x][y-1].getOwner()==pNum){
@@ -237,6 +277,7 @@ public class AI extends Player{
 						if(getDistance(origX, origY, hqLoc[0], hqLoc[1]) <
 								getDistance(i, j, hqLoc[0], hqLoc[1])){
 							log.moveUnit(pUnit, i, j);
+							move = "move,"+pUnit.getName()+","+origX+","+origY+","+i+","+j;
 							hasMoved = true;
 						}
 					}
@@ -281,54 +322,47 @@ public class AI extends Player{
 	 * 
 	 * @return ArrayList<Unit> - list of units moved.
 	 ***************************************************************/
-	private boolean moveToUncaptured(Unit pUnit, boolean desperation){
-		char[][] moveBoard = log.getMoves(pUnit);
+	private boolean moveToUncaptured(Unit pUnit, boolean enemyBuildings, boolean desperation){
 		char[][] buildingsBoard = getUncapturedBuildings();
 		boolean foundSafe = false;
-		int safeX = 0, safeY = 0;
+		int origX = 0, origY = 0;
 		boolean moved = false;
 
-
-
 		int closest = 999;
+		int[] temp = getUnitLocation(pUnit);
 		l1: for(int k = 0; k < log.getSize(); k++)
 			for(int u = 0; u < log.getSize(); u++){
 				if(buildingsBoard[k][u] == 'x'){
-					safeX = k;
-					safeY = u;
+					origX = k;
+					origY = u;
+					if(getDistance(temp[0], temp[1], origX, origY) <= closest){
+						closest = getDistance(temp[0], temp[1], origX, origY);
+					}
 					break l1;
 				}
 			}
 
-//		for(int i = 0; i < log.getSize(); i++)
-//			for(int j = 0; j < log.getSize(); j++){
-//				if(moveBoard[i][j] == buildingsBoard[i][j] && moveBoard[i][j] == 'x'){
-//					if(isItSafe(i, j)){
-//						safeX = i;
-//						safeY = j;
-//						foundSafe = true;
-//					}
-//				}
-//			}
-		
-		
-		foundSafe = moveTowardLocation 
-		
-		
+
+		temp = moveTowardLocation(pUnit, origX, origY, true,  false);
+		if(temp[0] != origX && temp[1] != origY){
+			foundSafe = true;
+		}
+		origX = temp[0];
+		origY = temp[1];
 
 		if(foundSafe == true){
-			log.moveUnit(pUnit, safeX, safeY);
+			log.moveUnit(pUnit, origX, origY);
 			moved = true;
 		}
 		else if(desperation == true){
-			log.moveUnit(pUnit, safeX, safeY);
+			log.moveUnit(pUnit, origX, origY);
 			moved = true;
 		}
 
 
 		return moved;
 	}
-	
+
 
 	/***************************************************************
 	 * This tells the AI if moving to that certain location is safe.
@@ -381,13 +415,15 @@ public class AI extends Player{
 
 		return retVal;
 	}
-	
-	
-	protected boolean moveTowardLocation(Unit pUnit, int dX, int dY, boolean desperation){
-		boolean hasMoved = false;
-		Tile[][] tBoard = log.getTBoard();
+
+
+	protected int[] moveTowardLocation(Unit pUnit, int dX, int dY, boolean isBase,  boolean desperation){
 		char[][] pMoves = log.getMoves(pUnit);
-		
+		int[] retVal = new int[2];
+
+		retVal[1] = -1;
+		retVal[2] = -1;
+
 
 		int closestX = 0;
 		int closestY = 0;
@@ -398,7 +434,7 @@ public class AI extends Player{
 					closestX = i;
 					closestY = j;
 				}
-		
+
 		boolean foundMove = false;
 		int bestMove = 999;
 		//this method will move each until closer to the specified position
@@ -407,33 +443,61 @@ public class AI extends Player{
 				if(pMoves[r][c] == 'x'){
 					if(desperation==false && isItSafe(r,c))
 						if(getDistance(r, c,dX,dY) <= bestMove){
-							foundMove = true;
-							closestX = r;
-							closestY = c;
-							bestMove = getDistance(closestX, closestY, dX, dY);
 							if(r == dX && c == dY){
-								break l1;
+								if(isBase == true && pUnit.getType()==Unit.INFANTRYTYPE){
+									retVal[1] = r;
+									retVal[2] = c;
+									foundMove = true;
+									closestX = r;
+									closestY = c;
+									bestMove = getDistance(closestX, closestY, dX, dY);
+									break l1;
+								}
 							}
+							else{
+								retVal[1] = r;
+								retVal[2] = c;
+								foundMove = true;
+								closestX = r;
+								closestY = c;
+								bestMove = getDistance(closestX, closestY, dX, dY);
+							}
+
+
 						}
 						else if(desperation==true){
-							foundMove = true;
-							closestX = r;
-							closestY = c;
-							bestMove = getDistance(closestX, closestY, dX, dY);
-							if(r == dX && c == dY){
-								break l1;
+							if(r == dX && c == dY && isBase){
+								if(isBase==true && pUnit.getType() == Unit.INFANTRYTYPE){
+									retVal[1] = r;
+									retVal[2] = c;
+									foundMove = true;
+									closestX = r;
+									closestY = c;
+									bestMove = getDistance(closestX, closestY, dX, dY);
+									break l1;
+								}
+							}
+							else{
+								retVal[1] = r;
+								retVal[2] = c;
+								foundMove = true;
+								closestX = r;
+								closestY = c;
+								bestMove = getDistance(closestX, closestY, dX, dY);
 							}
 						}
 				}
 			}
 		}
-		
+
 		if(foundMove){
+			int[] unitLoc = getUnitLocation(pUnit);
 			log.moveUnit(pUnit, closestX, closestY);
-			hasMoved = true;
+			move = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
+			moveLogger.add(move);
 		}
 
-		return hasMoved;
+		return retVal;
 	}
 
 
@@ -496,7 +560,10 @@ public class AI extends Player{
 			}
 		}
 		if(foundMove){
+			int[] unitLoc = getUnitLocation(pUnit);
 			log.moveUnit(pUnit, closestX, closestY);
+			move = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
+			moveLogger.add(move);
 			hasMoved = true;
 		}
 
@@ -582,11 +649,15 @@ public class AI extends Player{
 
 				if(bestPotentialDamageInflicted >= ATTACK_DAMAGE_THRESHOLD){
 					log.battle(currentUnit, bestUnitToAttack, currentUnit.getOwner());
+					move = "attack,"+currentUnit.getName()+","+bestUnitToAttack.getName();
+					moveLogger.add(move);
 				}
 			}
 			else if(potentialUnitsToAttack.size() == 1){
 				if(damageToUnit.get(0) >= ATTACK_DAMAGE_THRESHOLD){
 					log.battle(currentUnit, potentialUnitsToAttack.get(0), currentUnit.getOwner());
+					move = "attack,"+currentUnit.getName()+","+potentialUnitsToAttack.get(0).getName();
+					moveLogger.add(move);
 				}
 			}
 			else {
@@ -764,6 +835,14 @@ public class AI extends Player{
 					wantToBuild.add(createMeAUnit(thirdMost));
 					wantToBuild.add(createMeAUnit(fourthMost));
 				}
+			}
+		}
+		
+		int cash = getCash();
+		for(Unit bUnit: wantToBuild){
+			if(cash > bUnit.getCost()){
+				canBuild.add(bUnit);
+				cash -= bUnit.getCost();
 			}
 		}
 		return canBuild;
@@ -1089,11 +1168,50 @@ public class AI extends Player{
 		}
 		return captureAvailable;
 	}
+	
+	private void test(){
+		boolean finished = false;
+		
+		// creating Logic - NECESSARY
+		log = new Logic("test", 'b', 'r', "Puny Human", "Herp Derp", true);
+		
+		// create some random units
+		log.setUnit(4, 5, new Infantry(1));
+		log.setUnit(10, 8, new MedTank(1));
+		log.setUnit(13, 3, new Mech(1));
+		log.setUnit(21, 18, new HeavyTank(1));
+		
+		log.setUnit(29, 27, new MedTank(2));
+		log.setUnit(27, 26, new Infantry(2));
+		log.setUnit(23, 28, new HeavyTank(2));
+		log.setUnit(28, 28, new Rockets(2));
+		move = "Game started";
+		System.out.println(move);
+		Scanner scan = new Scanner(move);
+		while(!finished){
+			startTurn();
+			for(String s: moveLogger){
+				System.out.println(s);
+				scan.nextLine();
+			}
+			
+		}
+	}
+	
+	private static void waitOneSec(){
+		try {
+			Thread.currentThread();
+			Thread.sleep(1200);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args){
+		new AI("Herp, Derp", 2, 'b');
+	}
 
-	/** Move unit
-	 * If unit can't attack or capture:
-	 * 1. find x,y coordinates of nearest enemy
-	 * 2. move unit into same row or column as enemy
-	 */
+	
 
 }

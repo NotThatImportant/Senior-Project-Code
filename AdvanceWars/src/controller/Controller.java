@@ -365,44 +365,38 @@ public class Controller {
 	{
 		return log.getUB();
 	}
-	
-	/**
-	 * 
-	 * @param pNum
-	 * @return
-	 */
 		
-	public ArrayList<String> getConvertedUnits(int pNum) {
+	public int[][] getConvertedUnits(int pNum){
 		Unit[][] uB = log.getUB();
-		ArrayList<String> toSend = new ArrayList<String>();
-		String construct = "";
+		int[][] retBoard = new int[log.getSize()][log.getSize()];
 		
-		for (int r = 0; r < uB.length; r++) {
-			for (int c = 0; c < uB.length; c++) {
-				if (uB[r][c] != null && uB[r][c].getOwner() == pNum) {
-					if (uB[r][c].getName().equals("Anti-Air")) {
-						
-					} else if (uB[r][c].getName().equals("Artillery")) {
-						
-					} else if (uB[r][c].getName().equals("HeavyTank")) {
-						
-					} else if (uB[r][c].getName().equals("Infantry")) {
-						
-					} else if (uB[r][c].getName().equals("Mech")) {
-						
-					} else if (uB[r][c].getName().equals("Medium Tank")) {
-						
-					} else if (uB[r][c].getName().equals("Recon")) {
-						
-					} else if (uB[r][c].getName().equals("Rocket")) {
-						
-					} else if (uB[r][c].getName().equals("Tank")) {
-						
-					}
+		for(int i = 0; i < log.getSize(); i++)
+			for(int j = 0; j < log.getSize(); j++){
+				String name = uB[i][j].getName();
+				
+				if (uB[i][j].getOwner() == pNum) {
+					if(name.equals("Anti-Air"))
+						retBoard[i][j] = '1';
+					else if(name.equals("Artillery"))
+						retBoard[i][j] = '2';
+					else if(name.equals("HeavyTank"))
+						retBoard[i][j] = '3';
+					else if(name.equals("Infantry"))
+						retBoard[i][j] = '4';
+					else if(name.equals("Mech"))
+						retBoard[i][j] = '5';
+					else if(name.equals("Medium Tank"))
+						retBoard[i][j] = '6';
+					else if(name.equals("Recon"))
+						retBoard[i][j] = '7';
+					else if(name.equals("Rocket"))
+						retBoard[i][j] = '8';
+					else if(name.equals("Tank"))
+						retBoard[i][j] = '9';
 				}
 			}
-		}
 		
-		return tripleIntArray;
+		
+		return retBoard;
 	}
 }
