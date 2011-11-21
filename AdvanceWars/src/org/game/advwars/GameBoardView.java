@@ -1,6 +1,7 @@
 package org.game.advwars;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +14,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import controller.Controller;
 
 public class GameBoardView extends View
 {
@@ -22,11 +24,15 @@ public class GameBoardView extends View
     private static int mXOffset;
     private static int mYOffset;
     private Bitmap[] mTileArray;
+    private Bitmap[] mUnitTileArray;
     private char[][] mTileGrid;
+    private int[][] mPlayer1Units;
+    private int[][] mPlayer2Units;
     private int mX;
     private int mY;
     private final Paint mPaint = new Paint();
     private Canvas canvas;
+    private Controller controller;
 	
     public GameBoardView(Context context, AttributeSet attrs, int defStyle)
     {
@@ -34,16 +40,7 @@ public class GameBoardView extends View
 
         mX = 0;
         mY = 0;
-        
-//        mTileGrid = new char[100][100];
-//        for (int x = 0; x < 100; x++) {
-//            for (int y = 0; y < 100; y++) {
-//            	if(x != 0 && y != 0 )
-//            		setTile(0, x, y);
-//            	else
-//            		setTile(1, x, y);
-//            }
-//        }
+
         
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
@@ -59,15 +56,7 @@ public class GameBoardView extends View
         mX = 0;
         mY = 0;
         
-//        mTileGrid = new int[100][100];
-//        for (int x = 0; x < 100; x++) {
-//            for (int y = 0; y < 100; y++) {
-//            	if(x != 0 && y != 0 )
-//            		setTile(0, x, y);
-//            	else
-//            		setTile(1, x, y);
-//            }
-//        }
+
         
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
@@ -87,6 +76,10 @@ public class GameBoardView extends View
         loadTile(1, r.getDrawable(R.drawable.mountain));
         loadTile(2, r.getDrawable(R.drawable.road));
         loadTile(3, r.getDrawable(R.drawable.water));
+
+        mUnitTileArray = new Bitmap[9];
+
+
     }
 
     public void resetTiles(int tilecount)
@@ -109,6 +102,15 @@ public class GameBoardView extends View
         //mTileGrid = new int[mXTileCount][mYTileCount];
        // clearTiles();
     }
+
+    public void setController(Controller c) {
+        this.controller = c;
+    }
+
+    public Controller getController(){
+        return controller;
+    }
+
     
     public void loadTile(int key, Drawable tile)
     {
@@ -209,7 +211,7 @@ public class GameBoardView extends View
     	return mYTileCount;
     }
 
-	public int[] selectPoint(float x, float y)
+	public ArrayList<String> selectPoint(float x, float y)
 	{
 		x = x - mXOffset;
 		y = y - mYOffset;
@@ -221,7 +223,7 @@ public class GameBoardView extends View
 			int[] coor = new int[2];
 			coor[0] = tileX + mX;
 			coor[1] = tileY + mY;
-			return coor;
+			return controller.selectCoordinates(coor[0],coor[1]);
 		}
 		return null;
 	}
@@ -263,8 +265,12 @@ public class GameBoardView extends View
 		invalidate();
 	}
 
-	public void setMap(char[][] board)
+	public void initGame()
 	{
-		mTileGrid = board;
+		mTileGrid = controller.getBoard();
+        mPlayer1Units = controller.getConvertedUnits(1);
+        mPlayer2Units = controller.getConvertedUnits(2);
 	}
+
+
 }

@@ -116,8 +116,6 @@ public class Controller {
 	 * this is limited to only ground forces. 
 	 * 
 	 * @param pActions
-	 * @param x
-	 * @param y
 	 * @return
 	 */
 	
@@ -252,8 +250,6 @@ public class Controller {
 	 * This gives you the actions in a string ArrayList that are for the 
 	 * 
 	 * @param actions
-	 * @param x
-	 * @param y
 	 * @return
 	 */
 	
@@ -372,27 +368,31 @@ public class Controller {
 		
 		for(int i = 0; i < log.getSize(); i++)
 			for(int j = 0; j < log.getSize(); j++){
+                if(uB[i][j] == null)    {
+                    retBoard[i][j] = -1;
+                    continue;
+                }
 				String name = uB[i][j].getName();
 				
 				if (uB[i][j].getOwner() == pNum) {
 					if(name.equals("Anti-Air"))
-						retBoard[i][j] = '1';
+						retBoard[i][j] = 0;
 					else if(name.equals("Artillery"))
-						retBoard[i][j] = '2';
+						retBoard[i][j] = 1;
 					else if(name.equals("HeavyTank"))
-						retBoard[i][j] = '3';
+						retBoard[i][j] = 2;
 					else if(name.equals("Infantry"))
-						retBoard[i][j] = '4';
+						retBoard[i][j] = 3;
 					else if(name.equals("Mech"))
-						retBoard[i][j] = '5';
+						retBoard[i][j] = 4;
 					else if(name.equals("Medium Tank"))
-						retBoard[i][j] = '6';
+						retBoard[i][j] = 5;
 					else if(name.equals("Recon"))
-						retBoard[i][j] = '7';
+						retBoard[i][j] = 6;
 					else if(name.equals("Rocket"))
-						retBoard[i][j] = '8';
+						retBoard[i][j] = 7;
 					else if(name.equals("Tank"))
-						retBoard[i][j] = '9';
+						retBoard[i][j] = 8;
 				}
 			}
 		

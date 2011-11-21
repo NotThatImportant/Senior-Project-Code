@@ -54,7 +54,7 @@ public class AI extends Player{
 		move = "";
 		moveLogger = new ArrayList<String>();
 		
-		test();
+		//test();
 
 	}
 

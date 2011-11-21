@@ -1,5 +1,6 @@
 package org.game.advwars;
 
+import android.view.*;
 import player.Player;
 import controller.Controller;
 import dataconnectors.SaveData;
@@ -12,11 +13,10 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class GameBoard extends Activity implements OnTouchListener
 {
@@ -40,6 +40,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private SaveData sd = new SaveData();
 	private char p1Char;
 	private char p2Char;
+    private  ArrayList options;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState)
@@ -63,11 +64,12 @@ public class GameBoard extends Activity implements OnTouchListener
         
         gameBoardView = (GameBoardView) findViewById(R.id.gameboard);
         gameBoardView.setOnTouchListener(this);
-        
+
         Player p1 = new Player("Player1", 0, p1Char);
         Player p2 = new Player("Player2", 1, p2Char);
         Controller c = new Controller(p1, p2, true, ggvGlobal.getMap());
-        gameBoardView.setMap(c.getBoard());
+        gameBoardView.setController(c);
+        gameBoardView.initGame();
     }
 	
     @Override
@@ -137,8 +139,11 @@ public class GameBoard extends Activity implements OnTouchListener
 	         break;
 	      case MotionEvent.ACTION_UP:
 	      case MotionEvent.ACTION_POINTER_UP:
-	    	 if(mode == PRESS)
-	    		 gameBoardView.selectPoint(event.getX(), event.getY());
+	    	 if(mode == PRESS) {
+                 options = gameBoardView.selectPoint(event.getX(), event.getY());
+                 openContextMenu(v);
+
+             }
 	         mode = NONE;
 	         Log.d(TAG, "mode=NONE");
 	         break;
@@ -174,7 +179,21 @@ public class GameBoard extends Activity implements OnTouchListener
 			
 		return true;
 	}
-	
+
+
+        @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Context Menu");
+        menu.add(0, v.getId(), 0, "Action 1");
+        menu.add(0, v.getId(), 0, "Action 2");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    return true;
+    }
+
 	
 	  /** Determine the space between the first two fingers */
 	   private float spacing(MotionEvent event) {
