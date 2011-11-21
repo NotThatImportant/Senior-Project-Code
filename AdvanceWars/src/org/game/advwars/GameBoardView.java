@@ -1,6 +1,5 @@
 package org.game.advwars;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -8,9 +7,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -24,7 +21,7 @@ public class GameBoardView extends View
     private static int mXOffset;
     private static int mYOffset;
     private Bitmap[] mTileArray;
-    private Bitmap[] mUnitTileArray;
+    private Bitmap[] mRedUnitArray;
     private char[][] mTileGrid;
     private int[][] mPlayer1Units;
     private int[][] mPlayer2Units;
@@ -71,14 +68,24 @@ public class GameBoardView extends View
 
         Resources r = this.getContext().getResources();
         
-        resetTiles(4);
-        loadTile(0, r.getDrawable(R.drawable.ground));
-        loadTile(1, r.getDrawable(R.drawable.mountain));
-        loadTile(2, r.getDrawable(R.drawable.road));
-        loadTile(3, r.getDrawable(R.drawable.water));
+        resetTiles(5);
+        loadTile(0, r.getDrawable(R.drawable.ground), mTileArray);
+        loadTile(1, r.getDrawable(R.drawable.mountain), mTileArray);
+        loadTile(2, r.getDrawable(R.drawable.road), mTileArray);
+        loadTile(3, r.getDrawable(R.drawable.water), mTileArray);
+        loadTile(4, r.getDrawable(R.drawable.selected), mTileArray);
 
-        mUnitTileArray = new Bitmap[9];
+        mRedUnitArray = new Bitmap[9];
 
+        loadTile(0, r.getDrawable(R.drawable.red_anti_air), mRedUnitArray);
+        loadTile(1, r.getDrawable(R.drawable.red_artillery), mRedUnitArray);
+        loadTile(2, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
+        loadTile(3, r.getDrawable(R.drawable.red_infantry), mRedUnitArray);
+        loadTile(4, r.getDrawable(R.drawable.red_mech), mRedUnitArray);
+        loadTile(5, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
+        loadTile(6, r.getDrawable(R.drawable.red_recon), mRedUnitArray);
+        loadTile(7, r.getDrawable(R.drawable.red_rocket), mRedUnitArray);
+        loadTile(8, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
 
     }
 
@@ -112,14 +119,14 @@ public class GameBoardView extends View
     }
 
     
-    public void loadTile(int key, Drawable tile)
+    public void loadTile(int key, Drawable tile, Bitmap[] array)
     {
         Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         tile.setBounds(0, 0, mTileSize, mTileSize);
         tile.draw(canvas);
         
-        mTileArray[key] = bitmap;
+        array[key] = bitmap;
     }
     
     public void clearTiles()
@@ -174,6 +181,10 @@ public class GameBoardView extends View
 			result = 2;
 		else if (c == 'w')
 			result = 3;
+        else if (c == 'h')
+            result = 4;
+        else if (c == 'H')
+            result = 4;
 		
 		return result;
 	}

@@ -35,7 +35,7 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
         MapCreator mc = new MapCreator();
         
         // Add maps here...
-        mc.newMap("Map1", "mmmmmmmmmm\nmmmmmmbmmm\nmmmmmmrmmm\nmmggggrggm\nmggrrrrggm\nmggrgggggm\nmggrgggggm\nmggrgggggm\nmmmbmmmmmm\nmmmmmmmmmm", true);
+        mc.newMap("Map1", "mmmmmmmmmm\nmmmmmmbmmm\nmmmmmmrmmm\nmmhgggrggm\nmggrrrrggm\nmxgrgggggm\nmggrggggXm\nmggrgggHgm\nmmmbmmmmmm\nmmmmmmmmmm", true);
         mc.newMap("Map2", "mmmmmmmmmm\nmmmmmmbmmm\nmmmmmmrmmm\nmmggggrggm\nmggrrrrggm\nmggrgggggm\nmggrgggggm\nmggrgggggm\nmmmbmmmmmm\nmmmmmmmmmm", true);
     }
 
