@@ -67,6 +67,8 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
         		soundOnRB.setChecked(false);
         		soundOffRB.setChecked(false);
         	}
+        	
+        	soundCursor.close();
         }
         catch (Exception ex)
         {
@@ -109,6 +111,8 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
         		mediumRB.setChecked(false);
         		hardRB.setChecked(false);
         	}
+        	
+        	difficultyCursor.close();
         }
         catch (Exception ex)
         {

@@ -49,6 +49,8 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
                 }
                 while(cursor.moveToNext());
             }
+            
+            cursor.close();
         }
         finally
         {

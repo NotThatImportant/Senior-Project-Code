@@ -49,19 +49,16 @@ public class Logic {
 
 	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
 			String p2Name, boolean wantAI){
-
 		mr = new MapReader(mapName);
-
 		mapSize = mr.getSize();
 		createBoards();
 		playerList = new ArrayList<Player>();
 		Player p1 = new Player(p1Name, 1, p1Fact);
 		Player p2 = null;
-		//if (wantAI == true) 
-		//	herpDerp = new AI(p2Name, 2, 'r');
-		//else 
-		//	p2 = new Player(p2Name, 2, p2Fact);
-
+		if (wantAI == true) 
+			herpDerp = new AI("Herp Derp", 2, 'r');
+		else 
+			p2 = new Player(p2Name, 2, p2Fact);
 
 		playerList.add(p1);
 
@@ -70,31 +67,6 @@ public class Logic {
 		else
 			playerList.add(p2);
 	}
-
-	public Logic(String mapName, char p1Fact, char p2Fact, String p1Name, 
-			String p2Name, AI pAI){
-
-		mr = new MapReader(mapName);
-
-		mapSize = mr.getSize();
-		createBoards();
-		playerList = new ArrayList<Player>();
-		Player p1 = new Player(p1Name, 1, p1Fact);
-		Player p2 = null;
-		//if (wantAI == true) 
-		//	herpDerp = new AI(p2Name, 2, 'r');
-		//else 
-		//	p2 = new Player(p2Name, 2, p2Fact);
-
-		herpDerp = pAI;
-		playerList.add(p1);
-
-
-		playerList.add(herpDerp);
-
-	}
-
-
 
 	/************************************************************************
 	 * 
@@ -458,4 +430,18 @@ public class Logic {
 		unitBoard[x][y] = pUnit;
 	}
 
+	public void unitNewTurn(int pNum){
+
+		for(int i = 0; i < getSize(); i++)
+
+			for(int j = 0; j < getSize(); j++){
+
+				if(unitBoard[i][j] != null)
+
+					if(unitBoard[i][j].getOwner() == pNum)
+
+						unitBoard[i][j].setHasMoved(false);
+
+			}
+	}
 }

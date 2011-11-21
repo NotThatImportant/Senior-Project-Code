@@ -33,7 +33,7 @@ public class Controller {
 			secondPlayer = new AI(secondPlayer.getPName(), 2, secondPlayer.getFact());
 		}
 
-		log = new Logic ("Map1", firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(),
+		log = new Logic (mapName, firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(),
 				secondPlayer.getPName(), aiOn);
 
 		playerTurn = whoGoesFirst();	
@@ -204,6 +204,46 @@ public class Controller {
 		else
 			log.captureBuilding(log.getP2(), x, y);
 	}
+	
+//	/**
+//	 * Returns x on a char board of what buildings are in reach to capture
+//	 * 
+//	 * @return
+//	 */
+//	private char[][] capture() {
+//		char[][] moves = move();
+//		Tile[][] tiles = log.getTBoard();
+//		
+//		char[][] canCapture = new char[tiles.length][tiles.length];
+//		
+//		for (int r = 0; r < tiles.length; r++) {
+//			for (int c = 0; c < tiles.length;c++) {
+//				canCapture[r][c] = '-';
+//			}
+//		}
+//		
+//		for (int r = 0; r < tiles.length; r++) {
+//			for (int c = 0; c < tiles.length; c++) {
+//				if (playerTurn == 0) {
+//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
+//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' || 
+//							tiles[r][c].getType() == 'X') {
+//						if (moves[r][c] == 'x') //legal move 
+//							canCapture[r][c] = 'c';
+//					}
+//				} else {
+//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
+//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' || 
+//							tiles[r][c].getType() == 'x') {
+//						if (moves[r][c] == 'x') //legal move 
+//							canCapture[r][c] = 'c';
+//					}
+//				}
+//			}
+//		}
+//		
+//		return canCapture;
+//	}
 
 	//so the player decides to produce a unit, so we call this method and we send back an array 
 	//of strings so that the GUI can display array of strings in a menu as possible buys. 
