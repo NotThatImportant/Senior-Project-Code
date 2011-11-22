@@ -43,7 +43,7 @@ public class FactionSelection extends Activity implements OnItemSelectedListener
 		faction = parent.getItemAtPosition(pos).toString();
 		factionSelectionGGV.setFaction(faction);
 		sd.saveGGVData(factionSelectionGGV);
-	    Toast.makeText(parent.getContext(), "You selected " + faction, Toast.LENGTH_SHORT).show();
+	    //Toast.makeText(parent.getContext(), "You selected " + faction, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

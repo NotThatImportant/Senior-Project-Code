@@ -69,7 +69,7 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 		playerName = parent.getItemAtPosition(pos).toString();
 		this.selectPlayerGGV.setPlayerName(playerName);
 		sd.saveGGVData(selectPlayerGGV);
-	    Toast.makeText(parent.getContext(), "You selected " + playerName, Toast.LENGTH_SHORT).show();
+	    //Toast.makeText(parent.getContext(), "You selected " + playerName, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
 		mapName = parent.getItemAtPosition(pos).toString();
 		mapSelectionGGV.setMap(mapName);
 		sd.saveGGVData(mapSelectionGGV);
-	    Toast.makeText(parent.getContext(), "You selected " + mapName, Toast.LENGTH_SHORT).show();
+	    //Toast.makeText(parent.getContext(), "You selected " + mapName, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
