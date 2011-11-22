@@ -3,7 +3,7 @@ package org.game.advwars;
 import android.view.*;
 import player.Player;
 import controller.Controller;
-import dataconnectors.SaveData;
+import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	
 	private GameBoardView gameBoardView;
 	private GUIGameValues ggvGlobal = new GUIGameValues();
-	private SaveData sd = new SaveData();
+	private SaveGUIData sd = new SaveGUIData();
 	private char p1Char;
 	private char p2Char;
     private  ArrayList options;

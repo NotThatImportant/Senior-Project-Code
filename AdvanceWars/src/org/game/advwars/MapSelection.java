@@ -2,7 +2,7 @@ package org.game.advwars;
 
 import java.io.File;
 
-import dataconnectors.SaveData;
+import dataconnectors.SaveGUIData;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +20,7 @@ public class MapSelection extends Activity implements OnItemSelectedListener, On
 {
 	private String mapName = "";
 	private String[] maps = null;
-	private SaveData sd = new SaveData();
+	private SaveGUIData sd = new SaveGUIData();
 	private GUIGameValues mapSelectionGGV = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)

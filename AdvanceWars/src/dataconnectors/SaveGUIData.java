@@ -12,7 +12,12 @@ import org.game.advwars.GUIGameValues;
 
 import android.util.Log;
 
-public class SaveData
+/**
+ * Connector class used to save GUI values (GUIGameValues).
+ * 
+ * @author Sinisa Malbasa
+ */
+public class SaveGUIData
 {
 	private String filePath;
 	private FileOutputStream fos;
@@ -21,7 +26,7 @@ public class SaveData
 	private ObjectInputStream in;
 	private GUIGameValues ggv;
 	
-	public SaveData()
+	public SaveGUIData()
 	{
 		filePath = "/data/data/org.game.advwars/temp/ggvdata.dat";
 		fos = null;

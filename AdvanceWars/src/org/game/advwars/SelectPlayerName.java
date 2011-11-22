@@ -1,7 +1,7 @@
 package org.game.advwars;
 
 import dataconnectors.DBAndroidConnector;
-import dataconnectors.SaveData;
+import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,7 +20,7 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 {
 	private String playerName = "";
 	private GUIGameValues selectPlayerGGV = new GUIGameValues();
-	private SaveData sd = new SaveData();
+	private SaveGUIData sd = new SaveGUIData();
 	
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -84,7 +84,7 @@ public class SelectPlayerName extends Activity implements OnItemSelectedListener
 		selectPlayerGGV = sd.loadGGVData();
 		playerName = selectPlayerGGV.getPlayerName();
 		
-		if (!playerName.equals(""))
+		if (!playerName.equals("") && !playerName.equals("VALUE_NOT_SET"))
 		{
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", selectPlayerGGV);

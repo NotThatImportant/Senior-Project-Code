@@ -1,6 +1,6 @@
 package org.game.advwars;
 
-import dataconnectors.SaveData;
+import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class FactionSelection extends Activity implements OnItemSelectedListener, OnClickListener
 {
 	private String faction = "";
-	private SaveData sd = new SaveData();
+	private SaveGUIData sd = new SaveGUIData();
 	private GUIGameValues factionSelectionGGV = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)

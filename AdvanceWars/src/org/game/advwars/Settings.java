@@ -1,7 +1,7 @@
 package org.game.advwars;
 
 import dataconnectors.DBAndroidConnector;
-import dataconnectors.SaveData;
+import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -19,7 +19,7 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
 	private int soundOn;
 	private String difficulty;
 	private String playerName;
-	private SaveData sd = new SaveData();
+	private SaveGUIData sd = new SaveGUIData();
 	private GUIGameValues ggv = new GUIGameValues();
 	
 	protected void onCreate(Bundle savedInstanceState)
@@ -142,7 +142,7 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
 		DBAndroidConnector db = new DBAndroidConnector();
         SQLiteDatabase myDB = db.getDB();
         GUIGameValues tempGGV = new GUIGameValues();
-        SaveData tempSD = new SaveData();
+        SaveGUIData tempSD = new SaveGUIData();
         tempGGV = sd.loadGGVData();
         playerName = tempGGV.getPlayerName();
 		
