@@ -67,6 +67,8 @@
         <item >Save Game</item>
         <item >Quit Game</item>
     </string-array>
+    <string name="change_player_name_title">Change Current Player Name</string>
+    <string name="change_player_name_button_2">Change Player Name</string>
     
     
 </resources>

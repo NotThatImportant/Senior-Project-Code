@@ -130,7 +130,7 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
 		switch (v.getId())
     	{
     	case R.id.change_player_name:
-    		Intent i = new Intent(this, EnterPlayerName.class);
+    		Intent i = new Intent(this, ChangePlayerName.class);
     		startActivity(i);
     		break;
     	}

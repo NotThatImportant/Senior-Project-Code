@@ -78,6 +78,10 @@
         android:label="@string/invalid_player_name_selected_title"
         android:theme="@android:style/Theme.Dialog">
         </activity>
+        <activity android:name=".ChangePlayerName"
+        android:screenOrientation="landscape"
+        android:label="@string/change_player_name_title">
+        </activity>
         <activity android:name=".GameBoard"
         android:screenOrientation="landscape">
         </activity>

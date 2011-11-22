@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/change_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/change_player_name_title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/change_player_name_textbox"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/change_player_name_button"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/change_player_name_button_2" />
+
+</LinearLayout>
