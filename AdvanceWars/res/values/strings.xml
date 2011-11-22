@@ -33,7 +33,7 @@
     <string name="authors">Dan Ayotte; Roger Mo; Matt Tyndall; Austin Padilla; Sinisa Malbasa</string>
     <string name="invalid_player_name_entered_title">Entered Player Name Is Invalid</string>
     <string name="invalid_player_name_selected_title">Cannot Select Player Name</string>
-    <string name="invalid_player_name_entered_description">This may be because the player name already exists or because the field is blank. Please try again.</string>
+    <string name="invalid_player_name_entered_description">This may be because the player name already exists, the player name is greater than 15 characters, or the field is blank. Please try again.</string>
     <string name="invalid_player_name_selected_description">Player name cannot be selected because there are no saved player names. Try entering a new player name first.</string>
     <string name="select_player_name_description">Select an existing player name:</string>
     <string name="select_player_button">Confirm Player Name</string><string name="main_menu_welcome">Welcome To Advance Wars</string><string-array name="player_names">

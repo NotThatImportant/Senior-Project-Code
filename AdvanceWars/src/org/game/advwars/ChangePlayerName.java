@@ -53,6 +53,7 @@ public class ChangePlayerName extends Activity implements OnClickListener
 		{
 			changePlayerGGV.setPlayerName(playerName);
 			dbc.executeQuery("update PlayerSettings set Player_Name = '" + playerName + "' where Player_Name = '" + oldPlayerName + "';");
+			dbc.executeQuery("update Scores set Player_Name = '" + playerName + "' where Player_Name = '" + oldPlayerName + "';");
 			dbc.closeDB();
 			sgd.saveGGVData(changePlayerGGV);
 

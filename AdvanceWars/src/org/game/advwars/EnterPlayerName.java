@@ -34,35 +34,32 @@ public class EnterPlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		boolean cancelPlayerNameEntry = false;
+		boolean cancelPlayerNameEntry = true;
 		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
 		DBCheckPlayerName checkPlayer = new DBCheckPlayerName();
 		
 		if(checkPlayer.playerNameIsValid(playerName))
+			cancelPlayerNameEntry = false;
+		
+		if(playerName.length() > 15)
 			cancelPlayerNameEntry = true;
 
-		/*if (playerName.equals("sa"))
-		{
-			enterPlayerGGV.setPlayerName(playerName);
-			Intent i = new Intent(this, MainMenu.class);
-			i.putExtra("ggv", enterPlayerGGV);
-			startActivity(i);
-		}*/
-		if (!playerName.equals("") && cancelPlayerNameEntry)
+		if (!playerName.equals("") && !cancelPlayerNameEntry)
 		{
 			enterPlayerGGV.setPlayerName(playerName);
 			dbc.executeQuery("insert into 'PlayerSettings' ('Player_Name', 'Difficulty', 'Sound_On') values ('" + playerName + "', 'medium', '1');");
+			dbc.executeQuery("insert into 'Scores' ('Player_Name', 'Wins', 'Losses', 'Experience') values ('" + playerName + "', '0', '0', '0');");
 			dbc.closeDB();
 
-			Intent i2 = new Intent(this, MainMenu.class);
-			i2.putExtra("ggv", enterPlayerGGV);
-			startActivity(i2);
+			Intent i = new Intent(this, MainMenu.class);
+			i.putExtra("ggv", enterPlayerGGV);
+			startActivity(i);
 		}
 		else
 		{
-			Intent i3 = new Intent(this, InvalidPlayerNameEntered.class);
-			startActivity(i3);
+			Intent i2 = new Intent(this, InvalidPlayerNameEntered.class);
+			startActivity(i2);
 		}
 	}
 }
