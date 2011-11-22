@@ -185,6 +185,10 @@ public class GameBoardView extends View
             result = 4;
         else if (c == 'H')
             result = 4;
+        else if (c == 'x')
+        	result = 4;
+        else if (c == 'X')
+        	result = 4;
 		
 		return result;
 	}

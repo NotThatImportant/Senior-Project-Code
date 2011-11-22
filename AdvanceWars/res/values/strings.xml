@@ -24,7 +24,7 @@
     <string name="under_construction_description">We are sorry. This screen has not been implemented yet. :-(</string>
     <string name="enter_player_name_title">Enter Player Name</string>
     <string name="faction_selection_title">Select Your Faction</string>
-    <string name="leader_board_title">Leader Board</string>
+    <string name="leader_board_title">Scores</string>
     <string name="map_selection_title">Select Battle Map</string>
     <string name="multiplayer_options_title">Multiplayer Options</string>
     <string name="settings_title">Settings</string>

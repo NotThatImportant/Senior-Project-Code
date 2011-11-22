@@ -49,7 +49,7 @@ public class MainMenu extends Activity implements OnClickListener
     		startActivity(i2);
     		break;
     	case R.id.scores:
-    		Intent i3 = new Intent(this, UnderConstruction.class);
+    		Intent i3 = new Intent(this, LeaderBoard.class);
     		startActivity(i3);
     		break;
     	case R.id.settings:
