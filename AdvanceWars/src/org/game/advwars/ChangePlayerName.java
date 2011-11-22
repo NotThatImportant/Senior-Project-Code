@@ -1,6 +1,7 @@
 package org.game.advwars;
 
 import dataconnectors.DBAndroidConnector;
+import dataconnectors.DBCheckPlayerName;
 import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.content.Intent;
@@ -36,13 +37,19 @@ public class ChangePlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		boolean cancelPlayerNameEntry = false;
 		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
 		
 		changePlayerGGV = sgd.loadGGVData();
 		oldPlayerName = changePlayerGGV.getPlayerName();
+		
+		DBCheckPlayerName checkPlayer = new DBCheckPlayerName();
+		
+		if(checkPlayer.playerNameIsValid(playerName))
+			cancelPlayerNameEntry = true;
 
-		if (!playerName.equals("") && !playerName.equals("VALUE_NOT_SET"))
+		if (!playerName.equals("") && !playerName.equals("VALUE_NOT_SET") && cancelPlayerNameEntry)
 		{
 			changePlayerGGV.setPlayerName(playerName);
 			dbc.executeQuery("update PlayerSettings set Player_Name = '" + playerName + "' where Player_Name = '" + oldPlayerName + "';");

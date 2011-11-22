@@ -2,6 +2,7 @@ package org.game.advwars;
 
 import maps.MapCreator;
 import dataconnectors.DBAndroidCreator;
+import dataconnectors.DBCheckPlayerName;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -15,7 +16,6 @@ import android.view.View.OnClickListener;
  */
 public class AdvanceWarsActivity extends Activity implements OnClickListener
 {
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -41,15 +41,30 @@ public class AdvanceWarsActivity extends Activity implements OnClickListener
 
     public void onClick(View v)
     {
+    	boolean noPlayerNames = true;
+    	DBCheckPlayerName cpn = new DBCheckPlayerName();
+    	
+    	if (cpn.areThereAnyPlayerNamesSaved())
+    		noPlayerNames = false;
+    	
     	switch (v.getId())
     	{
     	case R.id.previous_player_name:
-    		Intent i = new Intent(this, SelectPlayerName.class);
-    		startActivity(i);
-    		break;
+    		if (!noPlayerNames)
+    		{
+    			Intent i = new Intent(this, SelectPlayerName.class);
+    			startActivity(i);
+    			break;
+    		}
+    		else
+    		{
+    			Intent i2 = new Intent(this, InvalidPlayerNameSelected.class);
+    			startActivity(i2);
+    			break;
+    		}
     	case R.id.new_player_name:
-    		Intent i2 = new Intent(this, EnterPlayerName.class);
-    		startActivity(i2);
+    		Intent i3 = new Intent(this, EnterPlayerName.class);
+    		startActivity(i3);
     		break;
     	}
     }

@@ -1,6 +1,7 @@
 package org.game.advwars;
 
 import dataconnectors.DBAndroidConnector;
+import dataconnectors.DBCheckPlayerName;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,18 +34,22 @@ public class EnterPlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		boolean cancelPlayerNameEntry = false;
 		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
+		DBCheckPlayerName checkPlayer = new DBCheckPlayerName();
+		
+		if(checkPlayer.playerNameIsValid(playerName))
+			cancelPlayerNameEntry = true;
 
-		// 'sa' overrides input and proceeds regardless of value validity
-		if (playerName.equals("sa"))
+		/*if (playerName.equals("sa"))
 		{
 			enterPlayerGGV.setPlayerName(playerName);
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", enterPlayerGGV);
 			startActivity(i);
-		}
-		else if (!playerName.equals(""))
+		}*/
+		if (!playerName.equals("") && cancelPlayerNameEntry)
 		{
 			enterPlayerGGV.setPlayerName(playerName);
 			dbc.executeQuery("insert into 'PlayerSettings' ('Player_Name', 'Difficulty', 'Sound_On') values ('" + playerName + "', 'medium', '1');");

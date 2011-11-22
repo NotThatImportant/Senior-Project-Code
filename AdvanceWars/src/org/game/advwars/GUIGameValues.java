@@ -35,17 +35,9 @@ public class GUIGameValues implements Serializable
 	{
 		// Check return values
 		if (playerName.equals(""))
-		{
 			return "VALUE_NOT_SET";
-		}
-		else if (playerName.equals("sa"))
-		{
-			return "System Administrator";
-		}
 		else
-		{
 			return this.playerName;
-		}
 	}
 	
 	public void setSound (boolean soundOn)
