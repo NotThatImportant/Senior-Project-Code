@@ -37,7 +37,7 @@ public class ChangePlayerName extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		boolean cancelPlayerNameEntry = false;
+		boolean cancelPlayerNameEntry = true;
 		DBAndroidConnector dbc = new DBAndroidConnector();
 		playerName = newPlayerName.getText().toString();
 		
@@ -47,9 +47,12 @@ public class ChangePlayerName extends Activity implements OnClickListener
 		DBCheckPlayerName checkPlayer = new DBCheckPlayerName();
 		
 		if(checkPlayer.playerNameIsValid(playerName))
+			cancelPlayerNameEntry = false;
+		
+		if(playerName.length() > 15)
 			cancelPlayerNameEntry = true;
 
-		if (!playerName.equals("") && !playerName.equals("VALUE_NOT_SET") && cancelPlayerNameEntry)
+		if (!playerName.equals("") && !playerName.equals("VALUE_NOT_SET") && !cancelPlayerNameEntry)
 		{
 			changePlayerGGV.setPlayerName(playerName);
 			dbc.executeQuery("update PlayerSettings set Player_Name = '" + playerName + "' where Player_Name = '" + oldPlayerName + "';");

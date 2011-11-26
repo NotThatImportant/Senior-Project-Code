@@ -18,7 +18,8 @@
         android:id="@+id/change_player_name_textbox"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
+        android:layout_gravity="center"
+        android:maxLength="15" >
 
         <requestFocus />
     </EditText>
