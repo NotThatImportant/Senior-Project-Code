@@ -142,7 +142,6 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
 		DBAndroidConnector db = new DBAndroidConnector();
         SQLiteDatabase myDB = db.getDB();
         GUIGameValues tempGGV = new GUIGameValues();
-        SaveGUIData tempSD = new SaveGUIData();
         tempGGV = sd.loadGGVData();
         playerName = tempGGV.getPlayerName();
 		
@@ -151,22 +150,32 @@ public class Settings extends Activity implements OnClickListener, OnCheckedChan
     	case R.id.sound_on:
     		myDB.execSQL("update PlayerSettings set Sound_On = 1 where Player_Name = '" + playerName + "';");
     		myDB.close();
+    		tempGGV.setSound(true);
+    		sd.saveGGVData(tempGGV);
     		break;
     	case R.id.sound_off:
     		myDB.execSQL("update PlayerSettings set Sound_On = 0 where Player_Name = '" + playerName + "';");
     		myDB.close();
+    		tempGGV.setSound(false);
+    		sd.saveGGVData(tempGGV);
     		break;
     	case R.id.easy:
     		myDB.execSQL("update PlayerSettings set Difficulty = 'easy' where Player_Name = '" + playerName + "';");
     		myDB.close();
+    		tempGGV.setDifficulty("easy");
+    		sd.saveGGVData(tempGGV);
     		break;
     	case R.id.medium:
     		myDB.execSQL("update PlayerSettings set Difficulty = 'medium' where Player_Name = '" + playerName + "';");
     		myDB.close();
+    		tempGGV.setDifficulty("medium");
+    		sd.saveGGVData(tempGGV);
     		break;
     	case R.id.hard:
     		myDB.execSQL("update PlayerSettings set Difficulty = 'hard' where Player_Name = '" + playerName + "';");
     		myDB.close();
+    		tempGGV.setDifficulty("hard");
+    		sd.saveGGVData(tempGGV);
     		break;
     	}
 	}
