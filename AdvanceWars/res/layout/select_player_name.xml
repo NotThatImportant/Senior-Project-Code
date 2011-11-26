@@ -2,11 +2,11 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
-  android:background="@drawable/camo"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_gravity="center" android:id="@+id/select_player_name" android:text="@string/select_player_name_title"></TextView>
-    <TextView android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="wrap_content" android:id="@+id/select_player_name_description" android:text="@string/select_player_name_description"></TextView>
+  android:layout_height="match_parent"
+  android:background="@drawable/camo">
+    <TextView android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_gravity="center" android:id="@+id/select_player_name" android:text="@string/select_player_name_title" android:textStyle="bold"></TextView>
+    <TextView android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="wrap_content" android:id="@+id/select_player_name_description" android:text="@string/select_player_name_description" android:textStyle="bold"></TextView>
     <Spinner android:layout_height="wrap_content" android:id="@+id/player_name_selection" android:layout_width="250dp" android:layout_gravity="center"></Spinner>
     <Button android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="250dp" android:id="@+id/confirm_player_name" android:text="@string/select_player_button"></Button>
     

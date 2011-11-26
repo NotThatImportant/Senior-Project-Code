@@ -18,19 +18,23 @@
  
      <TextView android:id="@+id/player_name"
          android:layout_width="200dip"
-         android:layout_height="wrap_content"/>
+         android:layout_height="wrap_content"
+         android:textStyle="bold"/>
  
      <TextView android:id="@+id/wins"
          android:layout_width="50dip"
-         android:layout_height="wrap_content" android:layout_weight="1"/>
+         android:layout_height="wrap_content" android:layout_weight="1"
+         android:textStyle="bold"/>
  
      <TextView android:id="@+id/losses"
          android:layout_width="50dip"
-         android:layout_height="wrap_content"  android:layout_weight="1"/>
+         android:layout_height="wrap_content"  android:layout_weight="1"
+         android:textStyle="bold"/>
      
      <TextView android:id="@+id/xp"
          android:layout_width="50dip"
-         android:layout_height="wrap_content"  android:layout_weight="1"/>
+         android:layout_height="wrap_content"  android:layout_weight="1"
+         android:textStyle="bold"/>
      
 </LinearLayout>
    	    

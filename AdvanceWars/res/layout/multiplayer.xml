@@ -3,8 +3,9 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/multiplayer" android:text="@string/multiplayer_title" android:layout_gravity="center"></TextView>
+  android:layout_height="match_parent"
+  android:background="@drawable/camo">
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/multiplayer" android:text="@string/multiplayer_title" android:layout_gravity="center" android:textStyle="bold"></TextView>
     <Button android:layout_gravity="center" android:layout_height="wrap_content" android:text="@string/create_mp_game_button" android:id="@+id/create_mp_game" android:layout_width="250dp"></Button>
     <Button android:layout_gravity="center" android:layout_height="wrap_content" android:text="@string/connect_to_mp_game_button" android:id="@+id/connect_to_mp_game" android:layout_width="250dp"></Button>
     <Button android:layout_gravity="center" android:layout_height="wrap_content" android:text="@string/multiplayer_options_button" android:id="@+id/mp_options" android:layout_width="250dp"></Button>

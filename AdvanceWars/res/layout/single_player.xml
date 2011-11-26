@@ -3,8 +3,9 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_gravity="center" android:id="@+id/single_player" android:text="@string/single_player_title"></TextView>
+  android:layout_height="match_parent"
+  android:background="@drawable/camo">
+    <TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:layout_gravity="center" android:id="@+id/single_player" android:text="@string/single_player_title" android:textStyle="bold"></TextView>
     <Button android:layout_height="wrap_content" android:id="@+id/tutorial" android:layout_gravity="center" android:layout_width="250dp" android:text="@string/tutorial_button"></Button>
     <Button android:layout_height="wrap_content" android:id="@+id/quick_match" android:layout_gravity="center" android:layout_width="250dp" android:text="@string/quick_match_button"></Button>
     <Button android:layout_height="wrap_content" android:id="@+id/campaign" android:layout_gravity="center" android:layout_width="250dp" android:text="@string/campaign_button"></Button>
