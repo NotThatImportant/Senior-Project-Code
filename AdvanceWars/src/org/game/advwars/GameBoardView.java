@@ -238,6 +238,7 @@ public class GameBoardView extends View
 			coor[1] = tileY + mY;
 			return controller.selectCoordinates(coor[0],coor[1]);
 		}
+
 		return null;
 	}
 

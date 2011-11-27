@@ -75,12 +75,12 @@ public class GameBoard extends Activity implements OnTouchListener
 		gameBoardView.initGame();
 
 		// Background music
-		if (mp != null)
+		/*if (mp != null)
 			mp.release();
 
 		mp = MediaPlayer.create(this, R.raw.background_music);
 		mp.setLooping(true);
-		mp.start();
+		mp.start();*/
 	}
 
 	@Override
@@ -96,6 +96,8 @@ public class GameBoard extends Activity implements OnTouchListener
 
 	private void openMainMenuDialog()
 	{
+		ggvGlobal = sd.loadGGVData();
+
 		new AlertDialog.Builder(this)
 		.setTitle(R.string.app_name)
 		.setItems(R.array.in_game_menu,
@@ -106,15 +108,23 @@ public class GameBoard extends Activity implements OnTouchListener
 				if (i == 0)
 				{
 					// End turn
+					ggvGlobal.setInGameMenuAction(true, false, false);
+					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 1)
 				{
 					// Save game
+					ggvGlobal.setInGameMenuAction(false, true, false);
+					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 2)
 				{
 					//Intent intent = new Intent(this, MainMenu.class);
 					//startActivity(intent);
+					
+					// Quit game
+					ggvGlobal.setInGameMenuAction(false, false, true);
+					sd.saveGGVData(ggvGlobal);
 				}
 				else
 				{
@@ -153,7 +163,6 @@ public class GameBoard extends Activity implements OnTouchListener
 			if(mode == PRESS) {
 				options = gameBoardView.selectPoint(event.getX(), event.getY());
 				openContextMenu(v);
-
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");

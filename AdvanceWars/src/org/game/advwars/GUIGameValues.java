@@ -16,6 +16,7 @@ public class GUIGameValues implements Serializable
 	private String difficulty;
 	private String mapName;
 	private String faction;
+	private boolean[] inGameMenu;
 	
 	public GUIGameValues()
 	{
@@ -24,6 +25,7 @@ public class GUIGameValues implements Serializable
 		difficulty = "medium";
 		mapName = "";
 		faction = "";
+		inGameMenu = new boolean[3];
 	}
 	
 	public void setPlayerName (String playerName)
@@ -78,5 +80,27 @@ public class GUIGameValues implements Serializable
 	public String getFaction ()
 	{
 		return this.faction;
+	}
+	
+	public void setInGameMenuAction (boolean endTurn, boolean saveGame, boolean quitGame)
+	{
+		this.inGameMenu[0] = endTurn;
+		this.inGameMenu[1] = saveGame;
+		this.inGameMenu[2] = quitGame;
+	}
+	
+	public boolean getInGameMenuEndTurn ()
+	{
+		return this.inGameMenu[0];
+	}
+	
+	public boolean getInGameMenuSaveGame ()
+	{
+		return this.inGameMenu[1];
+	}
+	
+	public boolean getInGameMenuQuitGame ()
+	{
+		return this.inGameMenu[2];
 	}
 }
