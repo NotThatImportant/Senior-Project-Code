@@ -1,7 +1,6 @@
 package org.game.advwars;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -86,7 +85,6 @@ public class GameBoardView extends View
         loadTile(6, r.getDrawable(R.drawable.red_recon), mRedUnitArray);
         loadTile(7, r.getDrawable(R.drawable.red_rocket), mRedUnitArray);
         loadTile(8, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
-
     }
 
     public void resetTiles(int tilecount)
