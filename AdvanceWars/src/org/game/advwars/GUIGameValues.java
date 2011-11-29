@@ -1,6 +1,9 @@
 package org.game.advwars;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import controller.Controller;
 
 /**
  * 
@@ -17,6 +20,9 @@ public class GUIGameValues implements Serializable
 	private String mapName;
 	private String faction;
 	private boolean[] inGameMainMenu;
+	private ArrayList<String> commands;
+	private int selectedCommand;
+	private Controller c;
 	
 	public GUIGameValues()
 	{
@@ -26,6 +32,8 @@ public class GUIGameValues implements Serializable
 		mapName = "";
 		faction = "";
 		inGameMainMenu = new boolean[3];
+		selectedCommand = -1;
+		c = null;
 	}
 	
 	public void setPlayerName (String playerName)
@@ -102,5 +110,35 @@ public class GUIGameValues implements Serializable
 	public boolean getInGameMenuQuitGame ()
 	{
 		return this.inGameMainMenu[2];
+	}
+	
+	public void setAvailableCommands (ArrayList<String> commands)
+	{
+		this.commands = commands;
+	}
+	
+	public ArrayList<String> getAvailableCommands ()
+	{
+		return this.commands;
+	}
+	
+	public void setSelectedCommand (int command)
+	{
+		this.selectedCommand = command;
+	}
+	
+	public int getSelectedCommand ()
+	{
+		return this.selectedCommand;
+	}
+	
+	public void setController (Controller controller)
+	{
+		this.c = controller;
+	}
+	
+	public Controller getController ()
+	{
+		return this.c;
 	}
 }

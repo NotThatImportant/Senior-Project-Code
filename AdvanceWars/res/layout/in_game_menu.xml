@@ -9,34 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:text="@string/move_unit_button" />
+        android:text="@string/move_unit_button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/attack_unit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:text="@string/attack_unit_button" />
+        android:text="@string/attack_unit_button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/capture_building"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:text="@string/capture_building_button" />
+        android:text="@string/capture_building_button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/create_unit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:text="@string/create_unit_button" />
+        android:text="@string/create_unit_button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/unit_info"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:text="@string/unit_info_button" />
+        android:text="@string/unit_info_button"
+        android:visibility="gone" />
 
 </LinearLayout>

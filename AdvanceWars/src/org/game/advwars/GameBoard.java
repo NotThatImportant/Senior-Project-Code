@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class GameBoard extends Activity implements OnTouchListener
 {
 	private MediaPlayer mp;
+	private Controller c;
 	private static final String TAG = "GameBoard";
 	// We can be in one of these 3 states
 	static final int NONE = 0;
@@ -41,7 +42,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private SaveGUIData sd = new SaveGUIData();
 	private char p1Char;
 	private char p2Char;
-	private  ArrayList options;
+	private  ArrayList<String> commands;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -70,7 +71,7 @@ public class GameBoard extends Activity implements OnTouchListener
 
 		Player p1 = new Player("Player1", 0, p1Char);
 		Player p2 = new Player("Player2", 1, p2Char);
-		Controller c = new Controller(p1, p2, true, ggvGlobal.getMap());
+		c = new Controller(p1, p2, true, ggvGlobal.getMap());
 		gameBoardView.setController(c);
 		gameBoardView.initGame();
 
@@ -96,8 +97,6 @@ public class GameBoard extends Activity implements OnTouchListener
 
 	private void openMainMenuDialog()
 	{
-		ggvGlobal = sd.loadGGVData();
-
 		new AlertDialog.Builder(this)
 		.setTitle(R.string.app_name)
 		.setItems(R.array.in_game_menu,
@@ -108,14 +107,10 @@ public class GameBoard extends Activity implements OnTouchListener
 				if (i == 0)
 				{
 					// End turn
-					ggvGlobal.setInGameMainMenuAction(true, false, false);
-					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 1)
 				{
 					// Save game
-					ggvGlobal.setInGameMainMenuAction(false, true, false);
-					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 2)
 				{
@@ -123,8 +118,6 @@ public class GameBoard extends Activity implements OnTouchListener
 					//startActivity(intent);
 					
 					// Quit game
-					ggvGlobal.setInGameMainMenuAction(false, false, true);
-					sd.saveGGVData(ggvGlobal);
 				}
 				else
 				{
@@ -139,9 +132,6 @@ public class GameBoard extends Activity implements OnTouchListener
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-
-
-
 		// Handle touch events here...
 		switch (event.getAction() & MotionEvent.ACTION_MASK) {
 		case MotionEvent.ACTION_DOWN:
@@ -161,10 +151,21 @@ public class GameBoard extends Activity implements OnTouchListener
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
 			if(mode == PRESS) {
-				options = gameBoardView.selectPoint(event.getX(), event.getY());
-				openContextMenu(v);
-				Intent i = new Intent(this, InGameMenu.class);
-    			startActivity(i);
+				//options = gameBoardView.selectPoint(event.getX(), event.getY());
+				//openContextMenu(v);
+				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
+				
+				if (selectedPoints != null)
+					commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);
+				
+				if (commands != null)
+				{
+					ggvGlobal.setAvailableCommands(commands);
+					Intent i = new Intent(this, InGameMenu.class);
+					i.putExtra("ggv", ggvGlobal);
+	    			startActivity(i);
+	    			ggvGlobal = sd.loadGGVData();
+				}
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");

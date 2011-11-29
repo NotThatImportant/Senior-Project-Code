@@ -405,13 +405,13 @@ public class Controller {
 	public ArrayList<String> getUnitInfo() {
 		Unit sUnit = log.getUnit(x, y);
 		int hp = sUnit.getHP();
-		int move = sUnit.getMovement();
+		int move = sUnit.getMove();
 		int armor = sUnit.getArmor();
 		int ammo = sUnit.getAmmo();
 		String name = sUnit.getName();
 		int attack = sUnit.getAttack();
 		int fuel = sUnit.getFuel();
-		int atkRange = sUnit.getAttkRange();
+		int atkRange = sUnit.getAtkRange();
 
 		String nameString = "Name: " + name;		
 		String hpString = "HP: " + hp;

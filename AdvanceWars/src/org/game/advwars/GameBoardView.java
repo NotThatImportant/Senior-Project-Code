@@ -241,6 +241,24 @@ public class GameBoardView extends View
 
 		return null;
 	}
+	
+	public int[] getPoints(float x, float y)
+	{
+		x = x - mXOffset;
+		y = y - mYOffset;
+		int tileX = (int) x/mTileSize;
+		int tileY = (int) y/mTileSize;
+		
+		if(tileX < mTileGrid.length && tileY < mTileGrid.length && tileX >= 0 && tileY >= 0)
+		{
+			int[] coor = new int[2];
+			coor[0] = tileX + mX;
+			coor[1] = tileY + mY;
+			return coor;
+		}
+
+		return null;
+	}
 
 	public void translateBoard(float x, float y)
 	{
