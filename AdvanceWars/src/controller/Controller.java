@@ -401,6 +401,40 @@ public class Controller {
 	{
 		return log.getUB();
 	}
+
+	public ArrayList<String> getUnitInfo() {
+		Unit sUnit = log.getUnit(x, y);
+		int hp = sUnit.getHP();
+		int move = sUnit.getMovement();
+		int armor = sUnit.getArmor();
+		int ammo = sUnit.getAmmo();
+		String name = sUnit.getName();
+		int attack = sUnit.getAttack();
+		int fuel = sUnit.getFuel();
+		int atkRange = sUnit.getAttkRange();
+
+		String nameString = "Name: " + name;		
+		String hpString = "HP: " + hp;
+		String moveString = "Move: " + move;
+		String attackString = "Attack: " + attack;
+		String attkRangeString = "Range: " + atkRange;
+		String armorString = "Armor: " + armor;
+		String ammoString = "Ammo: " + ammo;
+		String fuelString = "Fuel: " + fuel;
+		
+		ArrayList<String> toSend = new ArrayList<String>();
+
+		toSend.add(nameString);
+		toSend.add(hpString);	
+		toSend.add(moveString);
+		toSend.add(attackString);
+		toSend.add(attkRangeString);
+		toSend.add(armorString);
+		toSend.add(ammoString);
+		toSend.add(fuelString);
+
+		return toSend;
+	}
 		
 	public int[][] getConvertedUnits(int pNum){
 		Unit[][] uB = log.getUB();
