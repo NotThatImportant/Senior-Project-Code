@@ -53,8 +53,8 @@ public class AI extends Player{
 
 		lastAction = "";
 		moveLogger = new ArrayList<String>();
-		
-		//test();
+
+//		test();
 
 	}
 
@@ -127,6 +127,8 @@ public class AI extends Player{
 				moved = moveCloserToEnemies(actionUnit, true);
 
 			}
+
+			//moveToUncaptured(actionUnit, true, false);
 
 		}
 		if(availableCapture){
@@ -348,7 +350,6 @@ public class AI extends Player{
 		int moveX = 0, moveY = 0;
 		boolean moved = false;
 
-		//		int closest = 999;
 		int[] temp = getUnitLocation(pUnit);
 		//		l1: for(int k = 0; k < log.getSize(); k++)
 		//			for(int u = 0; u < log.getSize(); u++){
@@ -453,6 +454,8 @@ public class AI extends Player{
 
 
 	protected int[] moveTowardLocation(Unit pUnit, int dX, int dY, boolean isBase,  boolean desperation){
+
+		int origX = pUnit.getX(), origY = pUnit.getY();
 		char[][] pMoves = log.getMoves(pUnit);
 
 		int[] retVal = new int[2];
@@ -461,66 +464,108 @@ public class AI extends Player{
 		retVal[0] = pUnit.getX();
 		retVal[1] = pUnit.getY();
 
-		
+
+		System.out.println(pUnit.getName() +": " );
+		for(int i = 0; i < log.getSize(); i++){
+			for(int j = 0; j < log.getSize(); j++)
+				System.out.print(pMoves[i][j] + " ");
+			System.out.println();
+		}
 		boolean foundMove = false;
 		int bestMove = 999;
 		//this method will move each until closer to the specified position
 		l1: for (int r = 0; r < pMoves.length; r++) {
 			for (int c = 0; c < pMoves.length; c++) {
 				if(pMoves[r][c] == 'x' && unitBoard[r][c] == null){
-					if(desperation==false && isItSafe(r,c))
-						if(getDistance(r, c,dX,dY) < bestMove){
-							// Is the base you want to get to AND the unit is a capturing type
-							if(r == dX && c == dY && isBase == true && pUnit.getType()==Unit.INFANTRYTYPE){
-								retVal[1] = r;
-								retVal[2] = c;
-								foundMove = true;
-								bestMove = getDistance(r, c, dX, dY);
-								System.out.println("Best move so far: " + retVal[1] + " " + retVal[2] + "\nDistance: " + bestMove);
-								break l1;
-							}
-							// If it's the spot you want to go to AND it's not a base
-							else if(r==dX && c==dY &&isBase==false){
-								retVal[1] = r;
-								retVal[2] = c;
-								foundMove = true;
-								bestMove = getDistance(r, c, dX, dY);
-								System.out.println("Best move so far: " + retVal[1] + " " + retVal[2] + "\nDistance: " + bestMove);
-								break l1;
-							}
-							// 
-							else if(r==dX && c==dY && desperation==true){
-								if(r == dX && c == dY && isBase){
-									if(isBase==true && pUnit.getType() == Unit.INFANTRYTYPE){
-										retVal[1] = r;
-										retVal[2] = c;
-										foundMove = true;
-										bestMove = getDistance(r, c, dX, dY);
-										System.out.println("Best move so far: " + retVal[1] + " " + retVal[2] + "\nDistance: " + bestMove);
-										break l1;
-									}
-								}
-
-								retVal[1] = r;
-								retVal[2] = c;
-								foundMove = true;
-								bestMove = getDistance(r, c, dX, dY);
-								System.out.println("Best move so far: " + retVal[1] + " " + retVal[2] + "\nDistance: " + bestMove);
-							}
+					System.out.println("hi 2");
+					if(getDistance(r, c,dX,dY) < bestMove){ System.out.println("hi 3 values: " + r + " " + c);
+					// Is the spot you want
+					if(r == dX && c == dY){ System.out.println("hi 4 values: " + r + " " + c);
+					// If it's a base and it's safe
+					if(isBase == true && isItSafe(r,c) == true){ 
+						if(pUnit.getType()==Unit.INFANTRYTYPE){
+							System.out.println("What 1");
+							retVal[0] = r;
+							retVal[1] = c;
+							foundMove = true;
+							bestMove = getDistance(r, c, dX, dY);
+							System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+							break l1;
 						}
+					}
+					// It's a base, it's not safe, but you're desperate
+					else if(isBase==true && isItSafe(r,c) == false && desperation == true){
+						if(pUnit.getType() == Unit.INFANTRYTYPE){
+							System.out.println("What 2");
+							retVal[0] = r;
+							retVal[1] = c;
+							foundMove = true;
+							bestMove = getDistance(r, c, dX, dY);
+							System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+							break l1;
+						}
+					}
+					// It's not a base, but it's safe
+					else if(isBase == false && isItSafe(r,c) == true){
+						retVal[0] = r;
+						retVal[1] = c;
+						foundMove = true;
+						bestMove = getDistance(r, c, dX, dY);
+						System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+						break l1;
+					}
+					else if(isBase == false && isItSafe(r,c) == false && desperation == true){
+						retVal[0] = r;
+						retVal[1] = c;
+						foundMove = true;
+						bestMove = getDistance(r, c, dX, dY);
+						System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+						break l1;
+					}
+					}
+					// Not the spot you want
+					else{
+						System.out.println("hi 5 values: " + r + " " + c);
+						if(isItSafe(r,c) == true){
+							System.out.println("hi 6 values: " + r + " " + c);
+							retVal[0] = r;
+							retVal[1] = c;
+							foundMove = true;
+							bestMove = getDistance(r, c, dX, dY);
+							System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+						}
+						else if(isItSafe(r,c) == false && desperation == true){
+							System.out.println("hi 7 values: " + r + " " + c);
+							retVal[0] = r;
+							retVal[1] = c;
+							foundMove = true;
+							bestMove = getDistance(r, c, dX, dY);
+							System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+						}
+						else{
+							System.out.println("hi 8 values: " + r + " " + c);
+							retVal[0] = r;
+							retVal[1] = c;
+							foundMove = true;
+							bestMove = getDistance(r, c, dX, dY);
+							System.out.println("Best move so far: " + retVal[0] + " " + retVal[1] + "\nDistance: " + bestMove);
+						}
+					}
+					}
 				}
 			}
-
-			if(foundMove){
-				//retVal[0] = closestX;
-				//retVal[1] = closestY;
-				//int[] unitLoc = getUnitLocation(pUnit);
-				//log.moveUnit(pUnit, closestX, closestY);
-				//lastAction = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
-				//System.out.println(lastAction);
-				//moveLogger.add(lastAction);
-			}
 		}
+
+		if(foundMove){
+			//retVal[0] = closestX;
+			//retVal[1] = closestY;
+			//int[] unitLoc = getUnitLocation(pUnit);
+			//log.moveUnit(pUnit, closestX, closestY);
+			//lastAction = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
+			//System.out.println(lastAction);
+			//moveLogger.add(lastAction);
+		}
+
 		return retVal;
 
 	}
@@ -531,16 +576,16 @@ public class AI extends Player{
 	 * For the AI this means a is the hQ and b is the unit
 	 ***************************************************************/
 	protected boolean moveCloserToEnemies(Unit pUnit, boolean desperation) {
-		boolean hasMoved = false;
-		//ArrayList<Unit> toMove = getPossibleMoves(); 
+//		boolean hasMoved = false;
+//		//ArrayList<Unit> toMove = getPossibleMoves(); 
 		Tile[][] tBoard = log.getTBoard();
-		Unit[][] uBoard = log.getUB();
+//		Unit[][] uBoard = log.getUB();
 		int hx = 0;
 		int hy = 0;
-
-		//pmoves represents the + and - of where the unit can move 
-		//at its current X and Y location!
-		char[][] pMoves = log.getMoves(pUnit);
+//
+//		//pmoves represents the + and - of where the unit can move 
+//		//at its current X and Y location!
+//		char[][] pMoves = log.getMoves(pUnit);
 
 		//Sets hx and hy which gets the location of enemies HQ
 		for (int r = 0; r < log.getSize(); r++) {
@@ -552,44 +597,79 @@ public class AI extends Player{
 			}
 		}
 
-		int closestX = pUnit.getX();
-		int closestY = pUnit.getY();
+//		int closestX = pUnit.getX();
+//		int closestY = pUnit.getY();
 
+//
+//		boolean foundMove = false;
+//		int bestMove = 999;
+//		//this method will move each until closer to the HQ
+//		for (int r = 0; r < pMoves.length; r++) {
+//			for (int c = 0; c < pMoves.length; c++) {
+//				if(pMoves[r][c] == 'x' && uBoard[r][c] == null){
+//					if(desperation==false && isItSafe(r,c)){
+//						if(getDistance(r, c,hx,hy) <= bestMove){
+//							foundMove = true;
+//							closestX = r;
+//							closestY = c;
+//							bestMove = getDistance(closestX, closestY, hx, hy);
+//						}
+//					}
+//					else if(desperation==true){
+//						if(getDistance(r, c,hx,hy) <= bestMove){
+//							foundMove = true;
+//							closestX = r;
+//							closestY = c;
+//							bestMove = getDistance(closestX, closestY, hx, hy);
+//						}
+//					}
+//				}
+//			}
+//		}
+//		if(foundMove){
+//			int[] unitLoc = getUnitLocation(pUnit);
+//			log.moveUnit(pUnit, closestX, closestY);
+//			lastAction = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
+//			moveLogger.add(lastAction);
+//			hasMoved = true;
+//		}
+		
+		//return hasMoved;
+		
+		boolean foundSafe = false;
+		int moveX = 0, moveY = 0;
+		boolean moved = false;
 
-		boolean foundMove = false;
-		int bestMove = 999;
-		//this method will move each until closer to the HQ
-		for (int r = 0; r < pMoves.length; r++) {
-			for (int c = 0; c < pMoves.length; c++) {
-				if(pMoves[r][c] == 'x' && uBoard[r][c] == null){
-					if(desperation==false && isItSafe(r,c)){
-						if(getDistance(r, c,hx,hy) <= bestMove){
-							foundMove = true;
-							closestX = r;
-							closestY = c;
-							bestMove = getDistance(closestX, closestY, hx, hy);
-						}
-					}
-					else if(desperation==true){
-						if(getDistance(r, c,hx,hy) <= bestMove){
-							foundMove = true;
-							closestX = r;
-							closestY = c;
-							bestMove = getDistance(closestX, closestY, hx, hy);
-						}
-					}
-				}
-			}
+		int[] temp = getUnitLocation(pUnit);
+		
+		
+		temp = moveTowardLocation(pUnit, moveX, moveY, true,  false);
+		boolean valid = false;
+		if(temp[0] != -1 && temp[1] != -1){
+			valid = true;
 		}
-		if(foundMove){
-			int[] unitLoc = getUnitLocation(pUnit);
-			log.moveUnit(pUnit, closestX, closestY);
-			lastAction = "move,"+pUnit.getName()+","+unitLoc[0]+","+unitLoc[1]+","+closestX+","+closestY;
+		if(temp[0] != moveX && temp[1] != moveY && valid){
+			foundSafe = true;
+		}
+		moveX = temp[0];
+		moveY = temp[1];
+
+
+		if(foundSafe == true && valid){
+			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
+			log.moveUnit(pUnit, moveX, moveY);
 			moveLogger.add(lastAction);
-			hasMoved = true;
+			moved = true;
+		}
+		else if(desperation == true && valid){
+			log.moveUnit(pUnit, moveX, moveY);
+			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
+			moveLogger.add(lastAction);
+			moved = true;
 		}
 
-		return hasMoved;
+
+		return moved;
 
 	}
 
@@ -1214,6 +1294,16 @@ public class AI extends Player{
 		log.setUnit(23, 28, new HeavyTank(2));
 		log.setUnit(28, 28, new Rockets(2));
 
+		Unit m = new Infantry(2);
+		log.setUnit(15, 15, m);
+		char[][] t = log.getMoves(m);
+		for(int i = 0; i < log.getSize(); i++){
+			for(int j = 0; j < log.getSize(); j++)
+				System.out.print(t[i][j] + " ");
+			System.out.println();
+		}
+
+
 		lastAction = "Game started";
 		System.out.println(lastAction);
 		moveLogger.clear();
@@ -1231,26 +1321,16 @@ public class AI extends Player{
 			scan.nextLine();
 		}
 	}
-	
-	private static void waitOneSec(){
-		try {
-			Thread.currentThread();
-			Thread.sleep(1200);
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/*public static void main(String[] args){
-		new AI("Herp, Derp", 2, 'b');
-	}*/
 
-	public ArrayList<String> getActions()
-	{
+
+	public ArrayList<String> getActions(){
 		return moveLogger;
 	}
 
-	
+//	public static void main(String[] args){
+//		new AI("Herp, Derp", 2, 'b');
+//	}
+
+
 
 }
