@@ -108,13 +108,13 @@ public class GameBoard extends Activity implements OnTouchListener
 				if (i == 0)
 				{
 					// End turn
-					ggvGlobal.setInGameMenuAction(true, false, false);
+					ggvGlobal.setInGameMainMenuAction(true, false, false);
 					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 1)
 				{
 					// Save game
-					ggvGlobal.setInGameMenuAction(false, true, false);
+					ggvGlobal.setInGameMainMenuAction(false, true, false);
 					sd.saveGGVData(ggvGlobal);
 				}
 				else if (i == 2)
@@ -123,7 +123,7 @@ public class GameBoard extends Activity implements OnTouchListener
 					//startActivity(intent);
 					
 					// Quit game
-					ggvGlobal.setInGameMenuAction(false, false, true);
+					ggvGlobal.setInGameMainMenuAction(false, false, true);
 					sd.saveGGVData(ggvGlobal);
 				}
 				else

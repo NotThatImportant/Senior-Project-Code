@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class InGameMenu extends Activity implements OnClickListener
 {
@@ -24,6 +25,10 @@ public class InGameMenu extends Activity implements OnClickListener
         createUnit.setOnClickListener(this);
         View unitInfo = findViewById(R.id.unit_info);
         unitInfo.setOnClickListener(this);
+        
+        // How to disable a particular button
+        //final Button attackUnit = (Button) findViewById(R.id.attack_unit);
+        //attackUnit.setEnabled(false);
     }
 
 	@Override
@@ -44,7 +49,8 @@ public class InGameMenu extends Activity implements OnClickListener
     		this.finish();
     		break;
     	case R.id.unit_info:
-    		this.finish();
+    		Intent i = new Intent(this, UnitInfoScreen.class);
+			startActivity(i);
     		break;
     	}
 	}

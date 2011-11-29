@@ -74,6 +74,7 @@
     <string name="capture_building_button">Capture</string>
     <string name="create_unit_button">Create Unit</string>
     <string name="unit_info_button">Unit Info</string>
+    <string name="unit_info_screen_title">Unit Info</string>
     
     
 </resources>

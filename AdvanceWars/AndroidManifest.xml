@@ -89,5 +89,10 @@
         android:screenOrientation="landscape"
         android:theme="@android:style/Theme.Dialog">
         </activity>
+        <activity android:name=".UnitInfoScreen"
+        android:screenOrientation="landscape"
+        android:label="@string/unit_info_screen_title"
+        android:theme="@android:style/Theme.Dialog">
+        </activity>
     </application>
 </manifest>

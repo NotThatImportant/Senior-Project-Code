@@ -157,6 +157,7 @@ containing a value of this type.
         public static final int settings=0x7f03000f;
         public static final int single_player=0x7f030010;
         public static final int under_construction=0x7f030011;
+        public static final int unit_info_screen=0x7f030012;
     }
     public static final class raw {
         public static final int background_music=0x7f040000;
@@ -218,6 +219,7 @@ containing a value of this type.
         public static final int under_construction_description=0x7f050015;
         public static final int under_construction_title=0x7f050014;
         public static final int unit_info_button=0x7f050038;
+        public static final int unit_info_screen_title=0x7f050039;
         public static final int welcome_title=0x7f050007;
     }
     public static final class styleable {
