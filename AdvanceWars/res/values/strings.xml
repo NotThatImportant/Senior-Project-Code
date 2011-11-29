@@ -69,6 +69,11 @@
     </string-array>
     <string name="change_player_name_title">Change Current Player Name</string>
     <string name="change_player_name_button_2">Change Player Name</string>
+    <string name="move_unit_button">Move</string>
+    <string name="attack_unit_button">Attack</string>
+    <string name="capture_building_button">Capture</string>
+    <string name="create_unit_button">Create Unit</string>
+    <string name="unit_info_button">Unit Info</string>
     
     
 </resources>

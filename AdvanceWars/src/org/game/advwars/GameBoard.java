@@ -163,6 +163,8 @@ public class GameBoard extends Activity implements OnTouchListener
 			if(mode == PRESS) {
 				options = gameBoardView.selectPoint(event.getX(), event.getY());
 				openContextMenu(v);
+				Intent i = new Intent(this, InGameMenu.class);
+    			startActivity(i);
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");

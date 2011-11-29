@@ -85,5 +85,9 @@
         <activity android:name=".GameBoard"
         android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".InGameMenu"
+        android:screenOrientation="landscape"
+        android:theme="@android:style/Theme.Dialog">
+        </activity>
     </application>
 </manifest>
