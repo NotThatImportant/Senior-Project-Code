@@ -1,9 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/TableLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:layout_height="match_parent" >
     
+    <TableRow
+        android:id="@+id/TableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-</LinearLayout>
+        <Button
+            android:id="@+id/infantry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:singleLine="false"
+            android:text="@string/infantry_unit_button" />
+
+        <Button
+            android:id="@+id/mech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/mech_unit_button" />
+
+        <Button
+            android:id="@+id/recon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recon_unit_button" />
+
+        <Button
+            android:id="@+id/artillery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/artillery_unit_button" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/TableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/anti_air"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/anti_air_unit_button" />
+
+        <Button
+            android:id="@+id/tank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/tank_unit_button" />
+
+        <Button
+            android:id="@+id/chopper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/chopper_unit_button" />
+
+        <Button
+            android:id="@+id/rockets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/rockets_unit_button" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/TableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/med_tank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/medium_tank_unit_button" />
+
+        <Button
+            android:id="@+id/fighter_jet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/fighter_jet_unit_button" />
+
+        <Button
+            android:id="@+id/heavy_tank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/heavy_tank_unit_button" />
+
+        <Button
+            android:id="@+id/bomber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/bomber_unit_button" />
+
+    </TableRow>
+
+</TableLayout>

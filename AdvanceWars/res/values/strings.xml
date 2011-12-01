@@ -78,6 +78,18 @@
     <string name="end_turn_button">End Turn</string>
     <string name="save_game_button">Save Current Game</string>
     <string name="quit_game_button">Quit Current Game</string>
+    <string name="infantry_unit_button">Infantry\n[$1000]</string>
+    <string name="mech_unit_button">Mech\n[$3000]</string>
+    <string name="recon_unit_button">Recon\n[$4000]</string>
+    <string name="artillery_unit_button">Artillery\n[$6000]</string>
+    <string name="anti_air_unit_button">Anti-Air\n[$6000]</string>
+    <string name="chopper_unit_button">Chopper\n[$7000]</string>
+    <string name="tank_unit_button">Tank\n[$7000]</string>
+    <string name="rockets_unit_button">Rockets\n[$12000]</string>
+    <string name="medium_tank_unit_button">Med Tank\n[$14000]</string>
+    <string name="fighter_jet_unit_button">Fighter Jet\n[$15000]</string>
+    <string name="heavy_tank_unit_button">Heavy Tank\n[$24000]</string>
+    <string name="bomber_unit_button">Bomber\n[$26000]</string>
     
     
 </resources>

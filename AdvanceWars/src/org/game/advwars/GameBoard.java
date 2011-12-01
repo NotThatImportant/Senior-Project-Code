@@ -163,6 +163,9 @@ public class GameBoard extends Activity implements OnTouchListener
 	    			startActivity(i);
 	    			ggvGlobal = sd.loadGGVData();
 				}
+				
+				Intent i2 = new Intent(this, UnitSelectionMenu.class);
+				startActivity(i2);
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");

@@ -11,8 +11,7 @@ import units.APC;
 import units.AntiAir;
 import units.Artillery;
 import units.Bomber;
-import units.ChopperA;
-import units.ChopperB;
+import units.Chopper;
 import units.FighterJet;
 import units.HeavyTank;
 import units.Infantry;
@@ -974,11 +973,9 @@ public class AI extends Player{
 		}else if(type == types.ARTILLERY.ordinal()){
 			return new Artillery(-1);
 		}else if(type == types.BOMBER.ordinal()){
-			return new Bomber();
+			return new Bomber(-1);
 		}else if(type == types.CHOPPERA.ordinal()){
-			return new ChopperA();
-		}else if(type == types.CHOPPERB.ordinal()){
-			return new ChopperB();
+			return new Chopper(-1);
 		}else if(type == types.FIGHTERJET.ordinal()){
 			return new FighterJet(-1);
 		}else if(type == types.HEAVYTANK.ordinal()){
