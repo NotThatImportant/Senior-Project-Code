@@ -75,6 +75,9 @@
     <string name="create_unit_button">Create Unit</string>
     <string name="unit_info_button">Unit Info</string>
     <string name="unit_info_screen_title">Unit Info</string>
+    <string name="end_turn_button">End Turn</string>
+    <string name="save_game_button">Save Current Game</string>
+    <string name="quit_game_button">Quit Current Game</string>
     
     
 </resources>

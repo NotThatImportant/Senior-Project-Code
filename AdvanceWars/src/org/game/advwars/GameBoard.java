@@ -6,7 +6,6 @@ import controller.Controller;
 import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
@@ -89,44 +88,42 @@ public class GameBoard extends Activity implements OnTouchListener
 	{
 		if (keyCode == KeyEvent.KEYCODE_MENU)
 		{
-			openMainMenuDialog();
+			Intent i = new Intent(this, InGameMainMenu.class);
+			i.putExtra("ggv", ggvGlobal);
+			startActivityForResult(i, 0);
+
 			return true;
 		}
+		
 		return super.onKeyDown(keyCode, event);
 	}
-
-	private void openMainMenuDialog()
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		new AlertDialog.Builder(this)
-		.setTitle(R.string.app_name)
-		.setItems(R.array.in_game_menu,
-				new DialogInterface.OnClickListener()
+		ggvGlobal = sd.loadGGVData();
+		
+		if (ggvGlobal.getInGameMenuEndTurn())
 		{
-			public void onClick(DialogInterface dialogInterface, int i)
-			{
-				if (i == 0)
-				{
-					// End turn
-				}
-				else if (i == 1)
-				{
-					// Save game
-				}
-				else if (i == 2)
-				{
-					//Intent intent = new Intent(this, MainMenu.class);
-					//startActivity(intent);
-					
-					// Quit game
-				}
-				else
-				{
-					//Intent intent2 = new Intent(this, MainMenu.class);
-					//startActivity(intent2);
-				}
-			}
-		})
-		.show();
+			// End game code
+		}
+		else if (ggvGlobal.getInGameMenuSaveGame())
+		{
+			// Save game code
+		}
+		else if (ggvGlobal.getInGameMenuQuitGame())
+		{
+			Intent i = new Intent(this, MainMenu.class);
+			i.putExtra("ggv", ggvGlobal);
+			startActivityForResult(i, 0);
+		}
+		else
+		{
+			// This should never execute, but if it does then an error has occurred
+			this.finish();
+		}
+		
+	    super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -194,26 +191,8 @@ public class GameBoard extends Activity implements OnTouchListener
 
 		//Toast.makeText(v.getContext(), "y: " +event.getY()+ " \nRawY:" + event.getRawY(), Toast.LENGTH_SHORT).show();
 
-
-
-
-
 		v.invalidate();
 
-		return true;
-	}
-
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenu.ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		menu.setHeaderTitle("Context Menu");
-		menu.add(0, v.getId(), 0, "Action 1");
-		menu.add(0, v.getId(), 0, "Action 2");
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
 		return true;
 	}
 
