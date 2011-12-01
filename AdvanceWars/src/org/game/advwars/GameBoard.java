@@ -130,7 +130,8 @@ public class GameBoard extends Activity implements OnTouchListener
 	public boolean onTouch(View v, MotionEvent event)
 	{
 		// Handle touch events here...
-		switch (event.getAction() & MotionEvent.ACTION_MASK) {
+		switch (event.getAction() & MotionEvent.ACTION_MASK)
+		{
 		case MotionEvent.ACTION_DOWN:
 			start.set(event.getX(), event.getY());
 			Log.d(TAG, "mode=DRAG");
@@ -139,7 +140,8 @@ public class GameBoard extends Activity implements OnTouchListener
 		case MotionEvent.ACTION_POINTER_DOWN:
 			oldDist = spacing(event);
 			Log.d(TAG, "oldDist=" + oldDist);
-			if (oldDist > 10f) {
+			if (oldDist > 10f)
+			{
 				midPoint(mid, event);
 				mode = ZOOM;
 				Log.d(TAG, "mode=ZOOM");
@@ -147,25 +149,37 @@ public class GameBoard extends Activity implements OnTouchListener
 			break;
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_POINTER_UP:
-			if(mode == PRESS) {
-				//options = gameBoardView.selectPoint(event.getX(), event.getY());
-				//openContextMenu(v);
+			if(mode == PRESS)
+			{
+				// Get selected points from game board view
 				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
 				
+				// If selected points are valid pass them to the controller and get a list of commands from it
 				if (selectedPoints != null)
 					commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);
 				
+				// Check if commands are valid
 				if (commands != null)
 				{
-					ggvGlobal.setAvailableCommands(commands);
-					Intent i = new Intent(this, InGameMenu.class);
-					i.putExtra("ggv", ggvGlobal);
-	    			startActivity(i);
-	    			ggvGlobal = sd.loadGGVData();
+					// What to do if commands are for a unit
+					if (commands.get(0).toUpperCase().equals("MOVE"))
+					{
+						ggvGlobal.setAvailableCommands(commands);
+						Intent i = new Intent(this, InGameMenu.class);
+						i.putExtra("ggv", ggvGlobal);
+						startActivity(i);
+					}
+					// What to do if commands are for production building
+					else
+					{
+						ggvGlobal.setAvailableCommands(commands);
+						Intent i2 = new Intent(this, UnitSelectionMenu.class);
+						i2.putExtra("ggv", ggvGlobal);
+						startActivity(i2);
+					}
+					
+					ggvGlobal = sd.loadGGVData();
 				}
-				
-				Intent i2 = new Intent(this, UnitSelectionMenu.class);
-				startActivity(i2);
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");
