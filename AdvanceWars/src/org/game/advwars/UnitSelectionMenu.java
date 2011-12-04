@@ -64,6 +64,24 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		/*
+		 * Infantry
+		 * Mech
+		 * Anti-Air
+		 * APC
+		 * Artillery
+		 * Heavy Tank
+		 * Medium Tank
+		 * Recon
+		 * Rocket
+		 * Tank
+		 * Bomber
+		 * Chopper
+		 * Fighter Jet
+		 * 
+		 * produceUnit() method
+		 */
+		
 		switch (v.getId())
 		{
 		case R.id.infantry:

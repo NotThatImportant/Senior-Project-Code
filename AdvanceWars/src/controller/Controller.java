@@ -151,7 +151,8 @@ public class Controller {
 		}
 	}
 
-	public char[][] unitTakeAction(int unitType, int action) {
+	public char[][] unitTakeAction(int action)
+	{
 		char[][] canDo = null;
 		
 		if (action == MOVE) {

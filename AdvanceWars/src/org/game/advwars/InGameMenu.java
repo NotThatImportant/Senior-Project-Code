@@ -37,27 +37,28 @@ public class InGameMenu extends Activity implements OnClickListener
 		View unitInfo = findViewById(R.id.unit_info);
 		unitInfo.setOnClickListener(this);
 
+		// Disable buttons based on commands that are passed
 		for (int i = 0; i < commands.size(); i++)
 		{
-			if(commands.get(i).toUpperCase().equals("MOVE"))
+			if(!commands.get(i).toUpperCase().equals("MOVE"))
 			{
 				final Button moveUnit = (Button) findViewById(R.id.move_unit);
-				moveUnit.setVisibility(Button.VISIBLE);
+				moveUnit.setEnabled(false);
 			}
-			if(commands.get(i).toUpperCase().equals("ATTACK"))
+			if(!commands.get(i).toUpperCase().equals("ATTACK"))
 			{
 				final Button attackUnit = (Button) findViewById(R.id.attack_unit);
-				attackUnit.setVisibility(Button.VISIBLE);
+				attackUnit.setEnabled(false);
 			}
-			if(commands.get(i).toUpperCase().equals("CAPTURE"))
+			if(!commands.get(i).toUpperCase().equals("CAPTURE"))
 			{
 				final Button captureBuilding = (Button) findViewById(R.id.capture_building);
-				captureBuilding.setVisibility(Button.VISIBLE);
+				captureBuilding.setEnabled(false);
 			}
-			if(commands.get(i).toUpperCase().equals("UNITINFO"))
+			if(!commands.get(i).toUpperCase().equals("UNITINFO"))
 			{
 				final Button uInfo = (Button) findViewById(R.id.unit_info);
-				uInfo.setVisibility(Button.VISIBLE);
+				uInfo.setEnabled(false);
 			}
 		}
 
