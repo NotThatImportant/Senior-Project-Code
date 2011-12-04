@@ -75,12 +75,14 @@ public class GameBoard extends Activity implements OnTouchListener
 		gameBoardView.initGame();
 
 		// Background music
-		/*if (mp != null)
+		if (mp != null){
 			mp.release();
-
-		mp = MediaPlayer.create(this, R.raw.background_music);
-		mp.setLooping(true);
-		mp.start();*/
+		}
+		
+		//Begin gameplay music
+        mp = MediaPlayer.create(this, R.raw.background_music);
+        mp.setLooping(true);
+    	mp.start();
 	}
 
 	@Override
@@ -180,6 +182,8 @@ public class GameBoard extends Activity implements OnTouchListener
 					
 					ggvGlobal = sd.loadGGVData();
 				}
+
+				
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");
