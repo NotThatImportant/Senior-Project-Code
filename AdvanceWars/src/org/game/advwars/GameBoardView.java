@@ -21,6 +21,10 @@ public class GameBoardView extends View
     private static int mYOffset;
     private Bitmap[] mTileArray;
     private Bitmap[] mRedUnitArray;
+    //private Bitmap[] mRedBuildingArray;
+    private Bitmap[] mBlueUnitArray;
+    //private Bitmap[] mBlueBuildingArray;
+    private Bitmap[] mUncaptBuildingArray;
     private char[][] mTileGrid;
     private int[][] mPlayer1Units;
     private int[][] mPlayer2Units;
@@ -36,8 +40,6 @@ public class GameBoardView extends View
 
         mX = 0;
         mY = 0;
-
-        
         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
@@ -51,10 +53,7 @@ public class GameBoardView extends View
         
         mX = 0;
         mY = 0;
-        
-
-        
-        
+         
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
         mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
         initGameBoardView();
@@ -67,12 +66,21 @@ public class GameBoardView extends View
 
         Resources r = this.getContext().getResources();
         
-        resetTiles(5);
-        loadTile(0, r.getDrawable(R.drawable.ground), mTileArray);
+        resetTiles(13);
+        
+        loadTile(0, r.getDrawable(R.drawable.grass2), mTileArray);
         loadTile(1, r.getDrawable(R.drawable.mountain), mTileArray);
         loadTile(2, r.getDrawable(R.drawable.road), mTileArray);
         loadTile(3, r.getDrawable(R.drawable.water), mTileArray);
         loadTile(4, r.getDrawable(R.drawable.selected), mTileArray);
+        loadTile(5, r.getDrawable(R.drawable.blue_building), mTileArray);
+        loadTile(6, r.getDrawable(R.drawable.blue_hq), mTileArray);
+        loadTile(7, r.getDrawable(R.drawable.blue_factory), mTileArray);
+        loadTile(8, r.getDrawable(R.drawable.red_building), mTileArray);
+        loadTile(9, r.getDrawable(R.drawable.red_hq), mTileArray);
+        loadTile(10, r.getDrawable(R.drawable.red_factory), mTileArray);
+        loadTile(11, r.getDrawable(R.drawable.uncaptured_building), mTileArray);
+        loadTile(12, r.getDrawable(R.drawable.uncaptured_factory), mTileArray);
 
         mRedUnitArray = new Bitmap[9];
 
@@ -85,6 +93,35 @@ public class GameBoardView extends View
         loadTile(6, r.getDrawable(R.drawable.red_recon), mRedUnitArray);
         loadTile(7, r.getDrawable(R.drawable.red_rocket), mRedUnitArray);
         loadTile(8, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
+        
+        /*mRedBuildingArray = new Bitmap[3];
+        
+        loadTile(0, r.getDrawable(R.drawable.red_building), mRedBuildingArray);
+        loadTile(1, r.getDrawable(R.drawable.red_hq), mRedBuildingArray);
+        loadTile(2, r.getDrawable(R.drawable.red_factory), mRedBuildingArray);*/
+        
+        mBlueUnitArray = new Bitmap[9];
+
+        loadTile(0, r.getDrawable(R.drawable.blue_anti_air), mBlueUnitArray);
+        loadTile(1, r.getDrawable(R.drawable.blue_artillery), mBlueUnitArray);
+        loadTile(2, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+        loadTile(3, r.getDrawable(R.drawable.blue_infantry), mBlueUnitArray);
+        loadTile(4, r.getDrawable(R.drawable.blue_mech), mBlueUnitArray);
+        loadTile(5, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+        loadTile(6, r.getDrawable(R.drawable.blue_recon), mBlueUnitArray);
+        loadTile(7, r.getDrawable(R.drawable.blue_rocket), mBlueUnitArray);
+        loadTile(8, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+        
+        /*mBlueBuildingArray = new Bitmap[3];
+        
+        loadTile(0, r.getDrawable(R.drawable.blue_building), mBlueBuildingArray);
+        loadTile(1, r.getDrawable(R.drawable.blue_hq), mBlueBuildingArray);
+        loadTile(2, r.getDrawable(R.drawable.blue_factory), mBlueBuildingArray);
+        
+        mUncaptBuildingArray = new Bitmap[2];
+        
+        loadTile(0, r.getDrawable(R.drawable.uncaptured_building), mUncaptBuildingArray);
+        loadTile(1, r.getDrawable(R.drawable.uncaptured_factory), mUncaptBuildingArray);*/
     }
 
     public void resetTiles(int tilecount)
@@ -155,6 +192,15 @@ public class GameBoardView extends View
                     		mYOffset + (y - mY) * mTileSize,
                     		mPaint);
                 
+                    /*canvas.drawBitmap(mBlueUnitArray[getTileByType(mTileGrid[x][y])], 
+                    		mXOffset + (x - mX) * mTileSize,
+                    		mYOffset + (y - mY) * mTileSize,
+                    		mPaint);
+                    
+                    canvas.drawBitmap(mRedUnitArray[getTileByType(mTileGrid[x][y])], 
+                    		mXOffset + (x - mX) * mTileSize,
+                    		mYOffset + (y - mY) * mTileSize,
+                    		mPaint);*/
             }
         }
         
@@ -168,7 +214,8 @@ public class GameBoardView extends View
 
     }
     
-    private int getTileByType(char c) {
+    private int getTileByType(char c)
+    {
 		int result = 0;
 		
 		if(c == 'g')
@@ -180,13 +227,21 @@ public class GameBoardView extends View
 		else if (c == 'w')
 			result = 3;
         else if (c == 'h')
-            result = 4;
+            result = 9;
         else if (c == 'H')
-            result = 4;
+            result = 6;
         else if (c == 'x')
-        	result = 4;
+        	result = 5;
         else if (c == 'X')
-        	result = 4;
+        	result = 8;
+        else if (c == 'q')
+        	result = 7;
+        else if (c == 'Q')
+        	result = 10;
+        else if (c == 'b')
+        	result = 11;
+        else if (c == 'p')
+        	result = 12;
 		
 		return result;
 	}
@@ -194,7 +249,6 @@ public class GameBoardView extends View
 	public void update()
     {
           clearTiles();
-          //updateWalls();
     }
     
     /*private void updateWalls()
@@ -224,7 +278,7 @@ public class GameBoardView extends View
     	return mYTileCount;
     }
 
-	public ArrayList<String> selectPoint(float x, float y)
+	/*public ArrayList<String> selectPoint(float x, float y)
 	{
 		x = x - mXOffset;
 		y = y - mYOffset;
@@ -240,7 +294,7 @@ public class GameBoardView extends View
 		}
 
 		return null;
-	}
+	}*/
 	
 	public int[] getPoints(float x, float y)
 	{
