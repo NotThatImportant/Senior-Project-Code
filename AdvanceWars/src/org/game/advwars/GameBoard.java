@@ -122,8 +122,8 @@ public class GameBoard extends Activity implements OnTouchListener
 		}
 		else
 		{
-			// This should never execute, but if it does then an error has occurred
-			this.finish();
+			// Do nothing
+			// Only hit if a user decides to close the main menu by using phone's Back button
 		}
 		
 	    super.onActivityResult(requestCode, resultCode, data);
