@@ -167,7 +167,7 @@ public class GameBoard extends Activity implements OnTouchListener
 						ggvGlobal.setAvailableCommands(commands);
 						Intent i = new Intent(this, InGameMenu.class);
 						i.putExtra("ggv", ggvGlobal);
-						startActivity(i);
+						startActivityForResult(i, 0);
 					}
 					// What to do if commands are for production building
 					else
@@ -175,7 +175,7 @@ public class GameBoard extends Activity implements OnTouchListener
 						ggvGlobal.setAvailableCommands(commands);
 						Intent i2 = new Intent(this, UnitSelectionMenu.class);
 						i2.putExtra("ggv", ggvGlobal);
-						startActivity(i2);
+						startActivityForResult(i2, 0);
 					}
 					
 					ggvGlobal = sd.loadGGVData();
