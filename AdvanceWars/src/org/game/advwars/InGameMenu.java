@@ -36,30 +36,54 @@ public class InGameMenu extends Activity implements OnClickListener
 		capture.setOnClickListener(this);
 		View unitInfo = findViewById(R.id.unit_info);
 		unitInfo.setOnClickListener(this);
+		
+		// Convert commands to upper case for compatibility reasons
+		for (int i = 0; i < commands.size(); i++)
+			commands.set(i, commands.get(i).toUpperCase());
 
 		// Disable buttons based on commands that are passed
-		for (int i = 0; i < commands.size(); i++)
+		if(!commands.contains("MOVE"))
 		{
-			if(!commands.get(i).toUpperCase().equals("MOVE"))
-			{
-				final Button moveUnit = (Button) findViewById(R.id.move_unit);
-				moveUnit.setEnabled(false);
-			}
-			if(!commands.get(i).toUpperCase().equals("ATTACK"))
-			{
-				final Button attackUnit = (Button) findViewById(R.id.attack_unit);
-				attackUnit.setEnabled(false);
-			}
-			if(!commands.get(i).toUpperCase().equals("CAPTURE"))
-			{
-				final Button captureBuilding = (Button) findViewById(R.id.capture_building);
-				captureBuilding.setEnabled(false);
-			}
-			if(!commands.get(i).toUpperCase().equals("UNITINFO"))
-			{
-				final Button uInfo = (Button) findViewById(R.id.unit_info);
-				uInfo.setEnabled(false);
-			}
+			final Button moveUnit = (Button) findViewById(R.id.move_unit);
+			moveUnit.setEnabled(false);
+		}
+		else
+		{
+			final Button moveUnit = (Button) findViewById(R.id.move_unit);
+			moveUnit.setEnabled(true);
+		}
+
+		if(!commands.contains("ATTACK"))
+		{
+			final Button attackUnit = (Button) findViewById(R.id.attack_unit);
+			attackUnit.setEnabled(false);
+		}
+		else
+		{
+			final Button attackUnit = (Button) findViewById(R.id.attack_unit);
+			attackUnit.setEnabled(true);
+		}
+
+		if(!commands.contains("CAPTURE"))
+		{
+			final Button captureBuilding = (Button) findViewById(R.id.capture_building);
+			captureBuilding.setEnabled(false);
+		}
+		else
+		{
+			final Button captureBuilding = (Button) findViewById(R.id.capture_building);
+			captureBuilding.setEnabled(true);
+		}
+
+		if(!commands.contains("UNITINFO"))
+		{
+			final Button uInfo = (Button) findViewById(R.id.unit_info);
+			uInfo.setEnabled(false);
+		}
+		else
+		{
+			final Button uInfo = (Button) findViewById(R.id.unit_info);
+			uInfo.setEnabled(true);
 		}
 
 		sd.saveGGVData(ggv);
