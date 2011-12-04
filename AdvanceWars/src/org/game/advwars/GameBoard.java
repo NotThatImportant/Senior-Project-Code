@@ -79,6 +79,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			mp.release();
 		}
 		
+		
 		//Begin gameplay music
         mp = MediaPlayer.create(this, R.raw.background_music);
         mp.setLooping(true);
