@@ -22,6 +22,7 @@ public class GUIGameValues implements Serializable
 	private boolean[] inGameMainMenu;
 	private ArrayList<String> commands;
 	private int selectedCommand;
+	private String selectedUnit;
 	private Controller c;
 	
 	public GUIGameValues()
@@ -33,6 +34,7 @@ public class GUIGameValues implements Serializable
 		faction = "";
 		inGameMainMenu = new boolean[3];
 		selectedCommand = -1;
+		selectedUnit = "";
 		c = null;
 	}
 	
@@ -130,6 +132,16 @@ public class GUIGameValues implements Serializable
 	public int getSelectedCommand ()
 	{
 		return this.selectedCommand;
+	}
+	
+	public void setSelectedUnit (String unit)
+	{
+		this.selectedUnit = unit;
+	}
+	
+	public String getSelectedUnit ()
+	{
+		return this.selectedUnit;
 	}
 	
 	public void setController (Controller controller)
