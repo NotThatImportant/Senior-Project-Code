@@ -126,6 +126,38 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Only hit if a user decides to close the main menu by using phone's Back button
 		}
 		
+		if (ggvGlobal.getSelectedUnit() != null || ggvGlobal.getSelectedUnit() != "")
+		{
+			c.produceUnit(ggvGlobal.getSelectedUnit());
+			gameBoardView.setController(c);
+		}
+		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 3)
+		{
+			c.unitTakeAction(ggvGlobal.getSelectedCommand());
+			
+			if (ggvGlobal.getSelectedCommand() == 0)
+			{
+				//
+			}
+			else if (ggvGlobal.getSelectedCommand() == 1)
+			{
+				//
+			}
+			else if (ggvGlobal.getSelectedCommand() == 2)
+			{
+				//
+			}
+			else
+			{
+				// This should never get hit, if it does it's voodoo
+			}
+		}
+		else
+		{
+			// Do nothing
+			// This is not good because it means something is failing :-(
+		}
+		
 	    super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -162,7 +194,7 @@ public class GameBoard extends Activity implements OnTouchListener
 					commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);
 				
 				// Check if commands are valid
-				if (commands != null)
+				if (commands != null && !commands.isEmpty())
 				{
 					// What to do if commands are for a unit
 					if (commands.get(0).toUpperCase().equals("MOVE"))
@@ -180,11 +212,7 @@ public class GameBoard extends Activity implements OnTouchListener
 						i2.putExtra("ggv", ggvGlobal);
 						startActivityForResult(i2, 0);
 					}
-					
-					ggvGlobal = sd.loadGGVData();
 				}
-
-				
 			}
 			mode = NONE;
 			Log.d(TAG, "mode=NONE");
@@ -210,8 +238,6 @@ public class GameBoard extends Activity implements OnTouchListener
 			}
 			break;
 		}
-
-		//Toast.makeText(v.getContext(), "y: " +event.getY()+ " \nRawY:" + event.getRawY(), Toast.LENGTH_SHORT).show();
 
 		v.invalidate();
 

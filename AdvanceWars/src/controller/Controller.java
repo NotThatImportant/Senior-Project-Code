@@ -124,7 +124,7 @@ public class Controller {
 		ArrayList<String> actions = new ArrayList<String>();
 
 		Tile tempTile = board[x][y];
-		if(tempTile.getType() == 'p'){
+		if(tempTile.getType() == 'p' || tempTile.getType() == 'q' || tempTile.getType() == 'Q'){
 			if(tempTile.getHasProduced() == false){
 				if(tempTile.getOwner() == playerTurn){
 					actions.add("Build Unit");
@@ -133,7 +133,7 @@ public class Controller {
 			}
 		}
 
-		return actions;
+		return prodUnit();
 	}
 
 	/**

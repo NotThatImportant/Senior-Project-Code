@@ -22,7 +22,7 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 		Bundle extras = getIntent().getExtras();
 		this.ggv = (GUIGameValues) extras.getSerializable("ggv");
 
-		//commands = ggv.getAvailableCommands();
+		commands = ggv.getAvailableCommands();
 
 		// Set up click listeners for all buttons
 		View infantry = findViewById(R.id.infantry);
@@ -216,8 +216,6 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 		 * Bomber
 		 * Chopper
 		 * Fighter Jet
-		 * 
-		 * produceUnit() method
 		 */
 		
 		GUIGameValues tempGGV = new GUIGameValues();
