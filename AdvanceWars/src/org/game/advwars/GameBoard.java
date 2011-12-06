@@ -126,14 +126,17 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Only hit if a user decides to close the main menu by using phone's Back button
 		}
 		
-		if (ggvGlobal.getSelectedUnit() != null || ggvGlobal.getSelectedUnit() != "")
+		if (ggvGlobal.getSelectedUnit() != null && ggvGlobal.getSelectedUnit() != "")
 		{
 			c.produceUnit(ggvGlobal.getSelectedUnit());
 			gameBoardView.setController(c);
+			gameBoardView.initGame();
 		}
 		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 3)
 		{
 			c.unitTakeAction(ggvGlobal.getSelectedCommand());
+			gameBoardView.setController(c);
+			gameBoardView.initGame();
 			
 			if (ggvGlobal.getSelectedCommand() == 0)
 			{
