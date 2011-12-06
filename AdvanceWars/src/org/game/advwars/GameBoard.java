@@ -137,23 +137,6 @@ public class GameBoard extends Activity implements OnTouchListener
 			c.unitTakeAction(ggvGlobal.getSelectedCommand());
 			gameBoardView.setController(c);
 			gameBoardView.initGame();
-			
-			if (ggvGlobal.getSelectedCommand() == 0)
-			{
-				//
-			}
-			else if (ggvGlobal.getSelectedCommand() == 1)
-			{
-				//
-			}
-			else if (ggvGlobal.getSelectedCommand() == 2)
-			{
-				//
-			}
-			else
-			{
-				// This should never get hit, if it does it's voodoo
-			}
 		}
 		else
 		{

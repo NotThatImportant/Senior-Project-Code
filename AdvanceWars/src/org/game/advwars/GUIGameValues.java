@@ -126,6 +126,7 @@ public class GUIGameValues implements Serializable
 	
 	public void setSelectedCommand (int command)
 	{
+		this.selectedUnit = null;
 		this.selectedCommand = command;
 	}
 	
@@ -136,6 +137,7 @@ public class GUIGameValues implements Serializable
 	
 	public void setSelectedUnit (String unit)
 	{
+		this.selectedCommand = -1;
 		this.selectedUnit = unit;
 	}
 	
