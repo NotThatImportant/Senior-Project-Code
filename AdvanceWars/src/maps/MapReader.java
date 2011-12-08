@@ -5,7 +5,8 @@ import java.io.*;
 import terrain.Tile;
 
 
-public class MapReader {
+public class MapReader implements Serializable
+{
 	private Tile[][] map;
 	private int size;
 	private String[]line;

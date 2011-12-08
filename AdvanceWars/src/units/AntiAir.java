@@ -1,6 +1,9 @@
 package units;
 
-public class AntiAir extends Unit{
+import java.io.Serializable;
+
+public class AntiAir extends Unit implements Serializable
+{
 	public AntiAir(int owner){
 		super();
 		setOwner(owner);

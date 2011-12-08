@@ -1,6 +1,8 @@
 package units;
 
-public class Bomber extends Unit
+import java.io.Serializable;
+
+public class Bomber extends Unit implements Serializable
 {
 	public Bomber(int owner){
 		this.owner = owner;

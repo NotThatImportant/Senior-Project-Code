@@ -1,6 +1,9 @@
 package units;
 
-public class FighterJet extends Unit{
+import java.io.Serializable;
+
+public class FighterJet extends Unit implements Serializable
+{
 	public FighterJet(int owner){
 		this.owner = owner;
 		

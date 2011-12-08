@@ -1,6 +1,9 @@
 package units;
 
-public class Artillery extends Unit{
+import java.io.Serializable;
+
+public class Artillery extends Unit implements Serializable
+{
 	
 	public Artillery(int owner){
 		super();

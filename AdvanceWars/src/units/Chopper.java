@@ -1,6 +1,9 @@
 package units;
 
-public class Chopper extends Unit{
+import java.io.Serializable;
+
+public class Chopper extends Unit implements Serializable
+{
 	public Chopper(int owner){
 		this.owner = owner;
 		

@@ -1,6 +1,9 @@
 package units;
 
-public class Recon extends Unit{
+import java.io.Serializable;
+
+public class Recon extends Unit implements Serializable
+{
 	public Recon(int owner){
 		super();
 		setOwner(owner);

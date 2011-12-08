@@ -1,6 +1,9 @@
 package units;
 
-public class Infantry extends Unit{
+import java.io.Serializable;
+
+public class Infantry extends Unit implements Serializable
+{
 	
 	public Infantry(int owner){
 		super();

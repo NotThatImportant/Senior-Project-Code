@@ -1,6 +1,9 @@
 package units;
 
-public class Rockets extends Unit{
+import java.io.Serializable;
+
+public class Rockets extends Unit implements Serializable
+{
 	
 	public Rockets(int owner){
 		super();

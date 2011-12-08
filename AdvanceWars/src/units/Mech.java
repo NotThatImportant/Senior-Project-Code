@@ -1,6 +1,9 @@
 package units;
 
-public class Mech extends Unit{
+import java.io.Serializable;
+
+public class Mech extends Unit implements Serializable
+{
 
 	public Mech(int owner){
 		super();

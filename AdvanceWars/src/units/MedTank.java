@@ -1,6 +1,9 @@
 package units;
 
-public class MedTank extends Unit{
+import java.io.Serializable;
+
+public class MedTank extends Unit implements Serializable
+{
 	public MedTank(int owner){
 		super();
 		setOwner(owner);

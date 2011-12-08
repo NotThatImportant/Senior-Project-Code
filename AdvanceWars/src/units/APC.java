@@ -1,6 +1,9 @@
 package units;
 
-public class APC extends Unit{
+import java.io.Serializable;
+
+public class APC extends Unit implements Serializable
+{
 	public APC(int owner){
 		super();
 		setOwner(owner);

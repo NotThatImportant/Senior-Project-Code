@@ -1,6 +1,9 @@
 package units;
 
-public abstract class Unit {
+import java.io.Serializable;
+
+public abstract class Unit implements Serializable
+{
 
 	public static final char AIRTYPE = 'a'; 
 	public static final char INFANTRYTYPE = 'i'; 

@@ -1,6 +1,9 @@
 package units;
 
-public class Tank extends Unit{
+import java.io.Serializable;
+
+public class Tank extends Unit implements Serializable
+{
 	public Tank(int owner){
 		super();
 		setOwner(owner);

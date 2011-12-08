@@ -1,8 +1,10 @@
 package units;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Store {
+public class Store implements Serializable
+{
 
 	ArrayList<Unit> toBuyGround;
 	ArrayList<Unit> toBuyAir;

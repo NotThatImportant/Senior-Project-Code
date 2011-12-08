@@ -1,6 +1,9 @@
 package units;
 
-public class HeavyTank extends Unit{
+import java.io.Serializable;
+
+public class HeavyTank extends Unit implements Serializable
+{
 	
 	public HeavyTank(int owner){
 		super();
