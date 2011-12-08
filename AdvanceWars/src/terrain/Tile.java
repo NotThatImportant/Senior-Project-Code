@@ -1,11 +1,14 @@
 package terrain;
 
+import java.io.Serializable;
+
 
 /**
  * Discuss how to produce units
  *
  */
-public class Tile {
+public class Tile implements Serializable
+{
 
 	private int height;
 	private char type;

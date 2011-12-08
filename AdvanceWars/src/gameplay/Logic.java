@@ -1,5 +1,6 @@
 package gameplay;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import player.*;
@@ -16,7 +17,8 @@ import maps.MapReader;
  * @author ZuluXtreme 73
  ***************************************************************************/
 
-public class Logic {
+public class Logic implements Serializable
+{
 
 	private final int BINCOME = 1000; //income you get in addition to the base
 	private final int BASEINCOME = 3000; //income you get everyday

@@ -4,6 +4,7 @@ import android.view.*;
 import player.Player;
 import controller.Controller;
 import dataconnectors.SaveGUIData;
+import dataconnectors.SaveGameData;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,6 +40,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private GameBoardView gameBoardView;
 	private GUIGameValues ggvGlobal = new GUIGameValues();
 	private SaveGUIData sd = new SaveGUIData();
+	private SaveGameData saveGame = new SaveGameData();
 	private char p1Char;
 	private char p2Char;
 	private  ArrayList<String> commands;
@@ -73,14 +75,14 @@ public class GameBoard extends Activity implements OnTouchListener
 		c = new Controller(p1, p2, true, ggvGlobal.getMap());
 		gameBoardView.setController(c);
 		gameBoardView.initGame();
+		sd.saveGGVData(ggvGlobal);
 
 		// Background music
 		if (mp != null){
 			mp.release();
 		}
 		
-		
-		//Begin gameplay music
+		// Begin gameplay music
         mp = MediaPlayer.create(this, R.raw.background_music);
         mp.setLooping(true);
     	mp.start();
@@ -108,11 +110,12 @@ public class GameBoard extends Activity implements OnTouchListener
 		
 		if (ggvGlobal.getInGameMenuEndTurn())
 		{
-			// End game code
+			// End turn
 		}
 		else if (ggvGlobal.getInGameMenuSaveGame())
 		{
-			// Save game code
+			// Save game
+			saveGame.saveGameData(c);
 		}
 		else if (ggvGlobal.getInGameMenuQuitGame())
 		{

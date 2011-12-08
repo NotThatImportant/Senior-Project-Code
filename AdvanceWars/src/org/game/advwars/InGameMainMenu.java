@@ -1,7 +1,5 @@
 package org.game.advwars;
 
-import java.util.ArrayList;
-
 import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,6 +18,7 @@ public class InGameMainMenu extends Activity implements OnClickListener
         
         Bundle extras = getIntent().getExtras();
         this.ggv = (GUIGameValues) extras.getSerializable("ggv");
+        sd.saveGGVData(ggv);
         
         // Set up click listeners for all buttons
         View endTurn = findViewById(R.id.end_turn);
@@ -34,9 +33,19 @@ public class InGameMainMenu extends Activity implements OnClickListener
 	public void onClick(View v)
 	{
 		GUIGameValues tempGGV = sd.loadGGVData();
-		
+
 		switch (v.getId())
     	{
+    	case R.id.end_turn:
+    		tempGGV.setInGameMainMenuAction(true, false, false);
+    		sd.saveGGVData(tempGGV);
+    		this.finish();
+    		break;
+    	case R.id.save_game:
+    		tempGGV.setInGameMainMenuAction(false, true, false);
+    		sd.saveGGVData(tempGGV);
+    		this.finish();
+    		break;
     	case R.id.quit_game:
     		tempGGV.setInGameMainMenuAction(false, false, true);
     		sd.saveGGVData(tempGGV);

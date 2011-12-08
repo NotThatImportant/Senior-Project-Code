@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.ArrayList;
 import gameplay.Logic;
@@ -7,7 +8,8 @@ import player.*;
 import units.*;
 import terrain.Tile;
 
-public class Controller {
+public class Controller implements Serializable
+{
 
 	private final int MOVE = 0;
 	private final int ATTACK = 1;

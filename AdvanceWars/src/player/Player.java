@@ -1,5 +1,6 @@
 package player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import units.*;
@@ -9,7 +10,8 @@ import units.*;
  * Player class
  *  Austin was here....
  */
-public class Player {
+public class Player implements Serializable
+{
 	
 	protected int numUnits; 
 	protected int playNum;

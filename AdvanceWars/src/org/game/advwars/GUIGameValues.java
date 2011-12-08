@@ -28,13 +28,13 @@ public class GUIGameValues implements Serializable
 	public GUIGameValues()
 	{
 		soundOn = true;
-		playerName = "";
+		playerName = null;
 		difficulty = "medium";
-		mapName = "";
-		faction = "";
+		mapName = null;
+		faction = null;
 		inGameMainMenu = new boolean[3];
 		selectedCommand = -1;
-		selectedUnit = "";
+		selectedUnit = null;
 		c = null;
 	}
 	
