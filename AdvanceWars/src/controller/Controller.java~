@@ -78,10 +78,8 @@ public class Controller implements Serializable
 		if (log.getUB()[x][y] != null)
 			actions = unitActions(actions);
 
-		else if (log.getTBoard()[x][y].getType() == 'q' && playerTurn == 0)
+		else if (log.getTBoard()[x][y].getType() == 'q' || log.getTBoard()[x][y].getType() == 'Q')
 			actions = produceActions(actions);
-		else if (log.getTBoard()[x][y].getType() == 'Q' && playerTurn == 1) 
-			actions = produceActions(actions); 
 
 		else
 			return null;

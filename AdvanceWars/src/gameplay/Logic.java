@@ -101,6 +101,10 @@ public class Logic implements Serializable
 		return tBoard;
 	}
 
+	public void setTBoard(Tile[][] tb) {
+		tBoard = tb; 
+	}
+
 	/************************************************************************
 	 * This method returns the unit board. Used exclusively to test the 
 	 * board and make sure that a unit is properly placed and that the 
@@ -111,6 +115,10 @@ public class Logic implements Serializable
 
 	public Unit[][] getUB() {
 		return unitBoard;
+	}
+
+	public void setUB(Unit[][] ub) {
+		unitBoard = ub; 
 	}
 
 	/************************************************************************
