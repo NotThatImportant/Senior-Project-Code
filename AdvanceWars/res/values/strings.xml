@@ -90,6 +90,7 @@
     <string name="fighter_jet_unit_button">Fighter Jet\n[$15000]</string>
     <string name="heavy_tank_unit_button">Heavy Tank\n[$24000]</string>
     <string name="bomber_unit_button">Bomber\n[$26000]</string>
+    <string name="unit_name">UNIT_NAME_NOT_SET</string>
     
     
 </resources>

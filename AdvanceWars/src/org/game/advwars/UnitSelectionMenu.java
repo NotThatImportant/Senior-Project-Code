@@ -218,7 +218,7 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 		 * Fighter Jet
 		 */
 		
-		GUIGameValues tempGGV = new GUIGameValues();
+		GUIGameValues tempGGV = sd.loadGGVData();
 
 		switch (v.getId())
 		{

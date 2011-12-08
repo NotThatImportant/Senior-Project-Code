@@ -24,6 +24,7 @@ public class InGameMenu extends Activity implements OnClickListener
 
 		Bundle extras = getIntent().getExtras();
 		this.ggv = (GUIGameValues) extras.getSerializable("ggv");
+		sd.saveGGVData(ggv);
 
 		commands = ggv.getAvailableCommands();
 
@@ -96,7 +97,7 @@ public class InGameMenu extends Activity implements OnClickListener
 		// ATTACK = 1;
 		// CAPTURE = 2;
 
-		GUIGameValues tempGGV = new GUIGameValues();
+		GUIGameValues tempGGV = sd.loadGGVData();
 
 		switch (v.getId())
 		{
@@ -116,6 +117,8 @@ public class InGameMenu extends Activity implements OnClickListener
 			this.finish();
 			break;
 		case R.id.unit_info:
+			tempGGV.setSelectedCommand(3);
+			sd.saveGGVData(tempGGV);
 			Intent i = new Intent(this, UnitInfoScreen.class);
 			startActivity(i);
 			break;

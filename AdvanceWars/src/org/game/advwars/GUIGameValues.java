@@ -21,6 +21,7 @@ public class GUIGameValues implements Serializable
 	private String faction;
 	private boolean[] inGameMainMenu;
 	private ArrayList<String> commands;
+	private ArrayList<String> unitInfo;
 	private int selectedCommand;
 	private String selectedUnit;
 	private Controller c;
@@ -32,6 +33,8 @@ public class GUIGameValues implements Serializable
 		difficulty = "medium";
 		mapName = null;
 		faction = null;
+		commands = null;
+		unitInfo = null;
 		inGameMainMenu = new boolean[3];
 		selectedCommand = -1;
 		selectedUnit = null;
@@ -154,5 +157,15 @@ public class GUIGameValues implements Serializable
 	public Controller getController ()
 	{
 		return this.c;
+	}
+	
+	public void setUnitInfo (ArrayList<String> unitInfo)
+	{
+		this.unitInfo = unitInfo;
+	}
+	
+	public ArrayList<String> getUnitInfo ()
+	{
+		return this.unitInfo;
 	}
 }

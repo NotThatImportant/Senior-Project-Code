@@ -146,9 +146,8 @@ public class GameBoard extends Activity implements OnTouchListener
 			c.produceUnit(ggvGlobal.getSelectedUnit());
 			gameBoardView.setController(c);
 			gameBoardView.initGame();
-			endTurn = true;
 		}
-		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 3)
+		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 4)
 		{
 			c.unitTakeAction(ggvGlobal.getSelectedCommand());
 			gameBoardView.setController(c);
@@ -188,6 +187,8 @@ public class GameBoard extends Activity implements OnTouchListener
 		case MotionEvent.ACTION_POINTER_UP:
 			if(mode == PRESS)
 			{
+				ggvGlobal = sd.loadGGVData();
+				
 				// Get selected points from game board view
 				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
 				
@@ -202,6 +203,7 @@ public class GameBoard extends Activity implements OnTouchListener
 					if (commands.get(0).toUpperCase().equals("MOVE"))
 					{
 						ggvGlobal.setAvailableCommands(commands);
+						ggvGlobal.setUnitInfo(c.getUnitInfo());
 						Intent i = new Intent(this, InGameMenu.class);
 						i.putExtra("ggv", ggvGlobal);
 						startActivityForResult(i, 0);
