@@ -44,6 +44,10 @@ public class GameBoard extends Activity implements OnTouchListener
 	private char p1Char;
 	private char p2Char;
 	private  ArrayList<String> commands;
+	
+	private boolean endTurn = false;
+	private boolean move = false;
+	private boolean aiTurn = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -111,6 +115,10 @@ public class GameBoard extends Activity implements OnTouchListener
 		if (ggvGlobal.getInGameMenuEndTurn())
 		{
 			// End turn
+			endTurn = true;
+			
+			if (aiTurn = false)
+				aiTurn = true;
 		}
 		else if (ggvGlobal.getInGameMenuSaveGame())
 		{
@@ -129,11 +137,16 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Only hit if a user decides to close the main menu by using phone's Back button
 		}
 		
+		
+		/*------------------- Actions based on in-game menu selection -------------------*/
+		
+		
 		if (ggvGlobal.getSelectedUnit() != null && ggvGlobal.getSelectedUnit() != "")
 		{
 			c.produceUnit(ggvGlobal.getSelectedUnit());
 			gameBoardView.setController(c);
 			gameBoardView.initGame();
+			endTurn = true;
 		}
 		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 3)
 		{
