@@ -751,8 +751,7 @@ public class AI extends Player{
 
 				//check to see what attack would be most effective
 				Unit bestUnitToAttack = potentialUnitsToAttack.get(0); //start with the first unit
-				Integer bestPotentialDamageInflicted = 	Logic log;
-damageToUnit.get(0);  //get first units damage
+				Integer bestPotentialDamageInflicted = damageToUnit.get(0);  //get first units damage
 
 				for(int i = 1; i < potentialUnitsToAttack.size(); i++){ //start at second unit
 					if(damageToUnit.get(i) >  bestPotentialDamageInflicted){
