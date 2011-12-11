@@ -275,6 +275,7 @@ public class Logic implements Serializable
 				unitBoard[x][y].setX(x);
 				unitBoard[x][y].setY(y);
 				retVal = true;
+				unitBoard[x][y].justProded();
 			}
 		}
 
