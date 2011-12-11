@@ -7,18 +7,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import terrain.Tile;
-import units.APC;
-import units.AntiAir;
-import units.Artillery;
-import units.Bomber;
-import units.Chopper;
-import units.FighterJet;
-import units.HeavyTank;
-import units.Infantry;
-import units.Mech;
-import units.MedTank;
-import units.Rockets;
-import units.Unit;
+import units.*;
 
 public class AI extends Player{
 	private boolean availableMove;
@@ -33,8 +22,8 @@ public class AI extends Player{
 	private ArrayList<Unit> unitsWithAttacks;
 	private ArrayList<Unit> unitsWithCaptures;
 
-	private ArrayList<String> moveLogger; 
-	String lastAction;
+	//private ArrayList<String> moveLogger; 
+	//String lastAction;
 
 	Logic log;
 	int size;
@@ -50,8 +39,8 @@ public class AI extends Player{
 
 
 
-		lastAction = "";
-		moveLogger = new ArrayList<String>();
+		//lastAction = "";
+		//moveLogger = new ArrayList<String>();
 
 //		test();
 
@@ -66,7 +55,9 @@ public class AI extends Player{
 	}
 
 	/***************************************************************
-	 *  
+	 *  This is the method that does all of the moving/attacking/stuff
+	 * for the AI. This and getBoard are the only ones that really 
+	 * need to be called for the AI to do something. 
 	 * 
 	 ***************************************************************/
 	public void startTurn(){
