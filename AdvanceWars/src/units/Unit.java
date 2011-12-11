@@ -175,6 +175,12 @@ public abstract class Unit implements Serializable
 	public boolean getStartedCapture(){
 		return startedCapture;
 	}
+	
+	public void justProded() {
+		hasCaptured = false; 
+		hasAttacked = false; 
+		hasMoved = false; 
+	}
 
 
 }
