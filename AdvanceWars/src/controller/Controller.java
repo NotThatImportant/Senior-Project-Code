@@ -38,7 +38,9 @@ public class Controller implements Serializable
 		log = new Logic (mapName, firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(),
 				secondPlayer.getPName(), aiOn);
 
-		playerTurn = whoGoesFirst();	
+		//playerTurn = whoGoesFirst();	
+		//player one always goes first!!!!!!!!!!!1
+		playerTurn = 0; 
 	}
 	
 	public void aiTurn() {
