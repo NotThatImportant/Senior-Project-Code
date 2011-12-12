@@ -2,12 +2,18 @@ package player;
 
 
 import gameplay.Logic;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 import terrain.Tile;
-import units.*;
+import units.APC;
+import units.AntiAir;
+import units.Artillery;
+import units.Bomber;
+import units.Chopper;
+import units.FighterJet;
+import units.Unit;
 
 public class AI extends Player{
 	private boolean availableMove;

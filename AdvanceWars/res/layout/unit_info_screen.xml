@@ -22,4 +22,60 @@
         android:textStyle="bold"
         android:text="@string/unit_name" />
 
+    <TextView
+        android:id="@+id/unit_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_health" />
+    
+    <TextView
+        android:id="@+id/unit_move_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_move_range" />
+    
+    <TextView
+        android:id="@+id/unit_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_attack" />
+    
+    <TextView
+        android:id="@+id/unit_attack_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_attack_range" />
+    
+    <TextView
+        android:id="@+id/unit_armor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_armor" />
+    
+    <TextView
+        android:id="@+id/unit_ammo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_ammo" />
+    
+    <TextView
+        android:id="@+id/unit_fuel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/unit_fuel" />
+
 </LinearLayout>

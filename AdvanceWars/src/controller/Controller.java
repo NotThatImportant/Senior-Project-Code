@@ -322,6 +322,7 @@ public class Controller implements Serializable
 				actions.add("Capture");
 			}
 		}
+		actions.add("UnitInfo");
 
 		return actions;
 	}

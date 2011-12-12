@@ -91,6 +91,16 @@
     <string name="heavy_tank_unit_button">Heavy Tank\n[$24000]</string>
     <string name="bomber_unit_button">Bomber\n[$26000]</string>
     <string name="unit_name">UNIT_NAME_NOT_SET</string>
+    <string name="unit_health">UNIT_HEALTH_NOT_SET</string>
+    <string name="unit_move_range">UNIT_MOVE_RANGE_NOT_SET</string>
+    <string name="unit_attack">UNIT_ATTACK_NOT_SET</string>    
+    <string name="unit_attack_range">UNIT_ATTACK_RANGE_NOT_SET</string>
+    <string name="unit_armor">UNIT_ARMOR_NOT_SET</string>
+    <string name="unit_ammo">UNIT_AMMO_NOT_SET</string>
+    <string name="unit_fuel">UNIT_FUEL_NOT_SET</string>
+        
+        
+            
     
     
 </resources>
