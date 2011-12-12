@@ -8,6 +8,7 @@
 *.so
 *.dex
 *.apk
+*.ap_
 
 # Packages #
 ############
@@ -28,3 +29,4 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+R.java
