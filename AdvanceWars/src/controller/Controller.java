@@ -323,6 +323,8 @@ public class Controller implements Serializable
 			}
 		}
 
+		actions.add("UnitInfo");
+
 		return actions;
 	}
 
