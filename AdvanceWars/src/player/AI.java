@@ -61,7 +61,6 @@ public class AI extends Player{
 	 * 
 	 ***************************************************************/
 	public void startTurn(){
-		moveLogger.clear();
 
 		//determine possible actions
 		availableMove = canIMove();
@@ -151,8 +150,6 @@ public class AI extends Player{
 			Tile t = emptyProdBldg.get(counter);
 			for(Unit bU: unitsToBuild){
 				success = log.produceUnit(this, bU, emptyProdBldg.get(counter));
-				lastAction = "produce,"+bU.getName()+","+t.getX()+","+t.getY();
-				moveLogger.add(lastAction);
 				if(success)
 					counter++;
 			}
@@ -297,7 +294,6 @@ public class AI extends Player{
 						if(getDistance(origX, origY, hqLoc[0], hqLoc[1]) <
 								getDistance(i, j, hqLoc[0], hqLoc[1])){
 							log.moveUnit(pUnit, i, j);
-							lastAction = "move,"+pUnit.getName()+","+origX+","+origY+","+i+","+j;
 							hasMoved = true;
 						}
 					}
@@ -375,15 +371,11 @@ public class AI extends Player{
 
 
 		if(foundSafe == true && valid){
-			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
 			log.moveUnit(pUnit, moveX, moveY);
-			moveLogger.add(lastAction);
 			moved = true;
 		}
 		else if(desperation == true && valid){
 			log.moveUnit(pUnit, moveX, moveY);
-			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
-			moveLogger.add(lastAction);
 			moved = true;
 		}
 
@@ -654,15 +646,11 @@ public class AI extends Player{
 
 
 		if(foundSafe == true && valid){
-			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
 			log.moveUnit(pUnit, moveX, moveY);
-			moveLogger.add(lastAction);
 			moved = true;
 		}
 		else if(desperation == true && valid){
 			log.moveUnit(pUnit, moveX, moveY);
-			lastAction = "move,"+pUnit.getName()+","+pUnit.getX()+","+pUnit.getY()+","+moveX+","+moveY;
-			moveLogger.add(lastAction);
 			moved = true;
 		}
 
@@ -753,15 +741,11 @@ public class AI extends Player{
 
 				if(bestPotentialDamageInflicted >= ATTACK_DAMAGE_THRESHOLD){
 					log.battle(currentUnit, bestUnitToAttack, currentUnit.getOwner());
-					lastAction = "attack,"+currentUnit.getName()+","+bestUnitToAttack.getName();
-					moveLogger.add(lastAction);
 				}
 			}
 			else if(potentialUnitsToAttack.size() == 1){
 				if(damageToUnit.get(0) >= ATTACK_DAMAGE_THRESHOLD){
 					log.battle(currentUnit, potentialUnitsToAttack.get(0), currentUnit.getOwner());
-					lastAction = "attack,"+currentUnit.getName()+","+potentialUnitsToAttack.get(0).getName();
-					moveLogger.add(lastAction);
 				}
 			}
 			else {
@@ -836,7 +820,7 @@ public class AI extends Player{
 		}
 	}
 
-	protected void getLogic(Logic pLog) {
+	public void getLogic(Logic pLog) {
 		log = pLog;
 		size = log.getSize();
 	}
@@ -1273,55 +1257,52 @@ public class AI extends Player{
 		return captureAvailable;
 	}
 
-	private void test(){
-		boolean finished = false;
+//	private void test(){
+//		boolean finished = false;
+//
+//		// creating Logic - NECESSARY
+//		log = new Logic("test", 'b', 'r', "Puny Human", "Herp Derp", true);
+//
+//		// create some random units
+//		log.setUnit(4, 5, new Infantry(1));
+//		log.setUnit(10, 8, new MedTank(1));
+//		log.setUnit(13, 3, new Mech(1));
+//		log.setUnit(21, 18, new HeavyTank(1));
+//
+//		log.setUnit(29, 27, new MedTank(2));
+//		log.setUnit(27, 26, new Infantry(2));
+//		log.setUnit(23, 28, new HeavyTank(2));
+//		log.setUnit(28, 28, new Rockets(2));
+//
+//		Unit m = new Infantry(2);
+//		log.setUnit(15, 15, m);
+//		char[][] t = log.getMoves(m);
+//		for(int i = 0; i < log.getSize(); i++){
+//			for(int j = 0; j < log.getSize(); j++)
+//				System.out.print(t[i][j] + " ");
+//			System.out.println();
+//		}
+//
+//
+//		lastAction = "Game started";
+//		System.out.println(lastAction);
+//		moveLogger.clear();
+//		Scanner scan = new Scanner(System.in);
+//		while(!finished){
+//			startTurn();
+//			if(moveLogger.isEmpty())
+//				System.out.println("move list is empty.");
+//			for(String s: moveLogger){
+//				System.out.println(s);
+//				scan.nextLine();
+//			}
+//			log.unitNewTurn(getPNum());
+//			System.out.println("Player One takes a turn");
+//			scan.nextLine();
+//		}
+//	}
 
-		// creating Logic - NECESSARY
-		log = new Logic("test", 'b', 'r', "Puny Human", "Herp Derp", true);
 
-		// create some random units
-		log.setUnit(4, 5, new Infantry(1));
-		log.setUnit(10, 8, new MedTank(1));
-		log.setUnit(13, 3, new Mech(1));
-		log.setUnit(21, 18, new HeavyTank(1));
-
-		log.setUnit(29, 27, new MedTank(2));
-		log.setUnit(27, 26, new Infantry(2));
-		log.setUnit(23, 28, new HeavyTank(2));
-		log.setUnit(28, 28, new Rockets(2));
-
-		Unit m = new Infantry(2);
-		log.setUnit(15, 15, m);
-		char[][] t = log.getMoves(m);
-		for(int i = 0; i < log.getSize(); i++){
-			for(int j = 0; j < log.getSize(); j++)
-				System.out.print(t[i][j] + " ");
-			System.out.println();
-		}
-
-
-		lastAction = "Game started";
-		System.out.println(lastAction);
-		moveLogger.clear();
-		Scanner scan = new Scanner(System.in);
-		while(!finished){
-			startTurn();
-			if(moveLogger.isEmpty())
-				System.out.println("move list is empty.");
-			for(String s: moveLogger){
-				System.out.println(s);
-				scan.nextLine();
-			}
-			log.unitNewTurn(getPNum());
-			System.out.println("Player One takes a turn");
-			scan.nextLine();
-		}
-	}
-
-
-	public ArrayList<String> getActions(){
-		return moveLogger;
-	}
 
 //	public static void main(String[] args){
 //		new AI("Herp, Derp", 2, 'b');

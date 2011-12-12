@@ -96,6 +96,7 @@ public class InGameMenu extends Activity implements OnClickListener
 		// MOVE = 0;
 		// ATTACK = 1;
 		// CAPTURE = 2;
+		// UNITINFO = 3;
 
 		GUIGameValues tempGGV = sd.loadGGVData();
 
