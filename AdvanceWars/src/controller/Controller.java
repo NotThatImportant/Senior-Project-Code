@@ -324,6 +324,8 @@ public class Controller implements Serializable
 		}
 		actions.add("UnitInfo");
 
+		actions.add("UnitInfo");
+
 		return actions;
 	}
 
