@@ -467,17 +467,21 @@ public class Controller implements Serializable
 	
 	public int getCurrentPlayerMoney()
 	{
+		int munny = 0;
+		
 		if (playerTurn == firstPlayer.getPNum())
 		{
-			return firstPlayer.getCash();
+			munny = log.getP1().getCash();
 		}
 		else if (playerTurn == secondPlayer.getPNum())
 		{
-			return secondPlayer.getCash();
+			munny = log.getP2().getCash();
 		}
 		else
 		{
-			return -1;
+			munny = -1;
 		}
+		
+		return munny;
 	}
 }

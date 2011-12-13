@@ -265,6 +265,7 @@ public class GameBoard extends Activity implements OnTouchListener
 						{
 							ggvGlobal.setAvailableCommands(commands);
 							ggvGlobal.setMoney(c.getCurrentPlayerMoney());
+							sd.saveGGVData(ggvGlobal);
 							Intent i2 = new Intent(this, UnitSelectionMenu.class);
 							i2.putExtra("ggv", ggvGlobal);
 							startActivityForResult(i2, 0);
