@@ -87,23 +87,24 @@ containing a value of this type.
     public static final class id {
         public static final int LinearLayout=0x7f070019;
         public static final int TableLayout1=0x7f070047;
-        public static final int TableRow1=0x7f070048;
-        public static final int TableRow2=0x7f07004d;
-        public static final int TableRow3=0x7f070052;
+        public static final int TableRow1=0x7f070049;
+        public static final int TableRow2=0x7f07004e;
+        public static final int TableRow3=0x7f070053;
         public static final int about=0x7f070000;
         public static final int about_advance_wars=0x7f070001;
         public static final int android_logo=0x7f07003d;
-        public static final int anti_air=0x7f07004e;
-        public static final int artillery=0x7f07004c;
+        public static final int anti_air=0x7f07004f;
+        public static final int artillery=0x7f07004d;
         public static final int attack_unit=0x7f070012;
         public static final int authors=0x7f070002;
-        public static final int bomber=0x7f070056;
+        public static final int avail_money=0x7f070048;
+        public static final int bomber=0x7f070057;
         public static final int campaign=0x7f07003b;
         public static final int capture_building=0x7f070013;
         public static final int change_player_name=0x7f070003;
         public static final int change_player_name_button=0x7f070005;
         public static final int change_player_name_textbox=0x7f070004;
-        public static final int chopper=0x7f070050;
+        public static final int chopper=0x7f070051;
         public static final int confirm_player_name=0x7f07002f;
         public static final int connect_to_mp_game=0x7f07002a;
         public static final int create_mp_game=0x7f070029;
@@ -116,11 +117,11 @@ containing a value of this type.
         public static final int faction_selection=0x7f070009;
         public static final int faction_selection_description=0x7f07000a;
         public static final int faction_selection_list=0x7f07000b;
-        public static final int fighter_jet=0x7f070054;
+        public static final int fighter_jet=0x7f070055;
         public static final int gameboard=0x7f07000d;
         public static final int hard=0x7f070038;
-        public static final int heavy_tank=0x7f070055;
-        public static final int infantry=0x7f070049;
+        public static final int heavy_tank=0x7f070056;
+        public static final int infantry=0x7f07004a;
         public static final int invalid_user_name_entered=0x7f070015;
         public static final int invalid_user_name_entered_description=0x7f070016;
         public static final int invalid_user_name_selected=0x7f070017;
@@ -130,8 +131,8 @@ containing a value of this type.
         public static final int map_selection=0x7f070025;
         public static final int map_selection_description=0x7f070026;
         public static final int map_selection_list=0x7f070027;
-        public static final int mech=0x7f07004a;
-        public static final int med_tank=0x7f070053;
+        public static final int mech=0x7f07004b;
+        public static final int med_tank=0x7f070054;
         public static final int medium=0x7f070037;
         public static final int move_unit=0x7f070011;
         public static final int mp_options=0x7f07002b;
@@ -142,8 +143,8 @@ containing a value of this type.
         public static final int previous_player_name=0x7f07001f;
         public static final int quick_match=0x7f07003a;
         public static final int quit_game=0x7f070010;
-        public static final int recon=0x7f07004b;
-        public static final int rockets=0x7f070051;
+        public static final int recon=0x7f07004c;
+        public static final int rockets=0x7f070052;
         public static final int save_game=0x7f07000f;
         public static final int scores=0x7f07001a;
         public static final int select_faction=0x7f07000c;
@@ -156,7 +157,7 @@ containing a value of this type.
         public static final int sound_on=0x7f070032;
         public static final int sound_radio_group=0x7f070031;
         public static final int sounds=0x7f070030;
-        public static final int tank=0x7f07004f;
+        public static final int tank=0x7f070050;
         public static final int tutorial=0x7f070039;
         public static final int under_construction=0x7f07003c;
         public static final int under_construction_description=0x7f07003e;
@@ -208,6 +209,7 @@ containing a value of this type.
         public static final int artillery_unit_button=0x7f050040;
         public static final int attack_unit_button=0x7f050035;
         public static final int authors=0x7f05001e;
+        public static final int available_money=0x7f050051;
         public static final int bomber_unit_button=0x7f050048;
         public static final int campaign_button=0x7f050010;
         public static final int capture_building_button=0x7f050036;
@@ -274,12 +276,12 @@ containing a value of this type.
         public static final int unit_armor=0x7f05004e;
         public static final int unit_attack=0x7f05004c;
         public static final int unit_attack_range=0x7f05004d;
-        public static final int unit_fuel=0x7f050050;
         public static final int unit_health=0x7f05004a;
         public static final int unit_info_button=0x7f050038;
         public static final int unit_info_screen_title=0x7f050039;
         public static final int unit_move_range=0x7f05004b;
         public static final int unit_name=0x7f050049;
+        public static final int unit_owner=0x7f050050;
         public static final int welcome_title=0x7f050007;
     }
     public static final class styleable {

@@ -127,7 +127,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			
 			if (ggvGlobal.isAIOn())
 				c.aiTurn();
-			
+
 			ggvGlobal.setInGameMainMenuAction(false,false,false);
 			ggvGlobal.setSelectedUnit("");
 			ggvGlobal.setSelectedCommand(-1);
@@ -264,6 +264,7 @@ public class GameBoard extends Activity implements OnTouchListener
 						else
 						{
 							ggvGlobal.setAvailableCommands(commands);
+							ggvGlobal.setMoney(c.getCurrentPlayerMoney());
 							Intent i2 = new Intent(this, UnitSelectionMenu.class);
 							i2.putExtra("ggv", ggvGlobal);
 							startActivityForResult(i2, 0);

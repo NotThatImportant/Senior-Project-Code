@@ -464,4 +464,20 @@ public class Controller implements Serializable
 
 		return false;
 	}
+	
+	public int getCurrentPlayerMoney()
+	{
+		if (playerTurn == firstPlayer.getPNum())
+		{
+			return firstPlayer.getCash();
+		}
+		else if (playerTurn == secondPlayer.getPNum())
+		{
+			return secondPlayer.getCash();
+		}
+		else
+		{
+			return -1;
+		}
+	}
 }

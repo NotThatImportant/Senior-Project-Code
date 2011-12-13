@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class UnitSelectionMenu extends Activity implements OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();
 	private ArrayList<String> commands;
+	private Integer availMoney;
 	private SaveGUIData sd = new SaveGUIData();
 
 	protected void onCreate(Bundle savedInstanceState)
@@ -23,6 +25,7 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 		this.ggv = (GUIGameValues) extras.getSerializable("ggv");
 
 		commands = ggv.getAvailableCommands();
+		availMoney = ggv.getMoney();
 
 		// Set up click listeners for all buttons
 		View infantry = findViewById(R.id.infantry);
@@ -60,7 +63,15 @@ public class UnitSelectionMenu extends Activity implements OnClickListener
 
 		View bomber = findViewById(R.id.bomber);
 		bomber.setOnClickListener(this);
-
+		
+		String availableMoney = " Available money: $" + availMoney.toString();
+		
+		if (availMoney != -1)
+		{
+			final TextView moneyText = (TextView) findViewById(R.id.avail_money);
+        	moneyText.setText(availableMoney);
+		}
+		
 		// Convert commands to upper case for compatibility reasons
 		for (int i = 0; i < commands.size(); i++)
 			commands.set(i, commands.get(i).toUpperCase());

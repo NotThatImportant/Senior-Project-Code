@@ -27,6 +27,7 @@ public class GUIGameValues implements Serializable
 	private Controller c;
 	private char[][] movement;
 	private boolean aiOn;
+	private int money;
 	
 	public GUIGameValues()
 	{
@@ -43,6 +44,7 @@ public class GUIGameValues implements Serializable
 		c = null;
 		movement = null;
 		aiOn = false;
+		money = -1;
 	}
 	
 	public void setPlayerName (String playerName)
@@ -162,11 +164,21 @@ public class GUIGameValues implements Serializable
 		return this.selectedUnit;
 	}
 	
+	/*
+	 * This method should never be used because it defeats the purpose of
+	 * modular design. All variables should be passed individually, not
+	 * as a controller.
+	 */
 	public void setController (Controller controller)
 	{
 		this.c = controller;
 	}
 	
+	/*
+	 * This method should never be used because it defeats the purpose of
+	 * modular design. All variables should be retrieved individually, not
+	 * as a controller.
+	 */
 	public Controller getController ()
 	{
 		return this.c;
@@ -200,5 +212,15 @@ public class GUIGameValues implements Serializable
 	public boolean isAIOn ()
 	{
 		return this.aiOn;
+	}
+	
+	public void setMoney (int money)
+	{
+		this.money = money;
+	}
+	
+	public int getMoney ()
+	{
+		return this.money;
 	}
 }
