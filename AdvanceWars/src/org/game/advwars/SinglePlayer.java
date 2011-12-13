@@ -1,5 +1,6 @@
 package org.game.advwars;
 
+import dataconnectors.SaveGUIData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.view.View.OnClickListener;
 
 public class SinglePlayer extends Activity implements OnClickListener
 {
+	private GUIGameValues ggvGlobal = new GUIGameValues();
+	private SaveGUIData sd = new SaveGUIData();
+	
 	protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,8 @@ public class SinglePlayer extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
+		ggvGlobal = sd.loadGGVData();
+		
 		switch (v.getId())
     	{
     	case R.id.tutorial:
@@ -32,6 +38,8 @@ public class SinglePlayer extends Activity implements OnClickListener
     		startActivity(i);
     		break;
     	case R.id.quick_match:
+    		ggvGlobal.setAIOn(true);
+    		sd.saveGGVData(ggvGlobal);
     		Intent i2 = new Intent(this, FactionSelection.class);
     		startActivity(i2);
     		break;

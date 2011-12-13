@@ -47,9 +47,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private char p2Char;
 	private  ArrayList<String> commands;
 
-	private boolean endTurn = false;
 	private boolean move = false;
-	private boolean aiTurn = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -78,7 +76,13 @@ public class GameBoard extends Activity implements OnTouchListener
 
 		Player p1 = new Player("Player1", 0, p1Char);
 		Player p2 = new Player("Player2", 1, p2Char);
-		c = new Controller(p1, p2, false, ggvGlobal.getMap());
+		
+		// Sets AI on or off depending on user selection
+		if (ggvGlobal.isAIOn())
+			c = new Controller(p1, p2, true, ggvGlobal.getMap());
+		else
+			c = new Controller(p1, p2, false, ggvGlobal.getMap());
+		
 		gameBoardView.setController(c);
 		gameBoardView.initGame();
 		sd.saveGGVData(ggvGlobal);

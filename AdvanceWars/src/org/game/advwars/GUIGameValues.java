@@ -26,6 +26,7 @@ public class GUIGameValues implements Serializable
 	private String selectedUnit;
 	private Controller c;
 	private char[][] movement;
+	private boolean aiOn;
 	
 	public GUIGameValues()
 	{
@@ -41,6 +42,7 @@ public class GUIGameValues implements Serializable
 		selectedUnit = null;
 		c = null;
 		movement = null;
+		aiOn = false;
 	}
 	
 	public void setPlayerName (String playerName)
@@ -180,11 +182,23 @@ public class GUIGameValues implements Serializable
 		return this.unitInfo;
 	}
 	
-	public void setMovement(char[][] moves) {
+	public void setMovement(char[][] moves)
+	{
 		movement = moves;
 	}
 	
-	public char[][] getMovement() {
+	public char[][] getMovement()
+	{
 		return movement;
+	}
+	
+	public void setAIOn (boolean aiOn)
+	{
+		this.aiOn = aiOn;
+	}
+	
+	public boolean isAIOn ()
+	{
+		return this.aiOn;
 	}
 }

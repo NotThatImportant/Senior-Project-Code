@@ -20,8 +20,8 @@
     <string name="create_mp_game_button">Create a Game</string>
     <string name="connect_to_mp_game_button">Connect to a Game</string>
     <string name="multiplayer_options_button">Multiplayer Options</string>
-    <string name="under_construction_title">Under Construction</string>
-    <string name="under_construction_description">We are sorry. This screen has not been implemented yet. :-(</string>
+    <string name="under_construction_title">Oops!</string>
+    <string name="under_construction_description">We are sorry. This screen has not been implemented yet.</string>
     <string name="enter_player_name_title">Enter Player Name</string>
     <string name="faction_selection_title">Select Your Faction</string>
     <string name="leader_board_title">Scores</string>
