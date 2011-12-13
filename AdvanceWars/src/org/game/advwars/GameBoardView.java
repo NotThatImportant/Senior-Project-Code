@@ -202,25 +202,26 @@ public class GameBoardView extends View
 							mPaint);
 			}
 		}
-		drawPossibleMoves(canvas);
+//		drawPossibleMoves(canvas);
 	}
-
-	private void drawPossibleMoves(Canvas canvas) {
-		char[][] moves = ggvGlobal.getMovement();
-
-		if (moves != null) {
-			for (int x = mX; x < mXTileCount + mX && x < mTileGrid.length; x += 1)
-			{
-				for (int y = mY; y < mYTileCount + mY && y < mTileGrid[x].length; y += 1)
-				{
-					if (moves[x][y] == 'x') {
-						canvas.drawBitmap(mTileArray[4], mXOffset + (x - mX) * mTileSize, 
-								mYOffset + (y - mY) * mTileSize, mPaint);
-					}
-				}
-			}
-		}
-	}
+	
+// Not working yet
+//	private void drawPossibleMoves(Canvas canvas) {
+//		char[][] moves = ggvGlobal.getMovement();
+//
+//		if (moves != null) {
+//			for (int x = mX; x < mXTileCount + mX && x < mTileGrid.length; x += 1)
+//			{
+//				for (int y = mY; y < mYTileCount + mY && y < mTileGrid[x].length; y += 1)
+//				{
+//					if (moves[x][y] == 'x') {
+//						canvas.drawBitmap(mTileArray[4], mXOffset + (x - mX) * mTileSize, 
+//								mYOffset + (y - mY) * mTileSize, mPaint);
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	private Bitmap drawUnitTile(int i, String faction) {
 		if(faction.equalsIgnoreCase("blue")){

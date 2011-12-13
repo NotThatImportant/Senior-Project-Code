@@ -31,15 +31,35 @@ public class Store implements Serializable
 		toBuyGround.add(new Tank(-1));
 	}
 	
-	public Unit whatUnit(String name) {
-		Unit rightOne = null;
+	public Unit whatUnit(String requestedUnitName) {
+		Unit desiredUnit = null; //rightOne
 		
-		for (int i = 0; i < toBuyGround.size(); i++) {
-			if (toBuyGround.get(i).getName().equals(name)) 
-				rightOne = toBuyGround.get(i);
-		}
+		//for (int i = 0; i < toBuyGround.size(); i++) {
+		//	if (toBuyGround.get(i).getName().equals(name)) 
+		//		rightOne = toBuyGround.get(i);
+		//}
+		if (requestedUnitName.equals("Anti-Air"))
+			desiredUnit = new AntiAir(-1);
+		else if (requestedUnitName.equals("APC"))
+			desiredUnit = new APC(-1);
+		else if (requestedUnitName.equals("Artillery"))
+			desiredUnit = new Artillery(-1);
+		else if (requestedUnitName.equals("Heavy Tank"))
+			desiredUnit = new HeavyTank(-1);
+		else if (requestedUnitName.equals("Infantry"))
+			desiredUnit = new Infantry(-1);
+		else if (requestedUnitName.equals("Mech"))
+			desiredUnit = new Mech(-1);
+		else if (requestedUnitName.equals("Medium Tank"))
+			desiredUnit = new MedTank(-1);
+		else if (requestedUnitName.equals("Recon"))
+			desiredUnit = new Recon(-1);
+		else if (requestedUnitName.equals("Rockets"))
+			desiredUnit = new Rockets(-1);
+		else 
+			desiredUnit = new Tank(-1);
 		
-		return rightOne;
+		return desiredUnit;
 	}
 	
 	/*This will give you a list of the units you can buy with ground units*/
