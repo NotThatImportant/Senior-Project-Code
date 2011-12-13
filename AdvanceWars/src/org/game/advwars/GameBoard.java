@@ -122,6 +122,8 @@ public class GameBoard extends Activity implements OnTouchListener
 			c.endTurn();
 			//c.aiTurn();
 			ggvGlobal.setInGameMainMenuAction(false,false,false);
+			ggvGlobal.setSelectedUnit("");
+			ggvGlobal.setSelectedCommand(-1);
 			sd.saveGGVData(ggvGlobal);
 			Toast.makeText(this, "Player turn: " + (c.whosTurn() + 1), Toast.LENGTH_SHORT).show();
 			

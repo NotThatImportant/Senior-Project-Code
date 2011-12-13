@@ -42,7 +42,7 @@ public class Controller implements Serializable
 		//player one always goes first!!!!!!!!!!!1
 		playerTurn = 0; 
 	}
-	
+
 	public void aiTurn() {
 		((AI) secondPlayer).getLogic(log);
 		((AI) secondPlayer).startTurn();
@@ -50,13 +50,13 @@ public class Controller implements Serializable
 		log.setTBoard(((AI) secondPlayer).getNewTBoard());
 		endTurn();
 	}
-	
+
 	/**
 	 * This is a simple method that simply tells the GUI whos turn it is. 
 	 * 
 	 * @return
 	 */
-	
+
 	public int whosTurn() {
 		return playerTurn;
 	}
@@ -70,7 +70,7 @@ public class Controller implements Serializable
 	 * @param y
 	 * @return
 	 */
-	
+
 	public ArrayList<String> selectCoordinates(int x, int y) {
 		ArrayList<String> actions = new ArrayList<String>();
 
@@ -100,7 +100,7 @@ public class Controller implements Serializable
 	 * @param pActions
 	 * @return
 	 */
-	
+
 	private ArrayList<String> produceActions(ArrayList<String> pActions) {
 		Tile[][] board = log.getTBoard();
 		ArrayList<String> actions = new ArrayList<String>();
@@ -121,7 +121,7 @@ public class Controller implements Serializable
 	/**
 	 * This method is called at the end of a turn to update money. 
 	 */
-	
+
 	public void endTurn() {
 		if (playerTurn == 0) {
 			log.econDay(secondPlayer);
@@ -136,7 +136,7 @@ public class Controller implements Serializable
 	public char[][] unitTakeAction(int action)
 	{
 		char[][] canDo = null;
-		
+
 		if (action == MOVE) {
 			canDo = move();
 		} else if (action == ATTACK) {
@@ -153,32 +153,32 @@ public class Controller implements Serializable
 		char[][] move = move();
 		Unit[][] ub = log.getUB();
 		char[][] canAttack = new char[log.getTBoard().length][log.getTBoard().length];
-		
+
 		for (int r = 0; r < canAttack.length; r++) {
 			for (int c = 0; c < canAttack.length; c++) {
-				
+
 				//if there is a unit there that does not belong to you and you can move there...
 				//TODO move[r][c] isn't correct you should say if you can move within attack range
 				//of that unit NOT if you can move to the same tile as that unit!
-				
+
 				if (ub[r][c] != null && playerTurn != ub[r][c].getOwner() && move[r][c] == 'x') {
 					canAttack[r][c] = 'a';
 				}
 			}
 		}
-		
+
 		return canAttack;
 	}
-	
+
 	public void attackUnit(int r, int c) {
 		Unit toAttack = log.getUnit(r, c);
 		Unit attacker = log.getUnit(x, y);
-		
+
 		if (playerTurn == 0) 
 			log.battle(attacker, toAttack, playerTurn);
 		else
 			log.battle(toAttack, attacker, playerTurn);
-		
+
 	}
 
 	public void capture() {
@@ -188,45 +188,45 @@ public class Controller implements Serializable
 			log.captureBuilding(log.getP2(), x, y);
 	}
 
-//	/**
-//	 * Returns x on a char board of what buildings are in reach to capture
-//	 *
-//	 * @return
-//	 */
-//	private char[][] capture() {
-//		char[][] moves = move();
-//		Tile[][] tiles = log.getTBoard();
-//
-//		char[][] canCapture = new char[tiles.length][tiles.length];
-//
-//		for (int r = 0; r < tiles.length; r++) {
-//			for (int c = 0; c < tiles.length;c++) {
-//				canCapture[r][c] = '-';
-//			}
-//		}
-//
-//		for (int r = 0; r < tiles.length; r++) {
-//			for (int c = 0; c < tiles.length; c++) {
-//				if (playerTurn == 0) {
-//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
-//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' ||
-//							tiles[r][c].getType() == 'X') {
-//						if (moves[r][c] == 'x') //legal move
-//							canCapture[r][c] = 'c';
-//					}
-//				} else {
-//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
-//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' ||
-//							tiles[r][c].getType() == 'x') {
-//						if (moves[r][c] == 'x') //legal move
-//							canCapture[r][c] = 'c';
-//					}
-//				}
-//			}
-//		}
-//
-//		return canCapture;
-//	}
+	//	/**
+	//	 * Returns x on a char board of what buildings are in reach to capture
+	//	 *
+	//	 * @return
+	//	 */
+	//	private char[][] capture() {
+	//		char[][] moves = move();
+	//		Tile[][] tiles = log.getTBoard();
+	//
+	//		char[][] canCapture = new char[tiles.length][tiles.length];
+	//
+	//		for (int r = 0; r < tiles.length; r++) {
+	//			for (int c = 0; c < tiles.length;c++) {
+	//				canCapture[r][c] = '-';
+	//			}
+	//		}
+	//
+	//		for (int r = 0; r < tiles.length; r++) {
+	//			for (int c = 0; c < tiles.length; c++) {
+	//				if (playerTurn == 0) {
+	//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
+	//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' ||
+	//							tiles[r][c].getType() == 'X') {
+	//						if (moves[r][c] == 'x') //legal move
+	//							canCapture[r][c] = 'c';
+	//					}
+	//				} else {
+	//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
+	//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' ||
+	//							tiles[r][c].getType() == 'x') {
+	//						if (moves[r][c] == 'x') //legal move
+	//							canCapture[r][c] = 'c';
+	//					}
+	//				}
+	//			}
+	//		}
+	//
+	//		return canCapture;
+	//	}
 
 	//so the player decides to produce a unit, so we call this method and we send back an array
 	//of strings so that the GUI can display array of strings in a menu as possible buys. 
@@ -258,7 +258,7 @@ public class Controller implements Serializable
 	 * 
 	 * @param toProd
 	 */
-	
+
 	public void produceUnit(String toProd) {
 		Tile tile = log.getTile(x, y);
 		Unit prod = store.whatUnit(toProd);
@@ -275,7 +275,7 @@ public class Controller implements Serializable
 	 * @param actions
 	 * @return
 	 */
-	
+
 	private ArrayList<String> unitActions(ArrayList<String> actions) {
 		Unit selUnit = log.getUnit(x, y);
 		Logic tempLog = log;
@@ -330,15 +330,15 @@ public class Controller implements Serializable
 
 	public int getMunny(int pNum) {
 		int munny = 0;
-		
+
 		if (pNum == 0) 
 			munny = log.getP1().getCash();
 		else
 			munny = log.getP2().getCash();
-		
+
 		return munny;
 	}
-	
+
 	/**
 	 * I really think this method should be called when they click on a unit in the first
 	 * place as with the game.   So if they were to click on a unit, all possible moves that
@@ -349,13 +349,13 @@ public class Controller implements Serializable
 		Unit[][] temp = log.getUB();
 		return log.getMoves(temp[x][y]);
 	}
-	
+
 	public char[][] getBoard()
 	{
 		int size = log.getTBoard().length;
 		Tile[][] tiles = log.getTBoard();
 		char[][] tileBoard = new char[size][size];
-		
+
 		for(int i = 0; i < size; i++)
 		{
 			for(int j = 0; j < size; j++)
@@ -363,10 +363,10 @@ public class Controller implements Serializable
 				tileBoard[i][j] = tiles[i][j].getType();
 			}
 		}
-		
+
 		return tileBoard;
 	}
-	
+
 	public Unit[][] getUnitBoard()
 	{
 		return log.getUB();
@@ -391,12 +391,12 @@ public class Controller implements Serializable
 		String armorString = "Armor: " + armor;
 		String ammoString = "Ammo: " + ammo;
 		String ownerString;
-		
+
 		if (own == 0)
 			ownerString = "Owner: Player 1";
 		else
 			ownerString = "Owner: Player 2";
-		
+
 		ArrayList<String> toSend = new ArrayList<String>();
 
 		toSend.add(nameString);
@@ -410,53 +410,53 @@ public class Controller implements Serializable
 
 		return toSend;
 	}
-		
+
 	public int[][] getConvertedUnits(int pNum){
 		Unit[][] uB = log.getUB();
 		int[][] retBoard = new int[log.getSize()][log.getSize()];
-		
+
 		for(int i = 0; i < log.getSize(); i++)
 			for(int j = 0; j < log.getSize(); j++){
-                if(uB[i][j] == null)    {
-                    retBoard[i][j] = -1;
-                    continue;
-                }
-				String name = uB[i][j].getName();
-				
-				if (uB[i][j].getOwner() == pNum) {
-					if(name.equalsIgnoreCase("Anti-Air"))
-						retBoard[i][j] = 0;
-					else if(name.equalsIgnoreCase("Artillery"))
-						retBoard[i][j] = 1;
-					else if(name.equalsIgnoreCase("HeavyTank"))
-						retBoard[i][j] = 2;
-					else if(name.equalsIgnoreCase("Infantry"))
-						retBoard[i][j] = 3;
-					else if(name.equalsIgnoreCase("Mech"))
-						retBoard[i][j] = 4;
-					else if(name.equalsIgnoreCase("Medium Tank"))
-						retBoard[i][j] = 5;
-					else if(name.equalsIgnoreCase("Recon"))
-						retBoard[i][j] = 6;
-					else if(name.equalsIgnoreCase("Rocket"))
-						retBoard[i][j] = 7;
-					else if(name.equalsIgnoreCase("Tank"))
-						retBoard[i][j] = 8;
-				}
-				else{
+				if(uB[i][j] == null)    {
 					retBoard[i][j] = -1;
+					//continue;
+				} else {
+					String name = uB[i][j].getName();
+
+					if (uB[i][j].getOwner() == pNum) {
+						if(name.equalsIgnoreCase("Anti-Air"))
+							retBoard[i][j] = 0;
+						else if(name.equalsIgnoreCase("Artillery"))
+							retBoard[i][j] = 1;
+						else if(name.equalsIgnoreCase("HeavyTank"))
+							retBoard[i][j] = 2;
+						else if(name.equalsIgnoreCase("Infantry"))
+							retBoard[i][j] = 3;
+						else if(name.equalsIgnoreCase("Mech"))
+							retBoard[i][j] = 4;
+						else if(name.equalsIgnoreCase("Medium Tank"))
+							retBoard[i][j] = 5;
+						else if(name.equalsIgnoreCase("Recon"))
+							retBoard[i][j] = 6;
+						else if(name.equalsIgnoreCase("Rocket"))
+							retBoard[i][j] = 7;
+						else if(name.equalsIgnoreCase("Tank"))
+							retBoard[i][j] = 8;
+					} else
+						retBoard[i][j] = -1;
 				}
+				
 			}
-		
-		
+
+
 		return retBoard;
 	}
-	
+
 	public void unitMove(int moveX, int moveY) {
 		Unit toMove = log.getUnit(x, y);
 		log.moveUnit(toMove, moveX, moveY);
 	}
-	
+
 	public boolean isValidMove(int moveX, int moveY) {
 		char[][] posMoves = log.getMoves(log.getUnit(x,y));
 		if (posMoves[moveX][moveY] == 'x') 

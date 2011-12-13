@@ -272,6 +272,7 @@ public class Logic implements Serializable
 		if (unitBoard[x][y] == null) {
 			if(p.getCash() >= pU.getCost()){
 				pU.setOwner(p.getPNum());
+				pU.getOwner();
 				unitBoard[x][y] = pU;
 				p.setCash(p.getCash() - pU.getCost());
 				p.setNumUnits(p.getNumUnits()+1);
