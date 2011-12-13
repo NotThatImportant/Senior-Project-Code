@@ -236,7 +236,7 @@ public class GameBoard extends Activity implements OnTouchListener
 					if (commands != null && !commands.isEmpty())
 					{
 						// What to do if commands are for a unit
-						if (commands.get(0).toUpperCase().equals("MOVE"))
+						if (commands.contains("UnitInfo"))
 						{
 							ggvGlobal.setAvailableCommands(commands);
 							ggvGlobal.setUnitInfo(c.getUnitInfo());
