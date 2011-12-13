@@ -124,7 +124,10 @@ public class GameBoard extends Activity implements OnTouchListener
 		{
 			// End turn
 			c.endTurn();
-			//c.aiTurn();
+			
+			if (ggvGlobal.isAIOn())
+				c.aiTurn();
+			
 			ggvGlobal.setInGameMainMenuAction(false,false,false);
 			ggvGlobal.setSelectedUnit("");
 			ggvGlobal.setSelectedCommand(-1);
