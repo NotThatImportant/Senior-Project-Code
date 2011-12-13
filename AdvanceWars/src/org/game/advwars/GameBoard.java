@@ -7,6 +7,7 @@ import dataconnectors.SaveGUIData;
 import dataconnectors.SaveGameData;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -76,7 +78,7 @@ public class GameBoard extends Activity implements OnTouchListener
 
 		Player p1 = new Player("Player1", 0, p1Char);
 		Player p2 = new Player("Player2", 1, p2Char);
-		c = new Controller(p1, p2, true, ggvGlobal.getMap());
+		c = new Controller(p1, p2, false, ggvGlobal.getMap());
 		gameBoardView.setController(c);
 		gameBoardView.initGame();
 		sd.saveGGVData(ggvGlobal);
@@ -117,10 +119,14 @@ public class GameBoard extends Activity implements OnTouchListener
 		if (ggvGlobal.getInGameMenuEndTurn())
 		{
 			// End turn
-			endTurn = true;
-
-			if (aiTurn = false)
-				aiTurn = true;
+			c.endTurn();
+			//c.aiTurn();
+			ggvGlobal.setInGameMainMenuAction(false,false,false);
+			sd.saveGGVData(ggvGlobal);
+			Toast.makeText(this, "Player turn: " + (c.whosTurn() + 1), Toast.LENGTH_SHORT).show();
+			
+			gameBoardView.setController(c);
+			gameBoardView.initGame();
 		}
 		else if (ggvGlobal.getInGameMenuSaveGame())
 		{

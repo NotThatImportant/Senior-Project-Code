@@ -97,7 +97,7 @@
     <string name="unit_attack_range">UNIT_ATTACK_RANGE_NOT_SET</string>
     <string name="unit_armor">UNIT_ARMOR_NOT_SET</string>
     <string name="unit_ammo">UNIT_AMMO_NOT_SET</string>
-    <string name="unit_fuel">UNIT_FUEL_NOT_SET</string>
+    <string name="unit_owner">UNIT_FUEL_NOT_SET</string>
         
         
             

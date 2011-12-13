@@ -77,7 +77,7 @@ public class Controller implements Serializable
 		this.x = x;
 		this.y = y;
 
-		if (log.getUB()[x][y] != null)
+		if (log.getUB()[x][y] != null && log.getUB()[x][y].getOwner() == playerTurn)
 			actions = unitActions(actions);
 
 		else if (log.getTBoard()[x][y].getType() == 'q' && playerTurn == 0)
@@ -265,7 +265,7 @@ public class Controller implements Serializable
 
 		if (playerTurn == 0) 
 			log.produceUnit(log.getP1(), prod, tile);
-		else 
+		else if (playerTurn == 1)
 			log.produceUnit(log.getP2(), prod, tile);
 	}
 
@@ -285,7 +285,8 @@ public class Controller implements Serializable
 		for (int c = 0; c < possibleMoves.length; c++) {
 			for(int r = 0; r < possibleMoves.length; r++) {
 				if (canMove != true) {
-					if (!(possibleMoves[r][c] == '-') && !selUnit.getHasMoved()) {
+					if (!(possibleMoves[r][c] == '-') && !selUnit.getHasMoved() && 
+							selUnit.getOwner() == playerTurn) {
 						actions.add("Move");
 						canMove = true;
 						selected = 'u';
@@ -312,7 +313,7 @@ public class Controller implements Serializable
 
 		Tile[][] tileBoard = log.getTBoard();
 
-		if (playerTurn == 0) {
+		if (playerTurn == 1) {
 			if (tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p') {
 				actions.add("Capture");
 			}
@@ -379,7 +380,7 @@ public class Controller implements Serializable
 		int ammo = sUnit.getAmmo();
 		String name = sUnit.getName();
 		int attack = sUnit.getAttack();
-		int fuel = sUnit.getFuel();
+		int own = sUnit.getOwner();
 		int atkRange = sUnit.getAtkRange();
 
 		String nameString = "Name: " + name;		
@@ -389,7 +390,12 @@ public class Controller implements Serializable
 		String attkRangeString = "Range: " + atkRange;
 		String armorString = "Armor: " + armor;
 		String ammoString = "Ammo: " + ammo;
-		String fuelString = "Fuel: " + fuel;
+		String ownerString;
+		
+		if (own == 0)
+			ownerString = "Owner: Player 1";
+		else
+			ownerString = "Owner: Player 2";
 		
 		ArrayList<String> toSend = new ArrayList<String>();
 
@@ -400,7 +406,7 @@ public class Controller implements Serializable
 		toSend.add(attkRangeString);
 		toSend.add(armorString);
 		toSend.add(ammoString);
-		toSend.add(fuelString);
+		toSend.add(ownerString);
 
 		return toSend;
 	}
