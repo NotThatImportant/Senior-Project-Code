@@ -55,12 +55,12 @@ public class Logic implements Serializable
 		mapSize = mr.getSize();
 		createBoards();
 		playerList = new ArrayList<Player>();
-		Player p1 = new Player(p1Name, 1, p1Fact);
+		Player p1 = new Player(p1Name, 0, p1Fact);
 		Player p2 = null;
 		if (wantAI == true) 
-			herpDerp = new AI("Herp Derp", 2, 'r');
+			herpDerp = new AI("Herp Derp", 1, 'r');
 		else 
-			p2 = new Player(p2Name, 2, p2Fact);
+			p2 = new Player(p2Name, 1, p2Fact);
 
 		playerList.add(p1);
 
@@ -227,6 +227,7 @@ public class Logic implements Serializable
 					p2.setAmmo(p2.getAmmo() - 1);
 				}
 			} else { //if player2 unit is dead
+				unitBoard[p2.getX()][p2.getY()] = null;
 				p2 = null;
 				playerList.get(PLAYER2).setNumUnits(playerList.get(PLAYER2).getNumBuild() -1);
 				return 1;
@@ -248,6 +249,7 @@ public class Logic implements Serializable
 					p1.setAmmo(p1.getAmmo() - 1);
 				}
 			} else {
+				unitBoard[p1.getX()][p1.getY()] = null;
 				p1 = null;
 				playerList.get(PLAYER1).setNumUnits(playerList.get(PLAYER1).getNumBuild() -1);
 				return 1;
@@ -269,6 +271,7 @@ public class Logic implements Serializable
 
 		if (unitBoard[x][y] == null) {
 			if(p.getCash() >= pU.getCost()){
+				pU.setOwner(p.getPNum());
 				unitBoard[x][y] = pU;
 				p.setCash(p.getCash() - pU.getCost());
 				p.setNumUnits(p.getNumUnits()+1);
@@ -276,6 +279,9 @@ public class Logic implements Serializable
 				unitBoard[x][y].setY(y);
 				retVal = true;
 				unitBoard[x][y].justProded();
+//				pU.setHasMoved(true);
+//				pU.setHasAttacked(true);
+//				pU.setHasCaptured(true);
 			}
 		}
 

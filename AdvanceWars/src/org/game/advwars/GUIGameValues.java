@@ -95,6 +95,15 @@ public class GUIGameValues implements Serializable
 		return this.faction;
 	}
 	
+	public String getAIFaction ()
+	{
+		if(faction.equalsIgnoreCase("blue"))
+			return "red";
+		if(faction.equalsIgnoreCase("red"))
+			return this.faction;
+		return "";
+	}
+	
 	public void setInGameMainMenuAction (boolean endTurn, boolean saveGame, boolean quitGame)
 	{
 		this.inGameMainMenu[0] = endTurn;

@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import controller.Controller;
+import dataconnectors.SaveGUIData;
 
 public class GameBoardView extends View
 {
@@ -33,6 +34,8 @@ public class GameBoardView extends View
 	private final Paint mPaint = new Paint();
 	private Canvas canvas;
 	private Controller controller;
+	private SaveGUIData sd = new SaveGUIData();
+	private GUIGameValues gGValue;
 
 	public GameBoardView(Context context, AttributeSet attrs, int defStyle)
 	{
@@ -40,6 +43,8 @@ public class GameBoardView extends View
 
 		mX = 0;
 		mY = 0;
+
+		gGValue = sd.loadGGVData();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
 		mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
@@ -53,6 +58,8 @@ public class GameBoardView extends View
 
 		mX = 0;
 		mY = 0;
+
+		gGValue = sd.loadGGVData();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
 		mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
@@ -100,19 +107,19 @@ public class GameBoardView extends View
         loadTile(1, r.getDrawable(R.drawable.red_hq), mRedBuildingArray);
         loadTile(2, r.getDrawable(R.drawable.red_factory), mRedBuildingArray);*/
 
-        mBlueUnitArray = new Bitmap[9];
+		mBlueUnitArray = new Bitmap[9];
 
-        loadTile(0, r.getDrawable(R.drawable.blue_anti_air), mBlueUnitArray);
-        loadTile(1, r.getDrawable(R.drawable.blue_artillery), mBlueUnitArray);
-        loadTile(2, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
-        loadTile(3, r.getDrawable(R.drawable.blue_infantry), mBlueUnitArray);
-        loadTile(4, r.getDrawable(R.drawable.blue_mech), mBlueUnitArray);
-        loadTile(5, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
-        loadTile(6, r.getDrawable(R.drawable.blue_recon), mBlueUnitArray);
-        loadTile(7, r.getDrawable(R.drawable.blue_rocket), mBlueUnitArray);
-        loadTile(8, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+		loadTile(0, r.getDrawable(R.drawable.blue_anti_air), mBlueUnitArray);
+		loadTile(1, r.getDrawable(R.drawable.blue_artillery), mBlueUnitArray);
+		loadTile(2, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+		loadTile(3, r.getDrawable(R.drawable.blue_infantry), mBlueUnitArray);
+		loadTile(4, r.getDrawable(R.drawable.blue_mech), mBlueUnitArray);
+		loadTile(5, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
+		loadTile(6, r.getDrawable(R.drawable.blue_recon), mBlueUnitArray);
+		loadTile(7, r.getDrawable(R.drawable.blue_rocket), mBlueUnitArray);
+		loadTile(8, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
 
-        /*mBlueBuildingArray = new Bitmap[3];
+		/*mBlueBuildingArray = new Bitmap[3];
 
         loadTile(0, r.getDrawable(R.drawable.blue_building), mBlueBuildingArray);
         loadTile(1, r.getDrawable(R.drawable.blue_hq), mBlueBuildingArray);
@@ -194,13 +201,13 @@ public class GameBoardView extends View
 						mPaint);
 
 				if(mPlayer1Units[x][y] > -1)
-					canvas.drawBitmap(mBlueUnitArray[getTileByType(mTileGrid[x][y])], 
+					canvas.drawBitmap(drawUnitTile(mPlayer1Units[x][y], gGValue.getFaction()), 
 							mXOffset + (x - mX) * mTileSize,
 							mYOffset + (y - mY) * mTileSize,
 							mPaint);
 
 				if(mPlayer2Units[x][y] > -1)
-					canvas.drawBitmap(mRedUnitArray[getTileByType(mTileGrid[x][y])], 
+					canvas.drawBitmap(drawUnitTile(mPlayer2Units[x][y],gGValue.getAIFaction()), 
 							mXOffset + (x - mX) * mTileSize,
 							mYOffset + (y - mY) * mTileSize,
 							mPaint);
@@ -216,36 +223,75 @@ public class GameBoardView extends View
         canvas.drawLine(0, 10, 0, 100, mPaint);*/
 
 	}
+	
+	private Bitmap drawUnitTile(int i, String faction) {
+		if(faction.equalsIgnoreCase("blue")){
+			return mBlueUnitArray[i];
+		}else{
+			return mRedUnitArray[i];
+		}
+	}
 
 	private int getTileByType(char c)
 	{
+		String faction = gGValue.getFaction();
 		int result = 0;
-
-		if(c == 'g')
+		switch(c){
+		case 'g' :
 			result = 0;
-		else if(c == 'm')
+			break;
+		case 'm':
 			result = 1;
-		else if (c == 'r')
+			break;
+		case  'r':
 			result = 2;
-		else if (c == 'w')
+			break;
+		case 'w':
 			result = 3;
-		else if (c == 'h')
-			result = 9;
-		else if (c == 'H')
-			result = 6;
-		else if (c == 'x')
-			result = 5;
-		else if (c == 'X')
-			result = 8;
-		else if (c == 'q')
-			result = 7;
-		else if (c == 'Q')
-			result = 10;
-		else if (c == 'b')
+			break;
+		case 'h':
+			if(faction.equalsIgnoreCase("blue"))
+				result = 6;
+			else
+				result = 9;
+			break;
+		case 'H':
+			if(faction.equalsIgnoreCase("red"))
+				result = 6;
+			else
+				result = 9;
+			break;
+		case 'x':
+			if(faction.equalsIgnoreCase("blue"))
+				result = 5;
+			else
+				result = 8;
+			break;
+		case 'X':
+			if(faction.equalsIgnoreCase("red"))
+				result = 5;
+			else
+				result = 8;
+			break;
+		case 'q':
+			if(faction.equalsIgnoreCase("blue"))
+				result = 7;
+			else
+				result = 10;
+			break;
+		case 'Q':
+			if(faction.equalsIgnoreCase("red"))
+				result = 7;
+			else
+				result = 10;
+			break;
+		case 'b':
 			result = 11;
-		else if (c == 'p')
+			break;
+		case 'p':
 			result = 12;
-
+			break;
+		}
 		return result;
 	}
 
@@ -357,8 +403,8 @@ public class GameBoardView extends View
 	public void initGame()
 	{
 		mTileGrid = controller.getBoard();
-		mPlayer1Units = controller.getConvertedUnits(1);
-		mPlayer2Units = controller.getConvertedUnits(2);
+		mPlayer1Units = controller.getConvertedUnits(0);
+		mPlayer2Units = controller.getConvertedUnits(1);
 	}
 
 

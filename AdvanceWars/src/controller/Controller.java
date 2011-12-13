@@ -433,24 +433,27 @@ public class Controller implements Serializable
 				String name = uB[i][j].getName();
 				
 				if (uB[i][j].getOwner() == pNum) {
-					if(name.equals("Anti-Air"))
+					if(name.equalsIgnoreCase("Anti-Air"))
 						retBoard[i][j] = 0;
-					else if(name.equals("Artillery"))
+					else if(name.equalsIgnoreCase("Artillery"))
 						retBoard[i][j] = 1;
-					else if(name.equals("HeavyTank"))
+					else if(name.equalsIgnoreCase("HeavyTank"))
 						retBoard[i][j] = 2;
-					else if(name.equals("Infantry"))
+					else if(name.equalsIgnoreCase("Infantry"))
 						retBoard[i][j] = 3;
-					else if(name.equals("Mech"))
+					else if(name.equalsIgnoreCase("Mech"))
 						retBoard[i][j] = 4;
-					else if(name.equals("Medium Tank"))
+					else if(name.equalsIgnoreCase("Medium Tank"))
 						retBoard[i][j] = 5;
-					else if(name.equals("Recon"))
+					else if(name.equalsIgnoreCase("Recon"))
 						retBoard[i][j] = 6;
-					else if(name.equals("Rocket"))
+					else if(name.equalsIgnoreCase("Rocket"))
 						retBoard[i][j] = 7;
-					else if(name.equals("Tank"))
+					else if(name.equalsIgnoreCase("Tank"))
 						retBoard[i][j] = 8;
+				}
+				else{
+					retBoard[i][j] = -1;
 				}
 			}
 		
