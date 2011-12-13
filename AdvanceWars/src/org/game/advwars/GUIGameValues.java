@@ -25,6 +25,7 @@ public class GUIGameValues implements Serializable
 	private int selectedCommand;
 	private String selectedUnit;
 	private Controller c;
+	private char[][] movement;
 	
 	public GUIGameValues()
 	{
@@ -39,6 +40,7 @@ public class GUIGameValues implements Serializable
 		selectedCommand = -1;
 		selectedUnit = null;
 		c = null;
+		movement = null;
 	}
 	
 	public void setPlayerName (String playerName)
@@ -176,5 +178,13 @@ public class GUIGameValues implements Serializable
 	public ArrayList<String> getUnitInfo ()
 	{
 		return this.unitInfo;
+	}
+	
+	public void setMovement(char[][] moves) {
+		movement = moves;
+	}
+	
+	public char[][] getMovement() {
+		return movement;
 	}
 }

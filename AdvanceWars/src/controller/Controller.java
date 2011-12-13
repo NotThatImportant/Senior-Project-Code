@@ -339,21 +339,6 @@ public class Controller implements Serializable
 	}
 	
 	/**
-	 * Randomly decides who gets to go first.
-	 * 
-	 * @return
-	 */
-	private int whoGoesFirst() {
-		Random rand = new Random();
-		int answer = 0;
-
-		answer = rand.nextInt(10);
-		answer = answer % 2;
-
-		return answer;
-	}
-	
-	/**
 	 * I really think this method should be called when they click on a unit in the first
 	 * place as with the game.   So if they were to click on a unit, all possible moves that
 	 * unit can take are highlighted on screen before they choose to move
@@ -459,5 +444,18 @@ public class Controller implements Serializable
 		
 		
 		return retBoard;
+	}
+	
+	public void unitMove(int moveX, int moveY) {
+		Unit toMove = log.getUnit(x, y);
+		log.moveUnit(toMove, moveX, moveY);
+	}
+	
+	public boolean isValidMove(int moveX, int moveY) {
+		char[][] posMoves = log.getMoves(log.getUnit(x,y));
+		if (posMoves[moveX][moveY] == 'x') 
+			return true;
+
+		return false;
 	}
 }

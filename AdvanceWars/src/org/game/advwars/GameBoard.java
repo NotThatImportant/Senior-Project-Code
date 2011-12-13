@@ -44,7 +44,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private char p1Char;
 	private char p2Char;
 	private  ArrayList<String> commands;
-	
+
 	private boolean endTurn = false;
 	private boolean move = false;
 	private boolean aiTurn = false;
@@ -85,11 +85,11 @@ public class GameBoard extends Activity implements OnTouchListener
 		if (mp != null){
 			mp.release();
 		}
-		
+
 		// Begin gameplay music
-        mp = MediaPlayer.create(this, R.raw.background_music);
-        mp.setLooping(true);
-    	mp.start();
+		mp = MediaPlayer.create(this, R.raw.background_music);
+		mp.setLooping(true);
+		mp.start();
 	}
 
 	@Override
@@ -103,20 +103,22 @@ public class GameBoard extends Activity implements OnTouchListener
 
 			return true;
 		}
-		
+
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		ggvGlobal = sd.loadGGVData();
-		
+
+		/*----------------- Actions based on in-game main menu selection -----------------*/
+
 		if (ggvGlobal.getInGameMenuEndTurn())
 		{
 			// End turn
 			endTurn = true;
-			
+
 			if (aiTurn = false)
 				aiTurn = true;
 		}
@@ -136,11 +138,11 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Do nothing
 			// Only hit if a user decides to close the main menu by using phone's Back button
 		}
-		
-		
+
+
 		/*------------------- Actions based on in-game menu selection -------------------*/
-		
-		
+
+
 		if (ggvGlobal.getSelectedUnit() != null && ggvGlobal.getSelectedUnit() != "")
 		{
 			c.produceUnit(ggvGlobal.getSelectedUnit());
@@ -149,17 +151,40 @@ public class GameBoard extends Activity implements OnTouchListener
 		}
 		else if (ggvGlobal.getSelectedCommand() > -1 && ggvGlobal.getSelectedCommand() < 4)
 		{
-			c.unitTakeAction(ggvGlobal.getSelectedCommand());
-			gameBoardView.setController(c);
-			gameBoardView.initGame();
+			// Move
+			if (ggvGlobal.getSelectedCommand() == 0)
+			{
+				move = true;
+				ggvGlobal.setMovement(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
+				sd.saveGGVData(ggvGlobal);
+				gameBoardView.setController(c);
+				gameBoardView.initGame();
+			}
+			// Attack
+			else if (ggvGlobal.getSelectedCommand() == 1)
+			{
+
+			}
+			// Capture
+			else if (ggvGlobal.getSelectedCommand() == 2)
+			{
+
+			}
+			// Unit info
+			else
+			{
+				c.unitTakeAction(ggvGlobal.getSelectedCommand());
+				gameBoardView.setController(c);
+				gameBoardView.initGame();
+			}
 		}
 		else
 		{
 			// Do nothing
 			// This is not good because it means something is failing :-(
 		}
-		
-	    super.onActivityResult(requestCode, resultCode, data);
+
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
@@ -188,33 +213,46 @@ public class GameBoard extends Activity implements OnTouchListener
 			if(mode == PRESS)
 			{
 				ggvGlobal = sd.loadGGVData();
-				
+
 				// Get selected points from game board view
 				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
-				
-				// If selected points are valid pass them to the controller and get a list of commands from it
-				if (selectedPoints != null)
-					commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);
-				
-				// Check if commands are valid
-				if (commands != null && !commands.isEmpty())
+
+				if (move == true && selectedPoints != null &&
+						c.isValidMove(selectedPoints[0], selectedPoints[1]))
 				{
-					// What to do if commands are for a unit
-					if (commands.get(0).toUpperCase().equals("MOVE"))
+					c.unitMove(selectedPoints[0], selectedPoints[1]);
+					gameBoardView.setController(c);
+					gameBoardView.initGame();
+					move = false;
+				}
+				else 
+				{
+					move = false; 
+					// If selected points are valid pass them to the controller and get a list of commands from it
+					if (selectedPoints != null)
+						commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);
+
+					// Check if commands are valid
+					if (commands != null && !commands.isEmpty())
 					{
-						ggvGlobal.setAvailableCommands(commands);
-						ggvGlobal.setUnitInfo(c.getUnitInfo());
-						Intent i = new Intent(this, InGameMenu.class);
-						i.putExtra("ggv", ggvGlobal);
-						startActivityForResult(i, 0);
-					}
-					// What to do if commands are for production building
-					else
-					{
-						ggvGlobal.setAvailableCommands(commands);
-						Intent i2 = new Intent(this, UnitSelectionMenu.class);
-						i2.putExtra("ggv", ggvGlobal);
-						startActivityForResult(i2, 0);
+						// What to do if commands are for a unit
+						if (commands.get(0).toUpperCase().equals("MOVE"))
+						{
+							ggvGlobal.setAvailableCommands(commands);
+							ggvGlobal.setUnitInfo(c.getUnitInfo());
+							Intent i = new Intent(this, InGameMenu.class);
+							i.putExtra("ggv", ggvGlobal);
+							startActivityForResult(i, 0);
+							commands.clear();
+						}
+						// What to do if commands are for production building
+						else
+						{
+							ggvGlobal.setAvailableCommands(commands);
+							Intent i2 = new Intent(this, UnitSelectionMenu.class);
+							i2.putExtra("ggv", ggvGlobal);
+							startActivityForResult(i2, 0);
+						}
 					}
 				}
 			}

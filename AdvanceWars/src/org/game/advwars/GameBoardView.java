@@ -35,7 +35,7 @@ public class GameBoardView extends View
 	private Canvas canvas;
 	private Controller controller;
 	private SaveGUIData sd = new SaveGUIData();
-	private GUIGameValues gGValue;
+	private GUIGameValues ggvGlobal;
 
 	public GameBoardView(Context context, AttributeSet attrs, int defStyle)
 	{
@@ -44,7 +44,7 @@ public class GameBoardView extends View
 		mX = 0;
 		mY = 0;
 
-		gGValue = sd.loadGGVData();
+		ggvGlobal = sd.loadGGVData();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
 		mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
@@ -59,7 +59,7 @@ public class GameBoardView extends View
 		mX = 0;
 		mY = 0;
 
-		gGValue = sd.loadGGVData();
+		ggvGlobal = sd.loadGGVData();
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GameBoardView);
 		mTileSize = a.getInt(R.styleable.GameBoardView_tileSize, 30);
@@ -75,6 +75,8 @@ public class GameBoardView extends View
 
 		resetTiles(13);
 
+		// Terrain tiles
+
 		loadTile(0, r.getDrawable(R.drawable.grass2), mTileArray);
 		loadTile(1, r.getDrawable(R.drawable.mountain), mTileArray);
 		loadTile(2, r.getDrawable(R.drawable.road), mTileArray);
@@ -89,6 +91,8 @@ public class GameBoardView extends View
 		loadTile(11, r.getDrawable(R.drawable.uncaptured_building), mTileArray);
 		loadTile(12, r.getDrawable(R.drawable.uncaptured_factory), mTileArray);
 
+		// Red units tiles
+
 		mRedUnitArray = new Bitmap[9];
 
 		loadTile(0, r.getDrawable(R.drawable.red_anti_air), mRedUnitArray);
@@ -101,11 +105,7 @@ public class GameBoardView extends View
 		loadTile(7, r.getDrawable(R.drawable.red_rocket), mRedUnitArray);
 		loadTile(8, r.getDrawable(R.drawable.red_tank), mRedUnitArray);
 
-		/*mRedBuildingArray = new Bitmap[3];
-
-        loadTile(0, r.getDrawable(R.drawable.red_building), mRedBuildingArray);
-        loadTile(1, r.getDrawable(R.drawable.red_hq), mRedBuildingArray);
-        loadTile(2, r.getDrawable(R.drawable.red_factory), mRedBuildingArray);*/
+		// Blue units tiles
 
 		mBlueUnitArray = new Bitmap[9];
 
@@ -118,17 +118,6 @@ public class GameBoardView extends View
 		loadTile(6, r.getDrawable(R.drawable.blue_recon), mBlueUnitArray);
 		loadTile(7, r.getDrawable(R.drawable.blue_rocket), mBlueUnitArray);
 		loadTile(8, r.getDrawable(R.drawable.blue_tank), mBlueUnitArray);
-
-		/*mBlueBuildingArray = new Bitmap[3];
-
-        loadTile(0, r.getDrawable(R.drawable.blue_building), mBlueBuildingArray);
-        loadTile(1, r.getDrawable(R.drawable.blue_hq), mBlueBuildingArray);
-        loadTile(2, r.getDrawable(R.drawable.blue_factory), mBlueBuildingArray);
-
-        mUncaptBuildingArray = new Bitmap[2];
-
-        loadTile(0, r.getDrawable(R.drawable.uncaptured_building), mUncaptBuildingArray);
-        loadTile(1, r.getDrawable(R.drawable.uncaptured_factory), mUncaptBuildingArray);*/
 	}
 
 	public void resetTiles(int tilecount)
@@ -201,29 +190,38 @@ public class GameBoardView extends View
 						mPaint);
 
 				if(mPlayer1Units[x][y] > -1)
-					canvas.drawBitmap(drawUnitTile(mPlayer1Units[x][y], gGValue.getFaction()), 
+					canvas.drawBitmap(drawUnitTile(mPlayer1Units[x][y], ggvGlobal.getFaction()), 
 							mXOffset + (x - mX) * mTileSize,
 							mYOffset + (y - mY) * mTileSize,
 							mPaint);
 
 				if(mPlayer2Units[x][y] > -1)
-					canvas.drawBitmap(drawUnitTile(mPlayer2Units[x][y],gGValue.getAIFaction()), 
+					canvas.drawBitmap(drawUnitTile(mPlayer2Units[x][y],ggvGlobal.getAIFaction()), 
 							mXOffset + (x - mX) * mTileSize,
 							mYOffset + (y - mY) * mTileSize,
 							mPaint);
 			}
 		}
-
-		/*mPaint.setColor(Color.RED);
-        canvas.drawLine(0, 0, 10, 0, mPaint);
-
-        canvas.drawLine(0, 0, 0, 10, mPaint);
-
-        mPaint.setColor(Color.BLUE);
-        canvas.drawLine(0, 10, 0, 100, mPaint);*/
-
+		drawPossibleMoves(canvas);
 	}
-	
+
+	private void drawPossibleMoves(Canvas canvas) {
+		char[][] moves = ggvGlobal.getMovement();
+
+		if (moves != null) {
+			for (int x = mX; x < mXTileCount + mX && x < mTileGrid.length; x += 1)
+			{
+				for (int y = mY; y < mYTileCount + mY && y < mTileGrid[x].length; y += 1)
+				{
+					if (moves[x][y] == 'x') {
+						canvas.drawBitmap(mTileArray[4], mXOffset + (x - mX) * mTileSize, 
+								mYOffset + (y - mY) * mTileSize, mPaint);
+					}
+				}
+			}
+		}
+	}
+
 	private Bitmap drawUnitTile(int i, String faction) {
 		if(faction.equalsIgnoreCase("blue")){
 			return mBlueUnitArray[i];
@@ -234,7 +232,7 @@ public class GameBoardView extends View
 
 	private int getTileByType(char c)
 	{
-		String faction = gGValue.getFaction();
+		String faction = ggvGlobal.getFaction();
 		int result = 0;
 		switch(c){
 		case 'g' :
@@ -405,6 +403,7 @@ public class GameBoardView extends View
 		mTileGrid = controller.getBoard();
 		mPlayer1Units = controller.getConvertedUnits(0);
 		mPlayer2Units = controller.getConvertedUnits(1);
+		this.invalidate();
 	}
 
 

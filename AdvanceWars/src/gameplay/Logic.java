@@ -279,9 +279,9 @@ public class Logic implements Serializable
 				unitBoard[x][y].setY(y);
 				retVal = true;
 				unitBoard[x][y].justProded();
-//				pU.setHasMoved(true);
-//				pU.setHasAttacked(true);
-//				pU.setHasCaptured(true);
+				//				pU.setHasMoved(true);
+				//				pU.setHasAttacked(true);
+				//				pU.setHasCaptured(true);
 			}
 		}
 
@@ -326,103 +326,104 @@ public class Logic implements Serializable
 	}
 
 	private void move(Unit pUnit){
-		int movement = pUnit.getMove();
+		if (pUnit != null) {
+			int movement = pUnit.getMove();
 
-		if(tBoard[pUnit.getX()][pUnit.getY()].getType() == 'm'){
-			movement-=2;
-		}
-		//Top
-		for(int r = 1; r<=movement && pUnit.getX()-r >= 0; r++){
-			if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY())==false){
-				break;
+			if(tBoard[pUnit.getX()][pUnit.getY()].getType() == 'm'){
+				movement-=2;
 			}
-			else{
-				moves[pUnit.getX()-r][pUnit.getY()] = 'x';
-				for(int j = 1; j < movement && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
-					if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()+j)==true){
-						moves[pUnit.getX()-r][pUnit.getY()+j] = 'x';
+			//Top
+			for(int r = 1; r<=movement && pUnit.getX()-r >= 0; r++){
+				if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY())==false){
+					break;
+				}
+				else{
+					moves[pUnit.getX()-r][pUnit.getY()] = 'x';
+					for(int j = 1; j < movement && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
+						if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()+j)==true){
+							moves[pUnit.getX()-r][pUnit.getY()+j] = 'x';
+						}
+						if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()-j)==true){
+							moves[pUnit.getX()-r][pUnit.getY()-j] = 'x';
+						}
 					}
-					if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()-j)==true){
-						moves[pUnit.getX()-r][pUnit.getY()-j] = 'x';
+				}
+			}
+			//Bottom
+			for(int r = 1; r<movement && pUnit.getX()+r<mapSize; r++){
+				if(possibleMove(pUnit, pUnit.getX()+r, pUnit.getY())==false){
+					break;
+				}
+				else{
+					moves[pUnit.getX()+r][pUnit.getY()] = 'x';
+					// Checking Left
+					for(int j = 1; j < movement && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
+						if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
+							moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
+						}
+						if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()-j)== true){
+							moves[pUnit.getX()+r][pUnit.getY()-j] = 'x';
+						}
+					}
+				}
+			}
+			//Left
+			for(int c = 1; c<movement && pUnit.getY()-c>=0; c++){
+				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()-c)==false){
+					break;
+				}
+				else{
+					moves[pUnit.getX()][pUnit.getY()-c] = 'x';
+					// Checking below
+					for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+						if(possibleMove(pUnit, pUnit.getX()+j, pUnit.getY()-c)==true){
+							moves[pUnit.getX()+j][pUnit.getY()-c] = 'x';
+						}
+						if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()-c)==true){
+							moves[pUnit.getX()-j][pUnit.getY()-c] = 'x';
+						}
+					}
+
+				}
+			}
+			//Right
+			for(int c = 1; c<movement && pUnit.getY()+c<mapSize; c++){
+				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()+c)==false){
+					break;
+				}
+				else{
+					moves[pUnit.getX()][pUnit.getY()+c] = 'x';
+					// Checking Below
+					for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+						if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
+							moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
+						}
+						if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()+c)==true){
+							moves[pUnit.getX()-j][pUnit.getY()+c] = 'x';
+						}
+					}
+				}
+			}
+
+			for(int i = 0; i < mapSize; i++){
+				for(int j= 0; j < mapSize; j++){
+					boolean adj = false;
+					if(moves[i][j] == 'x'){
+						if(i-1 >=0 && moves[i-1][j] == 'x')
+							adj = true;
+						if(i+1 < mapSize && moves[i+1][j] == 'x')
+							adj = true;
+						if(j-1 >= 0 && moves[i][j-1] == 'x')
+							adj = true;
+						if(j+1 < mapSize && moves[i][j+1] == 'x')
+							adj = true;
+
+						if(adj == false)
+							moves[i][j] = '-';
 					}
 				}
 			}
 		}
-		//Bottom
-		for(int r = 1; r<movement && pUnit.getX()+r<mapSize; r++){
-			if(possibleMove(pUnit, pUnit.getX()+r, pUnit.getY())==false){
-				break;
-			}
-			else{
-				moves[pUnit.getX()+r][pUnit.getY()] = 'x';
-				// Checking Left
-				for(int j = 1; j < movement && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
-					if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
-						moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
-					}
-					if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()-j)== true){
-						moves[pUnit.getX()+r][pUnit.getY()-j] = 'x';
-					}
-				}
-			}
-		}
-		//Left
-		for(int c = 1; c<movement && pUnit.getY()-c>=0; c++){
-			if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()-c)==false){
-				break;
-			}
-			else{
-				moves[pUnit.getX()][pUnit.getY()-c] = 'x';
-				// Checking below
-				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
-					if(possibleMove(pUnit, pUnit.getX()+j, pUnit.getY()-c)==true){
-						moves[pUnit.getX()+j][pUnit.getY()-c] = 'x';
-					}
-					if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()-c)==true){
-						moves[pUnit.getX()-j][pUnit.getY()-c] = 'x';
-					}
-				}
-
-			}
-		}
-		//Right
-		for(int c = 1; c<movement && pUnit.getY()+c<mapSize; c++){
-			if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()+c)==false){
-				break;
-			}
-			else{
-				moves[pUnit.getX()][pUnit.getY()+c] = 'x';
-				// Checking Below
-				for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
-					if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
-						moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
-					}
-					if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()+c)==true){
-						moves[pUnit.getX()-j][pUnit.getY()+c] = 'x';
-					}
-				}
-			}
-		}
-
-		for(int i = 0; i < mapSize; i++){
-			for(int j= 0; j < mapSize; j++){
-				boolean adj = false;
-				if(moves[i][j] == 'x'){
-					if(i-1 >=0 && moves[i-1][j] == 'x')
-						adj = true;
-					if(i+1 < mapSize && moves[i+1][j] == 'x')
-						adj = true;
-					if(j-1 >= 0 && moves[i][j-1] == 'x')
-						adj = true;
-					if(j+1 < mapSize && moves[i][j+1] == 'x')
-						adj = true;
-
-					if(adj == false)
-						moves[i][j] = '-';
-				}
-			}
-		}
-
 		//pUnit.setHasMoved(true);
 	}
 
