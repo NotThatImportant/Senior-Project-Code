@@ -149,9 +149,6 @@ public class AI extends Player{
 		}
 		if(availablePurchase){
 			ArrayList<Unit> unitsToBuild = prodUnits();
-//			ArrayList<Unit> unitsToBuild = new ArrayList<Unit>();
-//			Infantry infantryUnit = new Infantry(-1);
-//			unitsToBuild.add(infantryUnit);
 			
 			Tile[][] tBoard= log.getTBoard();
 			Unit[][] uBoard = log.getUB();
