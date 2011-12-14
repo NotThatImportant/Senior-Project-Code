@@ -145,6 +145,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", ggvGlobal);
 			startActivityForResult(i, 0);
+			this.finish();
 		}
 		else
 		{
