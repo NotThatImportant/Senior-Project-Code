@@ -21,7 +21,7 @@ public class Logic implements Serializable
 {
 
 	private final int BINCOME = 1000; //income you get in addition to the base
-	private final int BASEINCOME = 3000; //income you get everyday
+	private final int BASEINCOME = 3000; //income you get everyturn
 
 	private final int PLAYER1 = 0; //player 1's number
 	private final int PLAYER2 = 1; //player 2's number
@@ -319,28 +319,27 @@ public class Logic implements Serializable
 		int oX = pUnit.getX();
 		int oY = pUnit.getY();
 
-		unitBoard[oX][oY] = null;
-
 		unitBoard[pX][pY] = pUnit;
+		unitBoard[oX][oY] = null;
 
 		pUnit.setHasMoved(true);
 	}
 
 	private void move(Unit pUnit){
 		if (pUnit != null) {
-			int movement = pUnit.getMove();
+			int movementRange = pUnit.getMove();
 
 			if(tBoard[pUnit.getX()][pUnit.getY()].getType() == 'm'){
-				movement-=2;
+				movementRange-=2;
 			}
 			//Top
-			for(int r = 1; r<=movement && pUnit.getX()-r >= 0; r++){
+			for(int r = 1; r<=movementRange && pUnit.getX()-r >= 0; r++){
 				if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY())==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()-r][pUnit.getY()] = 'x';
-					for(int j = 1; j < movement && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
+					for(int j = 1; j < movementRange && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
 						if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()+j)==true){
 							moves[pUnit.getX()-r][pUnit.getY()+j] = 'x';
 						}
@@ -351,14 +350,14 @@ public class Logic implements Serializable
 				}
 			}
 			//Bottom
-			for(int r = 1; r<movement && pUnit.getX()+r<mapSize; r++){
+			for(int r = 1; r<movementRange && pUnit.getX()+r<mapSize; r++){
 				if(possibleMove(pUnit, pUnit.getX()+r, pUnit.getY())==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()+r][pUnit.getY()] = 'x';
 					// Checking Left
-					for(int j = 1; j < movement && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
+					for(int j = 1; j < movementRange && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
 						if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
 							moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
 						}
@@ -369,14 +368,14 @@ public class Logic implements Serializable
 				}
 			}
 			//Left
-			for(int c = 1; c<movement && pUnit.getY()-c>=0; c++){
+			for(int c = 1; c<movementRange && pUnit.getY()-c>=0; c++){
 				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()-c)==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()][pUnit.getY()-c] = 'x';
 					// Checking below
-					for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+					for(int j = 1; j < movementRange && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
 						if(possibleMove(pUnit, pUnit.getX()+j, pUnit.getY()-c)==true){
 							moves[pUnit.getX()+j][pUnit.getY()-c] = 'x';
 						}
@@ -388,14 +387,14 @@ public class Logic implements Serializable
 				}
 			}
 			//Right
-			for(int c = 1; c<movement && pUnit.getY()+c<mapSize; c++){
+			for(int c = 1; c<movementRange && pUnit.getY()+c<mapSize; c++){
 				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()+c)==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()][pUnit.getY()+c] = 'x';
 					// Checking Below
-					for(int j = 1; j < movement && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+					for(int j = 1; j < movementRange && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
 						if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
 							moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
 						}
@@ -457,9 +456,13 @@ public class Logic implements Serializable
 
 				if(unitBoard[i][j] != null)
 
-					if(unitBoard[i][j].getOwner() == pNum)
-
+					if(unitBoard[i][j].getOwner() == pNum){
 						unitBoard[i][j].setHasMoved(false);
+						unitBoard[i][j].setHasAttacked(false);
+						unitBoard[i][j].setHasCaptured(false);
+					}
+
+						
 
 			}
 	}

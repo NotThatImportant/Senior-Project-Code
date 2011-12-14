@@ -1,12 +1,15 @@
 package controller;
 
-import java.io.Serializable;
-import java.util.Random;
-import java.util.ArrayList;
 import gameplay.Logic;
-import player.*;
-import units.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import player.AI;
+import player.Player;
 import terrain.Tile;
+import units.Store;
+import units.Unit;
 
 public class Controller implements Serializable
 {
@@ -32,7 +35,7 @@ public class Controller implements Serializable
 		store = new Store();
 
 		if (aiOn) {
-			secondPlayer = new AI(secondPlayer.getPName(), 2, secondPlayer.getFact());
+			secondPlayer = new AI(secondPlayer.getPName(), Integer.valueOf(1), secondPlayer.getFact());
 		}
 
 		log = new Logic (mapName, firstPlayer.getFact(), secondPlayer.getFact(), p1.getPName(),
@@ -49,6 +52,7 @@ public class Controller implements Serializable
 		log.setUB(((AI) secondPlayer).getNewUBoard());
 		log.setTBoard(((AI) secondPlayer).getNewTBoard());
 		endTurn();
+		
 	}
 
 	/**
@@ -125,12 +129,15 @@ public class Controller implements Serializable
 	public void endTurn() {
 		if (playerTurn == 0) {
 			log.econDay(secondPlayer);
+			log.unitNewTurn(playerTurn);
 			playerTurn = 1;
 		}
 		else {
 			log.econDay(firstPlayer);
+			log.unitNewTurn(playerTurn);
 			playerTurn = 0;
 		}
+		
 	}
 
 	public char[][] unitTakeAction(int action)

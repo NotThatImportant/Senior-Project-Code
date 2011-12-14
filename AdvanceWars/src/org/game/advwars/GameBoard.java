@@ -1,25 +1,23 @@
 package org.game.advwars;
 
-import android.view.*;
+import java.util.ArrayList;
+
 import player.Player;
-import controller.Controller;
-import dataconnectors.SaveGUIData;
-import dataconnectors.SaveGameData;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
-
-import java.util.ArrayList;
+import controller.Controller;
+import dataconnectors.SaveGUIData;
+import dataconnectors.SaveGameData;
 
 public class GameBoard extends Activity implements OnTouchListener
 {

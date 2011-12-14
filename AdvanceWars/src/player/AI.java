@@ -13,6 +13,13 @@ import units.Artillery;
 import units.Bomber;
 import units.Chopper;
 import units.FighterJet;
+import units.HeavyTank;
+import units.Infantry;
+import units.Mech;
+import units.MedTank;
+import units.Recon;
+import units.Rockets;
+import units.Tank;
 import units.Unit;
 
 public class AI extends Player{
@@ -142,6 +149,10 @@ public class AI extends Player{
 		}
 		if(availablePurchase){
 			ArrayList<Unit> unitsToBuild = prodUnits();
+//			ArrayList<Unit> unitsToBuild = new ArrayList<Unit>();
+//			Infantry infantryUnit = new Infantry(-1);
+//			unitsToBuild.add(infantryUnit);
+			
 			Tile[][] tBoard= log.getTBoard();
 			Unit[][] uBoard = log.getUB();
 			ArrayList<Tile> emptyProdBldg = new ArrayList<Tile>();
@@ -153,9 +164,9 @@ public class AI extends Player{
 				}
 			int counter = 0;
 			boolean success = false;
-			Tile t = emptyProdBldg.get(counter);
+			Tile tileToPlaceUnitOn = emptyProdBldg.get(counter);
 			for(Unit bU: unitsToBuild){
-				success = log.produceUnit(this, bU, emptyProdBldg.get(counter));
+				success = log.produceUnit(this, bU, tileToPlaceUnitOn);
 				if(success)
 					counter++;
 			}
@@ -914,7 +925,7 @@ public class AI extends Player{
 
 		for (int r = 0; r < log.getSize(); r++) {
 			for (int c = 0; c < log.getSize(); c++) {
-				if (map[r][c].getType() == 'p' &&
+				if ((map[r][c].getType() == 'q') || map[r][c].getType() == 'Q' &&
 						map[r][c].getOwner() == playNum) {
 					int[] unitsToBuild = counterEnemyUnits();
 					int most = 0, secondMost = 0, thirdMost = 0, fourthMost = 0;
@@ -968,21 +979,19 @@ public class AI extends Player{
 		}else if(type == types.FIGHTERJET.ordinal()){
 			return new FighterJet(-1);
 		}else if(type == types.HEAVYTANK.ordinal()){
-			return new APC(-1);
+			return new HeavyTank(-1);
 		}else if(type == types.INFANTRY.ordinal()){
-			return new APC(-1);
+			return new Infantry(-1);
 		}else if(type == types.MECH.ordinal()){
-			return new APC(-1);
+			return new Mech(-1);
 		}else if(type == types.MEDTANK.ordinal()){
-			return new APC(-1);
-		}else if(type == types.MISSILE.ordinal()){
-			return new APC(-1);
+			return new MedTank(-1);
 		}else if(type == types.RECON.ordinal()){
-			return new APC(-1);
+			return new Recon(-1);
 		}else if(type == types.ROCKETS.ordinal()){
-			return new APC(-1);
+			return new Rockets(-1);
 		}else if(type == types.TANK.ordinal()){
-			return new APC(-1);
+			return new Tank(-1);
 		}else{
 			return null;
 		}
