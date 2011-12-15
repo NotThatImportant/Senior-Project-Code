@@ -35,17 +35,6 @@ public class Tile implements Serializable
 			default: height = 0;break;
 		}
 	}
-
-	public void setBC(int pNum) {
-		buildingCapture = pNum;
-	}
-	
-	public int getBC() {
-		int oBC = buildingCapture;
-		if (buildingCapture != 0)
-			buildingCapture = 0;
-		return oBC;
-	}
 	
 	public int getX() {
 		return x;
