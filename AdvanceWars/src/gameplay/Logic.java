@@ -180,7 +180,19 @@ public class Logic implements Serializable
 	 * @param p
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
-
+		if (tBoard[pX][pY].getOwner() != p.getPNum() && (
+			tBoard[pX][pY].getType == 'h' || tBoard[pX][pY].getType == 'H' || 
+			tBoard[pX][pY].getType == 'b' || tBoard[pX][pY].getType == 'p' || 
+			tBoard[pX][pY].getType == 'q' || tBoard[pX][pY].getType == 'Q' || 
+			tBoard[pX][pY].getType == 'x' || tBoard[pX][pY].getType == 'X' || )) {
+		
+			if(unitBoard[pX][pY].getHasCaptured()) {
+				tBoard[pX][pY].setOwner(p.getPNum());
+				unitBoard[pX][pY].justProded();
+			} else {
+				unitBoard[pX][pY].setHasCaptured(true);
+			}
+		}
 	}
 
 	public Player getP1() {
@@ -346,6 +358,7 @@ public class Logic implements Serializable
 		unitBoard[pX][pY].setY(pY);
 
 		pUnit.setHasMoved(true);
+		pUnit.setHasCaptured(false);
 	}
 
 	private void move(Unit pUnit){
