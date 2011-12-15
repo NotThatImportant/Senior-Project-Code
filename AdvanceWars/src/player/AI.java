@@ -4,6 +4,7 @@ package player;
 import gameplay.Logic;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 import terrain.Tile;
@@ -48,7 +49,18 @@ public class AI extends Player{
 		MISSILE, RECON, ROCKETS, TANK
 	};
 
+	// Default Constructor
 	public AI(String pN, int pNum, char fact) {
+		super(pN, pNum, fact);	
+
+		lastAction = "";
+		moveLogger = new ArrayList<String>();
+		unitTracker = new int[types.values().length];
+
+	}
+	
+	// Test Constructor
+	public AI(String pN, int pNum, char fact, boolean test){
 		super(pN, pNum, fact);	
 
 
@@ -58,7 +70,7 @@ public class AI extends Player{
 		unitTracker = new int[types.values().length];
 
 		test();
-
+		
 	}
 
 	/***************************************************************
@@ -92,10 +104,14 @@ public class AI extends Player{
 			if(availableAttack){
 				attack();
 			}
+			if(availableCapture){
+				capture();
+			}
 
 			//move units
 			boolean moved = false;
 
+			// Printing out preliminary move info and moves board
 			System.out.println("Before Move");
 			System.out.println(actionUnit.getName() +": " );
 			System.out.println("Starting Location: " + actionUnit.getX() + " " + actionUnit.getY());
@@ -118,7 +134,7 @@ public class AI extends Player{
 				}				
 
 				if(!moved){
-					if(countUncapturedBuildings() == 0)
+					if(countUncapturedBuildings() > 0)
 						moved = moveToUncaptured(actionUnit, true, false);
 					else
 						moved = moveToUncaptured(actionUnit, false, false);
@@ -128,12 +144,14 @@ public class AI extends Player{
 					moved = moveCloserToEnemies(actionUnit, true);
 				}
 				if(!moved){
-					if(countUncapturedBuildings() == 0)
+					if(countUncapturedBuildings() > 0)
 						moved = moveToUncaptured(actionUnit, true, false);
 					else
 						moved = moveToUncaptured(actionUnit, false, false);
 				}
-			}else{
+			}
+			// We don't have more econ
+			else{
 
 				if(moveToUncaptured(actionUnit, false, false)){
 
@@ -160,10 +178,7 @@ public class AI extends Player{
 
 			}
 
-			
-
-			//moveCloserToEnemies(actionUnit, true);
-
+			// Printing out where the unit went 
 			System.out.println(actionUnit.getName() +": " );
 			pMoves = log.getMoves(actionUnit);
 			for(int i = 0; i < log.getSize(); i++){
@@ -194,6 +209,7 @@ public class AI extends Player{
 				System.out.println("\t" +a.getName());
 			}
 
+			/// Find me a production building!
 			Tile[][] tBoard= log.getTBoard();
 			Unit[][] uBoard = log.getUB();
 			ArrayList<Tile> emptyProdBldg = new ArrayList<Tile>();
@@ -203,6 +219,7 @@ public class AI extends Player{
 						emptyProdBldg.add(tBoard[i][j]);
 					}
 				}
+			
 			int counter = 0;
 			boolean success = false;
 			Tile t = emptyProdBldg.get(counter);
@@ -249,6 +266,11 @@ public class AI extends Player{
 		}
 	}
 
+	/***************************************************************
+	 * Count the number of uncaptured buildings on the map
+	 * 
+	 * @return int number of uncaptured buildings
+	 ***************************************************************/
 	private int countUncapturedBuildings(){
 		char[][] temp = getUncapturedBuildings();
 		int count = 0;
@@ -264,8 +286,12 @@ public class AI extends Player{
 
 
 	/***************************************************************
+	 * Unimplemented method.  Returns whether or not a specified 
+	 * position has a friendly unit nearby.  This was going to be
+	 * used so that the AI's units would move in packs.  Sort of 
+	 * unpractical, I guess
 	 * 
-	 * @return 
+	 * @return boolean whether or not has a friendly nearby 
 	 ***************************************************************/
 	private boolean hasFriendliesNearby(int x, int y){
 		boolean retVal = false;
@@ -362,9 +388,9 @@ public class AI extends Player{
 
 
 	/***************************************************************
+	 *  Method to determine the coordinates of the enemy's HQ
 	 * 
-	 * 
-	 * @return 
+	 * @return int[] coordinates
 	 ***************************************************************/
 	private int[] getHQLoc(){
 		int[] retVal = new int[2];
@@ -403,7 +429,9 @@ public class AI extends Player{
 		int moveX = 0, moveY = 0;
 		boolean moved = false;
 
-		int[] temp = getUnitLocation(pUnit);
+		int[] temp = new int[2];
+		temp[0] = pUnit.getX();
+		temp[1] = pUnit.getY();
 
 		temp = moveTowardLocation(pUnit, moveX, moveY, true,  false);
 		boolean valid = false;
@@ -472,15 +500,20 @@ public class AI extends Player{
 		return retVal;
 	}
 
-	private int[] getUnitLocation(Unit pUnit){
-		int[] retVal = new int[2];
-		retVal[0] = pUnit.getX();
-		retVal[1] = pUnit.getY();
-
-		return retVal;
-	}
-
-
+	/***************************************************************
+	 * This method is used for moving a specified unit as close as it
+	 * possibly can to a desired location.  
+	 * Can also specify if the location is a base and if they're
+	 * desperate to get there.
+	 * 
+	 * If it's a base, you don't want a unit that can't capture to 
+	 * go to that location.
+	 * 
+	 * If desperate is set to true, the safety of the desired spot
+	 * will be disregarded
+	 * 
+	 * @return int[] coordinates
+	 ***************************************************************/
 	protected int[] moveTowardLocation(Unit pUnit, int dX, int dY, boolean isBase,  boolean desperation){
 
 		//int origX = pUnit.getX(), origY = pUnit.getY();
@@ -587,8 +620,9 @@ public class AI extends Player{
 
 
 	/***************************************************************
-	 * Moves the unit 
+	 * Moves the unit closer to the enemy's HQ
 	 * For the AI this means a is the hQ and b is the unit
+	 * Ultimately uses moveTowardLocation method.
 	 ***************************************************************/
 	protected boolean moveCloserToEnemies(Unit pUnit, boolean desperation) {
 		Tile[][] tBoard = log.getTBoard();
@@ -644,7 +678,6 @@ public class AI extends Player{
 	}
 
 	/***************************************************************
-	 * 
 	 * Gets the distance from point a (x1, y1) to point b (x2, y2) 
 	 * For the AI this means a is the hQ and b is the unit
 	 ***************************************************************/
@@ -799,7 +832,7 @@ public class AI extends Player{
 					}
 				}
 
-				// Old Attack
+				// Old Attack code.  Doesn't account for actual attack range
 				//		
 				//			//look North
 				//			if(currUnitXPosition - 1 >=0)
@@ -834,6 +867,15 @@ public class AI extends Player{
 				//					damageToUnit.add(potentialDamage);
 				//				}
 
+				for(Unit b:potentialUnitsToAttack){
+					for(Unit c:potentialUnitsToAttack){
+						//if(b.getX() == c.getX() &&
+							//	b.getY() == c.getY())
+					}
+				}
+				//potentialUnitsToAttack
+				
+				// Testing purposes.  Prints out who we can attack.
 				if(potentialUnitsToAttack.size() >= 1)
 					System.out.println("Units to Attack:");
 				for(Unit a: potentialUnitsToAttack){
@@ -1472,6 +1514,14 @@ public class AI extends Player{
 			}
 		return count;
 	}
+	
+	public Unit[][] getNewUBoard(){
+		return log.getUB();
+	}
+	
+	public Tile[][] getNewTBoard(){
+		return log.getTBoard();
+	}
 
 
 	public ArrayList<String> getActions(){
@@ -1479,7 +1529,7 @@ public class AI extends Player{
 	}
 
 	public static void main(String[] args){
-		new AI("Herp, Derp", 1, 'b');
+		new AI("Herp, Derp", 1, 'b', true);
 	}
 
 
