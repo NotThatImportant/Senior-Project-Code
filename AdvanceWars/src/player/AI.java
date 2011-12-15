@@ -869,15 +869,20 @@ public class AI extends Player{
 
 				for(Unit b:potentialUnitsToAttack){
 					for(Unit c:potentialUnitsToAttack){
-						//if(b.getX() == c.getX() &&
-							//	b.getY() == c.getY())
+						if(b.getX() == c.getX() &&
+							b.getY() == c.getY() &&
+							b != c){
+							potentialUnitsToAttack.remove(c);
+						}
 					}
 				}
 				//potentialUnitsToAttack
 				
 				// Testing purposes.  Prints out who we can attack.
-				if(potentialUnitsToAttack.size() >= 1)
-					System.out.println("Units to Attack:");
+				if(potentialUnitsToAttack.size() >= 1){
+					System.out.println();
+					System.out.println(currentUnit.getName() +": Units to Attack:");
+				}
 				for(Unit a: potentialUnitsToAttack){
 					System.out.println(a.getName());
 					System.out.println(a.getX() + " " + a.getY());
@@ -985,11 +990,23 @@ public class AI extends Player{
 		}
 	}
 
+	/***************************************************************
+	 * Mutator for sending the logic to the AI.
+	 * For some reason, it's named getLogic instead of setLogic
+	 * This caused problems... But we're all good now
+	 * 
+	 ***************************************************************/
 	public void getLogic(Logic pLog) {
 		log = pLog;
 		size = log.getSize();
 	}
 
+	/***************************************************************
+	 * Finds all the units belonging to the AI that are allowed to
+	 * make moves.  
+	 * 
+	 * @return ArrayList<Unit> units that are able to move
+	 ***************************************************************/
 	protected ArrayList<Unit> getPossibleMoves() {
 		Unit[][] uBoard = log.getUB();
 
@@ -1012,6 +1029,12 @@ public class AI extends Player{
 
 	}
 
+	/***************************************************************
+	 * Returns the list of units that are able to attack.  In other
+	 * words, units that haven't attacked yet
+	 * 
+	 * @return ArrayList<Unit> units that can attack
+	 ***************************************************************/
 	protected ArrayList<Unit> getPossibleAttacks() {
 		Unit[][] uBoard = log.getUB();
 
@@ -1032,6 +1055,11 @@ public class AI extends Player{
 		return unitsWithAttacks;
 	}
 
+	/***************************************************************
+	 * Returns the list of units that are able to capture
+	 * 
+	 * @return ArrayList<Unit> units that can capture
+	 ***************************************************************/
 	protected ArrayList<Unit> getPossibleCaptures() {
 		Unit[][] uBoard = log.getUB();
 		Tile[][] tBoard = log.getTBoard();
@@ -1415,6 +1443,11 @@ public class AI extends Player{
 		return attackAvailable;
 	}
 
+	/***************************************************************
+	 * Returns whether or not I can afford ANY units
+	 * 
+	 * 
+	 ***************************************************************/
 	protected boolean canIBuy(){
 		boolean buyAvailable = false;
 		//find buys
@@ -1425,6 +1458,11 @@ public class AI extends Player{
 		return buyAvailable;
 	}
 
+	/***************************************************************
+	 * Returns whether or not I can capture ANY building
+	 * 
+	 * 
+	 ***************************************************************/
 	protected boolean canICapture(){
 		boolean captureAvailable = false;
 		//find captures
@@ -1435,6 +1473,10 @@ public class AI extends Player{
 		return captureAvailable;
 	}
 
+	/***************************************************************
+	 * Testing method.
+	 * Creates units and runs through AI turns
+	 ***************************************************************/
 	private void test(){
 		boolean finished = false;
 
@@ -1490,6 +1532,11 @@ public class AI extends Player{
 		}
 	}
 
+	/***************************************************************
+	 * Method used for returning the number of enemy units
+	 * 
+	 * 
+	 ***************************************************************/
 	private int countEnemyUnits(){
 		int count = 0;
 		Unit[][] temp = log.getUB();
@@ -1502,6 +1549,12 @@ public class AI extends Player{
 			}
 		return count;
 	}
+	
+	/***************************************************************
+	 * Method used for returning the number of AI units
+	 * 
+	 * 
+	 ***************************************************************/
 	private int countMyUnits(){
 		int count = 0;
 		Unit[][] temp = log.getUB();
@@ -1515,15 +1568,30 @@ public class AI extends Player{
 		return count;
 	}
 	
+	/***************************************************************
+	 * Returns the Unit Board to the Controller
+	 * 
+	 * 
+	 ***************************************************************/
 	public Unit[][] getNewUBoard(){
 		return log.getUB();
 	}
 	
+	/***************************************************************
+	 * Returns the Terrain Board to the Controller
+	 * 
+	 * 
+	 ***************************************************************/
 	public Tile[][] getNewTBoard(){
 		return log.getTBoard();
 	}
 
 
+	/***************************************************************
+	 * Returns the list of actions back to the controller
+	 * 
+	 * 
+	 ***************************************************************/
 	public ArrayList<String> getActions(){
 		return moveLogger;
 	}
