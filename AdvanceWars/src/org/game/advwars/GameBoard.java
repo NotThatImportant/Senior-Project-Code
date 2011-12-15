@@ -54,6 +54,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	private  ArrayList<String> commands;
 
 	private boolean move = false;
+	private boolean attk = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -195,6 +196,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Attack
 			else if (ggvGlobal.getSelectedCommand() == 1)
 			{
+				attk = true;
 				ggvGlobal.setAttackGrid(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
 				sd.saveGGVData(ggvGlobal);
 				gameBoardView.setController(c);
@@ -257,6 +259,14 @@ public class GameBoard extends Activity implements OnTouchListener
 				// Get selected points from game board view
 				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
 
+				if (attk == true && selectedPoints != null && 
+						c.isValidAttk(selectedPoints[0], selectedPoints[1])) {
+					c.attackUnit(selectedPoints[0], selectedPoints[1]);
+					gameBoardView.setController(c);
+					gameBoardView.initGame();
+					attk = false;
+				}
+				
 				if (move == true && selectedPoints != null &&
 						c.isValidMove(selectedPoints[0], selectedPoints[1]))
 				{
@@ -268,6 +278,7 @@ public class GameBoard extends Activity implements OnTouchListener
 				else 
 				{
 					move = false; 
+					attk = false;
 					// If selected points are valid pass them to the controller and get a list of commands from it
 					if (selectedPoints != null)
 						commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);

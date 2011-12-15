@@ -137,7 +137,6 @@ public class Controller implements Serializable
 			log.unitNewTurn(playerTurn);
 			playerTurn = 0;
 		}
-
 	}
 
 	public char[][] unitTakeAction(int action)
@@ -374,7 +373,8 @@ public class Controller implements Serializable
 				tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P' ||
 				tileBoard[x][y].getType() == 'h' || tileBoard[x][y].getType() == 'H' ||
 				tileBoard[x][y].getType() == 'b' || tileBoard[x][y].getType() == 'x' ||
-				tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner()) {	
+				tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner() &&
+				unitBoard[x][y].getType() == Unit.INFANTRYTYPE) {	
 
 			actions.add("Capture");
 		}	
@@ -518,6 +518,13 @@ public class Controller implements Serializable
 		if (posMoves[moveX][moveY] == 'x') 
 			return true;
 
+		return false;
+	}
+	
+	public boolean isValidAttk(int atkX, int atkY) {
+		char[][] posAtk = attack();
+		if (posAtk[atkX][atkY] == 'x')
+			return true;
 		return false;
 	}
 
