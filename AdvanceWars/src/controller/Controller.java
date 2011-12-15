@@ -298,30 +298,89 @@ public class Controller implements Serializable
 		}
 
 		Unit[][] unitBoard = log.getUB();
+		boolean canIAttack = false;
 
-		for (int c = 0; c < unitBoard.length && c < selUnit.getAtkRange(); c++) {
-			for (int r = 0; r < unitBoard.length; r++) {
-				if (unitBoard[r][c] != null) {
-					Unit otherUnit = unitBoard[r][c];
-					if (otherUnit.getOwner() != playerTurn && !selUnit.getHasAttacked()) {
-						actions.add("Attack");
+		for (int c = 0; c < unitBoard.length; c++) {
+			for (int r = 0; r < unitBoard.length && r <= selUnit.getAtkRange(); r++) {
+				for (int i = 1; i <= selUnit.getAtkRange(); i++) {
+					if (selUnit.getAtkRange() == 1 || 
+						i > 1) { 
+						//check up
+						if (r + i < unitBoard.length && unitBoard[r + i][c] != null) {
+							Unit otherUnit = unitBoard[r + i][c];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+								canIAttack = true;
+						}
+				
+						//check the right one
+						if (c + i < unitBoard.length && unitBoard[r][c + i] != null) {
+							Unit otherUnit = unitBoard[r][c + i];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+								canIAttack = true;
+						}
+				
+						//check the left
+						if (c - i >= 0 && unitBoard[r][c - i] != null) {
+							Unit otherUnit = unitBoard[r][c - i];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+								canIAttack = true;						
+						}
+					
+						//check the bottom
+						if (r - i >= 0  && unitBoard[r - i][c] != null) {
+							Unit otherUnit = unitBoard[r-i][c];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+								canIAttack = true;							
+						}
+					} else {
+						int oC = i - 1;
+						
+						//lower left corner
+						if (r - oC > 0 && c - oC > 0 && unitBoard[r - oC][c - oC] != null) {
+							Unit otherUnit = unitBoard[r - oC][c - oC];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+								canIAttack = true;
+						}
+						
+						//upper left corner
+						if (r + oC < log.getSize() && c - oC > 0 && unitBoard[r + oC][c - oC] != null) {
+							Unit otherUnit = unitBoard[r + oC][c - oC];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+								canIAttack = true;
+						}
+						
+						//bottom right corner
+						if (r - oC > 0 && c + oC < log.getSize() && unitBoard[r - oC][c + oC] != null) {
+							Unit otherUnit = unitBoard[r - oC][c + oC];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+								canIAttack = true;
+						}
+						
+						//top right corner
+						if (r + oC < log.getSize() && c + oC < log.getSize() && unitBoard[r + oC][c + oC] != null) {
+							Unit otherUnit = unitBoard[r + oC][c + oC];
+							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+								canIAttack = true; 
+						}
 					}
 				}
 			}
 		}
+		
+		if (canIAttack) 
+			actions.add("Attack");
 
 		Tile[][] tileBoard = log.getTBoard();
 
-		if (playerTurn == 1) {
-			if (tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p') {
-				actions.add("Capture");
-			}
-		} else {
-			if (tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P') {
-
-				actions.add("Capture");
-			}
-		}
+		if ((tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p' ||
+			tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P' ||
+			tileBoard[x][y].getType() == 'h' || tileBoard[x][y].getType() == 'H' ||
+			tileBoard[x][y].getType() == 'b' || tileBoard[x][y].getType() == 'x' ||
+			tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner()) {	
+			
+			actions.add("Capture");
+		}	
+			
 		actions.add("UnitInfo");
 
 		return actions;
