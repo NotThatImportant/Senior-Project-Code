@@ -180,17 +180,34 @@ public class Logic implements Serializable
 	 * @param p
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
-		if (tBoard[pX][pY].getType() == 'p' || 
-				tBoard[pX][pY].getType() == 'b' && 
-				tBoard[pX][pY].getOwner() != p.getPNum()) {
-
-			if (tBoard[pX][pY].getBC() == p.getPNum()) 
-				tBoard[pX][pY].setOwner(p.getPNum());
-			else 
-				tBoard[pX][pY].setBC(p.getPNum());
-
+		if (tBoard[pX][pY].getOwner() != unitBoard[pX][pY].getOwner() && (
+			tBoard[pX][pY].getType() == 'h' || tBoard[pX][pY].getType() == 'H' || 
+			tBoard[pX][pY].getType() == 'b' || tBoard[pX][pY].getType() == 'p' || 
+			tBoard[pX][pY].getType() == 'q' || tBoard[pX][pY].getType() == 'Q' || 
+			tBoard[pX][pY].getType() == 'x' || tBoard[pX][pY].getType() == 'X' ||
+			tBoard[pX][pY].getType() == 'P')) {
+		
+			if((unitBoard[pX][pY].getHasCaptured()) == false) {
+				tBoard[pX][pY].setOwner(unitBoard[pX][pY].getOwner());
+				if (p.getPNum() == 0 && (tBoard[pX][pY].getType() == 'b' || tBoard[pX][pY].getType() ==
+						'x'))
+					tBoard[pX][pY].setType('X');
+				else if (p.getPNum() == 0 && (tBoard[pX][pY].getType() == 'p' || tBoard[pX][pY].getType() == 
+						'q'))
+					tBoard[pX][pY].setType('Q');
+				else if (p.getPNum() == 1 && (tBoard[pX][pY].getType() == 'p' || tBoard[pX][pY].getType() ==
+						'Q'))
+					tBoard[pX][pY].setType('q');
+				else if (p.getPNum() == 1 && (tBoard[pX][pY].getType() == 'b' || tBoard[pX][pY].getType() == 
+						'X'))
+					tBoard[pX][pY].setType('x');
+				
+				unitBoard[pX][pY].justProded();
+			} else {
+				unitBoard[pX][pY].setHasCaptured(true);
+				unitBoard[pX][pY].justProded();
+			}
 		}
-		unitBoard[pX][pY].setStartedCapture(Boolean.TRUE);
 	}
 
 	public Player getP1() {
@@ -356,6 +373,7 @@ public class Logic implements Serializable
 		unitBoard[pX][pY].setY(pY);
 
 		pUnit.setHasMoved(true);
+		pUnit.setHasCaptured(false);
 	}
 
 	private void move(Unit pUnit){

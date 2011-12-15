@@ -52,7 +52,7 @@ public class Controller implements Serializable
 		log.setUB(((AI) secondPlayer).getNewUBoard());
 		log.setTBoard(((AI) secondPlayer).getNewTBoard());
 		endTurn();
-		
+
 	}
 
 	/**
@@ -128,16 +128,15 @@ public class Controller implements Serializable
 
 	public void endTurn() {
 		if (playerTurn == 0) {
-			log.econDay(secondPlayer);
+			log.econDay(log.getP2());
 			log.unitNewTurn(playerTurn);
 			playerTurn = 1;
 		}
 		else {
-			log.econDay(firstPlayer);
+			log.econDay(log.getP1());
 			log.unitNewTurn(playerTurn);
 			playerTurn = 0;
 		}
-		
 	}
 
 	public char[][] unitTakeAction(int action)
@@ -157,24 +156,55 @@ public class Controller implements Serializable
 	}
 
 	private char[][] attack() {
-		char[][] move = move();
-		Unit[][] ub = log.getUB();
-		char[][] canAttack = new char[log.getTBoard().length][log.getTBoard().length];
+		char[][] attackGrid = new char[log.getSize()][log.getSize()];
+		Unit attacker = log.getUnit(x, y);
+		int attackRange = attacker.getAtkRange();
 
-		for (int r = 0; r < canAttack.length; r++) {
-			for (int c = 0; c < canAttack.length; c++) {
+		for (int r = 0; r < log.getSize(); r++) 
+			for (int c = 0; c < log.getSize(); c++) 
+				attackGrid[r][c] = '-';
 
-				//if there is a unit there that does not belong to you and you can move there...
-				//TODO move[r][c] isn't correct you should say if you can move within attack range
-				//of that unit NOT if you can move to the same tile as that unit!
+		for (int i = 1; i <= attackRange; i++) {
+			//To the right
+			if (x+i < log.getSize() && (attackRange == 1 || i != 1))  
+				attackGrid[x+i][y] = 'x';
 
-				if (ub[r][c] != null && playerTurn != ub[r][c].getOwner() && move[r][c] == 'x') {
-					canAttack[r][c] = 'a';
-				}
-			}
+			/*Second part of the if just says if the attack range is 1 
+			or if it is not the first time around, meaning it's ranged,
+			then put a x there.*/
+
+			//To the left
+			if (x-i >= 0 && (attackRange == 1 || i != 1)) 
+				attackGrid[x-i][y] = 'x';
+
+			//Up
+			if (y+i < log.getSize() && (attackRange == 1 || i != 1))
+				attackGrid[x][y+i] = 'x';
+
+			//Down
+			if (y-i >= 0 && (attackRange == 1 || i != 1))
+				attackGrid[x][y-i] = 'x';
+
+			if (attackRange > 1 && attacker.getHasMoved() == false) {
+				//Top right
+				if (x+i < log.getSize() && y+i < log.getSize()) 
+					attackGrid[x+i][y+i] = 'x';
+
+				//Bottom right
+				if (x+i < log.getSize() && y-i > 0) 
+					attackGrid[x+i][y-i] = 'x';
+
+				//Top left
+				if (x-i > 0 && y+i < log.getSize()) 
+					attackGrid[x-i][y+i] = 'x';
+
+				//Bottom left
+				if (x-i > 0 && y-i > 0) 
+					attackGrid[x-i][y-i] = 'x';
+			}  
 		}
 
-		return canAttack;
+		return attackGrid;
 	}
 
 	public void attackUnit(int r, int c) {
@@ -195,45 +225,6 @@ public class Controller implements Serializable
 			log.captureBuilding(log.getP2(), x, y);
 	}
 
-	//	/**
-	//	 * Returns x on a char board of what buildings are in reach to capture
-	//	 *
-	//	 * @return
-	//	 */
-	//	private char[][] capture() {
-	//		char[][] moves = move();
-	//		Tile[][] tiles = log.getTBoard();
-	//
-	//		char[][] canCapture = new char[tiles.length][tiles.length];
-	//
-	//		for (int r = 0; r < tiles.length; r++) {
-	//			for (int c = 0; c < tiles.length;c++) {
-	//				canCapture[r][c] = '-';
-	//			}
-	//		}
-	//
-	//		for (int r = 0; r < tiles.length; r++) {
-	//			for (int c = 0; c < tiles.length; c++) {
-	//				if (playerTurn == 0) {
-	//					if (tiles[r][c].getType() == 'H' || tiles[r][c].getType() == 'b' ||
-	//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'Q' ||
-	//							tiles[r][c].getType() == 'X') {
-	//						if (moves[r][c] == 'x') //legal move
-	//							canCapture[r][c] = 'c';
-	//					}
-	//				} else {
-	//					if (tiles[r][c].getType() == 'h' || tiles[r][c].getType() == 'b' ||
-	//							tiles[r][c].getType() == 'p' || tiles[r][c].getType() == 'q' ||
-	//							tiles[r][c].getType() == 'x') {
-	//						if (moves[r][c] == 'x') //legal move
-	//							canCapture[r][c] = 'c';
-	//					}
-	//				}
-	//			}
-	//		}
-	//
-	//		return canCapture;
-	//	}
 
 	//so the player decides to produce a unit, so we call this method and we send back an array
 	//of strings so that the GUI can display array of strings in a menu as possible buys. 
@@ -306,30 +297,88 @@ public class Controller implements Serializable
 		}
 
 		Unit[][] unitBoard = log.getUB();
+		boolean canIAttack = false;
 
-		for (int c = 0; c < unitBoard.length && c < selUnit.getAtkRange(); c++) {
-			for (int r = 0; r < unitBoard.length; r++) {
-				if (unitBoard[r][c] != null) {
-					Unit otherUnit = unitBoard[r][c];
-					if (otherUnit.getOwner() != playerTurn && !selUnit.getHasAttacked()) {
-						actions.add("Attack");
-					}
+		for (int i = 1; i <= selUnit.getAtkRange(); i++) {
+			if (selUnit.getAtkRange() == 1 || 
+					i > 1) { 
+				//check up
+				if (x + i < unitBoard.length && unitBoard[x + i][y] != null) {
+					Unit otherUnit = unitBoard[x + i][y];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//check the right one
+				if (y + i < unitBoard.length && unitBoard[x][y + i] != null) {
+					Unit otherUnit = unitBoard[x][y + i];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;
+				}
+
+				//check the left
+				if (y - i >= 0 && unitBoard[x][y - i] != null) {
+					Unit otherUnit = unitBoard[x][y - i];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;						
+				}
+
+				//check the bottom
+				if (x - i >= 0  && unitBoard[x - i][y] != null) {
+					Unit otherUnit = unitBoard[x-i][y];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;							
+				}
+			} else {
+				int oC = i - 1;
+
+				//lower left corner
+				if (x - oC > 0 && y - oC > 0 && unitBoard[x - oC][y - oC] != null) {
+					Unit otherUnit = unitBoard[x - oC][y - oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//upper left corner
+				if (x + oC < log.getSize() && y - oC > 0 && unitBoard[x + oC][y - oC] != null) {
+					Unit otherUnit = unitBoard[x + oC][y - oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//bottom right corner
+				if (x - oC > 0 && y + oC < log.getSize() && unitBoard[x - oC][y + oC] != null) {
+					Unit otherUnit = unitBoard[x - oC][y + oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//top right corner
+				if (x + oC < log.getSize() && y + oC < log.getSize() && unitBoard[x + oC][y + oC] != null) {
+					Unit otherUnit = unitBoard[x + oC][y + oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true; 
 				}
 			}
+
+
 		}
+
+		if (canIAttack) 
+			actions.add("Attack");
 
 		Tile[][] tileBoard = log.getTBoard();
 
-		if (playerTurn == 1) {
-			if (tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p') {
-				actions.add("Capture");
-			}
-		} else {
-			if (tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P') {
+		if ((tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p' ||
+				tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P' ||
+				tileBoard[x][y].getType() == 'h' || tileBoard[x][y].getType() == 'H' ||
+				tileBoard[x][y].getType() == 'b' || tileBoard[x][y].getType() == 'x' ||
+				tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner() &&
+				unitBoard[x][y].getType() == Unit.INFANTRYTYPE) {	
 
-				actions.add("Capture");
-			}
-		}
+			actions.add("Capture");
+		}	
+
 		actions.add("UnitInfo");
 
 		return actions;
@@ -452,7 +501,7 @@ public class Controller implements Serializable
 					} else
 						retBoard[i][j] = -1;
 				}
-				
+
 			}
 
 
@@ -472,20 +521,27 @@ public class Controller implements Serializable
 		return false;
 	}
 	
+	public boolean isValidAttk(int atkX, int atkY) {
+		char[][] posAtk = attack();
+		if (posAtk[atkX][atkY] == 'x')
+			return true;
+		return false;
+	}
+
 	public int getCurrentPlayerMoney()
 	{
 		int munny = 0;
-		
+
 		if (playerTurn == firstPlayer.getPNum())
 			munny = log.getP1().getCash();
-		
+
 		else if (playerTurn == secondPlayer.getPNum())
 			munny = log.getP2().getCash();
-		
+
 		else
 			munny = -1;
-		
-		
+
+
 		return munny;
 	}
 }

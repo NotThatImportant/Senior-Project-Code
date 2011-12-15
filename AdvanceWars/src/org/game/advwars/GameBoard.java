@@ -54,14 +54,13 @@ public class GameBoard extends Activity implements OnTouchListener
 	private  ArrayList<String> commands;
 
 	private boolean move = false;
+	private boolean attk = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gameboard_layout);
-		// Tells Android to adjust the volume of music instead of the ringer
-		//setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 		// Load player values
 		ggvGlobal = sd.loadGGVData();
@@ -92,16 +91,23 @@ public class GameBoard extends Activity implements OnTouchListener
 		gameBoardView.setController(c);
 		gameBoardView.initGame();
 		sd.saveGGVData(ggvGlobal);
+		
+		if (mp != null)
+			mp.release();
+		
+		mp = MediaPlayer.create(this, R.raw.background_music);
+		//mp.stop();
 
 		// Play background music only if enabled
 		if (ggvGlobal.getSound())
 		{
-			if (mp != null)
-				mp.release();
-			
-			mp = MediaPlayer.create(this, R.raw.background_music);
 			mp.setLooping(true);
 			mp.start();
+		}
+		else
+		{
+			mp.setLooping(false);
+			mp.stop();
 		}
 	}
 
@@ -140,7 +146,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			ggvGlobal.setSelectedCommand(-1);
 			sd.saveGGVData(ggvGlobal);
 			Toast.makeText(this, "Player turn: " + (c.whosTurn() + 1), Toast.LENGTH_SHORT).show();
-			
+			Toast.makeText(this, "Money: " + c.getCurrentPlayerMoney(), Toast.LENGTH_SHORT).show();
 			gameBoardView.setController(c);
 			gameBoardView.initGame();
 		}
@@ -151,6 +157,8 @@ public class GameBoard extends Activity implements OnTouchListener
 		}
 		else if (ggvGlobal.getInGameMenuQuitGame())
 		{
+			// Quit game
+			mp.stop();
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", ggvGlobal);
 			startActivityForResult(i, 0);
@@ -181,19 +189,27 @@ public class GameBoard extends Activity implements OnTouchListener
 				ggvGlobal.setMovement(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
 				sd.saveGGVData(ggvGlobal);
 				gameBoardView.setController(c);
-                gameBoardView.setmPlayerMoves(ggvGlobal.getMovement());
+            		        gameBoardView.setmPlayerMoves(ggvGlobal.getMovement());
 				gameBoardView.initGame();
 
 			}
 			// Attack
 			else if (ggvGlobal.getSelectedCommand() == 1)
 			{
-
+				attk = true;
+				ggvGlobal.setAttackGrid(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
+				sd.saveGGVData(ggvGlobal);
+				gameBoardView.setController(c);
+				gameBoardView.setmPlayerAttack(ggvGlobal.getAttackGrid());
+				gameBoardView.initGame();
 			}
 			// Capture
 			else if (ggvGlobal.getSelectedCommand() == 2)
 			{
-
+				c.unitTakeAction(ggvGlobal.getSelectedCommand());
+				gameBoardView.setController(c);
+				Toast.makeText(this, "Buildling Captured!", Toast.LENGTH_SHORT).show();
+				gameBoardView.initGame();
 			}
 			// Unit info
 			else
@@ -244,6 +260,33 @@ public class GameBoard extends Activity implements OnTouchListener
 				// Get selected points from game board view
 				int[] selectedPoints = gameBoardView.getPoints(event.getX(), event.getY());
 
+				if (attk == true && selectedPoints != null && 
+						c.isValidAttk(selectedPoints[0], selectedPoints[1])) {
+					Unit atker = c.getUnitBoard()[x][y];
+					Unit defndr = c.getUnitBoard()[selectedPoints[0], selectedPoints[1];
+					
+					int aHP = atker.getHP();
+					int dHP = defndr.getHP();
+					
+					Toast.makeText(this, "Attacker: " + atker.getName() + " HP: " + aHP, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Defender: " + defndr.getName() + " HP: " + dHP, Toast.LENGTH_SHORT).show();
+					
+					c.attackUnit(selectedPoints[0], selectedPoints[1]);
+					atker = c.getUnitBoard()[x][y];
+					defndr = c.getUnitBoard()[selectedPoints[0], selectedPoints[1];
+					
+					int aDmg = dHP - defndr.getHP();
+					int dDmg = aHP - atker.getHP();
+					
+					Toast.makeText(this, "Attacker: " + atker.getName() + " Damage: " + aDmg, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Defender: " + defndr.getName() + " Damage: " + dDmg, Toast.LENGTH_SHORT).show();
+					
+					
+					gameBoardView.setController(c);
+					gameBoardView.initGame();
+					attk = false;
+				}
+				
 				if (move == true && selectedPoints != null &&
 						c.isValidMove(selectedPoints[0], selectedPoints[1]))
 				{
@@ -255,6 +298,7 @@ public class GameBoard extends Activity implements OnTouchListener
 				else 
 				{
 					move = false; 
+					attk = false;
 					// If selected points are valid pass them to the controller and get a list of commands from it
 					if (selectedPoints != null)
 						commands = c.selectCoordinates(selectedPoints[0], selectedPoints[1]);

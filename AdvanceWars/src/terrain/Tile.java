@@ -35,17 +35,6 @@ public class Tile implements Serializable
 			default: height = 0;break;
 		}
 	}
-
-	public void setBC(int pNum) {
-		buildingCapture = pNum;
-	}
-	
-	public int getBC() {
-		int oBC = buildingCapture;
-		if (buildingCapture != 0)
-			buildingCapture = 0;
-		return oBC;
-	}
 	
 	public int getX() {
 		return x;
@@ -65,6 +54,10 @@ public class Tile implements Serializable
 	
 	public char getType() {
 		return type;
+	}
+	
+	public void setType(char newType) {
+		this.type = newType;
 	}
 	
 	public int getHeight() {
