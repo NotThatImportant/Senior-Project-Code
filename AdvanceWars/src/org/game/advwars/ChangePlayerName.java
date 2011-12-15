@@ -11,6 +11,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to change his or her name. It is accessed through the Settings screen
+ * while in-game.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class ChangePlayerName extends Activity implements OnClickListener
 {
 	private String playerName = null;

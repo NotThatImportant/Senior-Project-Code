@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-/**
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
  * Class that checks validity of entered player name. This is important so
- * that we don't end up with same, yet multiple player names in the database.
+ * that we don't end up with same player names in the database.
  * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class DBCheckPlayerName
 {
 	private String dbPath;

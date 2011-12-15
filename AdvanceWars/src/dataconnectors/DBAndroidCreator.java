@@ -4,12 +4,16 @@ import java.io.File;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-/**
- * Class that is used to create SQLite database for Advance Wars game
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
+ * Class that is used to create a SQLite database for Advance Wars game if the database
+ * doesn't already exist on the mobile device.
  * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class DBAndroidCreator
 {
 	private String dbPath;

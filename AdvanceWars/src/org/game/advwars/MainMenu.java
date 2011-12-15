@@ -7,6 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+/**********************************************************************************************
+ * 
+ * Main menu.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class MainMenu extends Activity implements OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();

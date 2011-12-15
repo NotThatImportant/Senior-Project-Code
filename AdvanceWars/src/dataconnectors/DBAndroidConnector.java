@@ -5,12 +5,15 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-/**
- * Class that is used to open SQLite database for Advance Wars game
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
+ * Class that is used to open an existing SQLite database for Advance Wars game.
  * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class DBAndroidConnector
 {
 	private String dbPath;

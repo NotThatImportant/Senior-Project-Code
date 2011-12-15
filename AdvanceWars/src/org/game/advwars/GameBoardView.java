@@ -12,6 +12,13 @@ import android.view.View;
 import controller.Controller;
 import dataconnectors.SaveGUIData;
 
+/**********************************************************************************************
+ * 
+ * This class controls the game board.
+ * 
+ * @author Sinisa Malbasa, Austin Padilla
+ *
+ *********************************************************************************************/
 public class GameBoardView extends View
 {
 	protected static int mTileSize;
@@ -26,6 +33,7 @@ public class GameBoardView extends View
 	//private Bitmap[] mBlueBuildingArray;
 	private Bitmap[] mUncaptBuildingArray;
 	private char[][] mTileGrid;
+    private char[][] mPlayerMoves;
 	private int[][] mPlayer1Units;
 	private int[][] mPlayer2Units;
 	private int mX;
@@ -72,7 +80,7 @@ public class GameBoardView extends View
 
 		Resources r = this.getContext().getResources();
 
-		resetTiles(13);
+		resetTiles(14);
 
 		// Terrain tiles
 
@@ -89,6 +97,7 @@ public class GameBoardView extends View
 		loadTile(10, r.getDrawable(R.drawable.red_factory3), mTileArray);
 		loadTile(11, r.getDrawable(R.drawable.uncaptured_building2), mTileArray);
 		loadTile(12, r.getDrawable(R.drawable.uncaptured_factory2), mTileArray);
+        loadTile(13, r.getDrawable(R.drawable.blue_highlight), mTileArray);
 
 		// Red units tiles
 
@@ -177,6 +186,7 @@ public class GameBoardView extends View
 	public void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
+//        mPlayerMoves = ggvGlobal.getMovement();
 
 		for (int x = mX; x < mXTileCount + mX && x < mTileGrid.length; x += 1)
 		{
@@ -199,8 +209,19 @@ public class GameBoardView extends View
 							mXOffset + (x - mX) * mTileSize,
 							mYOffset + (y - mY) * mTileSize,
 							mPaint);
+
+
+                if(mPlayerMoves != null){
+                    if(mPlayerMoves[x][y] == 'x')
+                        canvas.drawBitmap(mTileArray[13],
+                            mXOffset + (x - mX) * mTileSize,
+                            mYOffset + (y - mY) * mTileSize,
+                            mPaint);
+
+                }
 			}
 		}
+        mPlayerMoves = null;
 //		drawPossibleMoves(canvas);
 	}
 	
@@ -407,4 +428,9 @@ public class GameBoardView extends View
 	}
 
 
+
+
+    public void setmPlayerMoves(char[][] mPlayerMoves) {
+        this.mPlayerMoves = mPlayerMoves;
+    }
 }

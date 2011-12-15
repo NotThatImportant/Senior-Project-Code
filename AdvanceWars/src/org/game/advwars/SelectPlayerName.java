@@ -15,6 +15,13 @@ import android.widget.Spinner;
 import dataconnectors.DBAndroidConnector;
 import dataconnectors.SaveGUIData;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to select a player name from a list of already created player names.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class SelectPlayerName extends Activity implements OnItemSelectedListener, OnClickListener
 {
 	private String playerName = "";

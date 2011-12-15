@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-/**
- * Startup class
+/**********************************************************************************************
+ * 
+ * Startup class. This view gets called when the game is launched.
+ * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class AdvanceWarsActivity extends Activity implements OnClickListener
 {
     @Override

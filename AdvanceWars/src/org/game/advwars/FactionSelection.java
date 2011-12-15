@@ -12,6 +12,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import dataconnectors.SaveGUIData;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to select his/her faction before going to the game board screen.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class FactionSelection extends Activity implements OnItemSelectedListener, OnClickListener
 {
 	private String faction = "";

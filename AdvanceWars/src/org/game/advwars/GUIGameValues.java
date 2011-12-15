@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 import controller.Controller;
 
-/**
+/**********************************************************************************************
  * 
- * Keeps track of all game values that need to be accessed or stored by the GUI
+ * Keeps track of all game values that need to be accessed or stored by the GUI. Considered
+ * second most important class of the game because without it no information could be passed
+ * between various views in the game.
  * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class GUIGameValues implements Serializable
 {
 	private boolean soundOn;

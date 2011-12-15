@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**********************************************************************************************
+ * 
+ * Starts a multiplayer game against another human player.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class Multiplayer extends Activity implements OnClickListener
 {
 	private GUIGameValues ggvGlobal = new GUIGameValues();

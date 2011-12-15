@@ -10,6 +10,15 @@ import java.io.Writer;
 import org.apache.commons.logging.Log;
 import java.io.FileNotFoundException;
 
+/**********************************************************************************************
+ * 
+ * This class makes in-game map creation possible so that individual maps do not have to be
+ * loaded manually as text files once the game is loaded onto Android device (phone and
+ * emulator).
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class MapCreator
 {
 	private File mapsDirectory;
@@ -26,10 +35,10 @@ public class MapCreator
 		mapsDirectory.mkdirs();
 	}
 	
+	// Used to create a new map on the device
 	public void newMap(String mapName, String map, boolean overwrite)
 	{
 		File fMap = new File("/data/data/org.game.advwars/maps/" + mapName + ".txt");
-		//boolean fileExists = fMap.exists();
 		Writer output = null;
 
 		if (overwrite)

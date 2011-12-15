@@ -9,6 +9,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**********************************************************************************************
+ * 
+ * Unit selection menu that is invoked by selecting a production building on the game board.
+ * It is used for selecting a unit that needs to be built.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class UnitSelectionMenu extends Activity implements OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();

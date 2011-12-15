@@ -99,6 +99,8 @@
     <string name="unit_ammo">UNIT_AMMO_NOT_SET</string>
     <string name="unit_owner">UNIT_FUEL_NOT_SET</string>
     <string name="available_money">MONEY_VALUE_NOT_AVAILABLE</string>
+    <string name="about_description_2">Based on the Advance Wars game created by Intelligent Systems for the Game Boy Advance handheld.</string>
+    <string name="about_copyright_notice">Unit graphics are copyrighted by Nintendo. Background music is copyrighted by Creative Assembly and Activision. All rights reserved.</string>
         
         
             

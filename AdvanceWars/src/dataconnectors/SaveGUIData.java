@@ -12,11 +12,16 @@ import org.game.advwars.GUIGameValues;
 
 import android.util.Log;
 
-/**
- * Connector class used to save GUI values (GUIGameValues).
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
+ * This class is used to save and load GUI values (GUIGameValues) between Android views.
+ * This circumvents Android's apparent problem of passing values between various views.
  * 
  * @author Sinisa Malbasa
- */
+ *
+ *********************************************************************************************/
 public class SaveGUIData
 {
 	private String filePath;

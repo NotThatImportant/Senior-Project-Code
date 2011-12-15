@@ -68,6 +68,32 @@ public class Logic implements Serializable
 			playerList.add(herpDerp);
 		else
 			playerList.add(p2);
+
+		tBoard = mr.createMap();
+	}
+
+	// Test constructor
+	public Logic(AI in){
+		mr = new MapReader();
+		mapSize = mr.getSize();
+		tBoard = mr.testMap();
+		createBoards();
+		playerList = new ArrayList<Player>();
+
+		Player p1 = new Player("P1Name", 0, 'r');
+		Player p2 = in;
+
+		playerList.add(p1);
+		playerList.add(in);
+
+
+
+		for(int i = 0; i < mr.getSize(); i++){
+			for(int j = 0; j < mr.getSize(); j++){
+				System.out.print(tBoard[i][j].getType());
+			}
+			System.out.println();
+		}
 	}
 
 	/************************************************************************
@@ -84,7 +110,7 @@ public class Logic implements Serializable
 			for (int c = 0; c < mapSize; c++) 
 				unitBoard[r][c] = null;
 
-		tBoard = mr.createMap();
+
 		moves = new char[mapSize][mapSize];
 
 		for(int i = 0; i < mapSize; i++)
@@ -139,6 +165,10 @@ public class Logic implements Serializable
 	 ***********************************************************************/
 
 	public char[][] getMoves(Unit u) {
+		for(int i = 0; i < mapSize; i++)		
+			for(int j = 0; j < mapSize; j++)		
+				moves[i][j] = '-';
+
 		move(u);
 
 		return moves;
@@ -322,27 +352,32 @@ public class Logic implements Serializable
 		unitBoard[pX][pY] = pUnit;
 		unitBoard[oX][oY] = null;
 
+		unitBoard[pX][pY].setX(pX);
+		unitBoard[pX][pY].setY(pY);
+
 		pUnit.setHasMoved(true);
 	}
 
 	private void move(Unit pUnit){
 		if (pUnit != null) {
-			int movementRange = pUnit.getMove();
+			int movement = pUnit.getMove();
 
 			if(tBoard[pUnit.getX()][pUnit.getY()].getType() == 'm'){
-				movementRange-=2;
+				movement-=2;
 			}
 			//Top
-			for(int r = 1; r<=movementRange && pUnit.getX()-r >= 0; r++){
+			for(int r = 1; r<movement && pUnit.getX()-r >= 0; r++){
 				if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY())==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()-r][pUnit.getY()] = 'x';
-					for(int j = 1; j < movementRange && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
+					for(int j = r; j < movement-r && pUnit.getY()+j < mapSize && pUnit.getY()-j >= 0; j++){
+						// Checking Right
 						if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()+j)==true){
 							moves[pUnit.getX()-r][pUnit.getY()+j] = 'x';
 						}
+						// Checking Left
 						if(possibleMove(pUnit, pUnit.getX()-r, pUnit.getY()-j)==true){
 							moves[pUnit.getX()-r][pUnit.getY()-j] = 'x';
 						}
@@ -350,14 +385,14 @@ public class Logic implements Serializable
 				}
 			}
 			//Bottom
-			for(int r = 1; r<movementRange && pUnit.getX()+r<mapSize; r++){
+			for(int r = 1; r<movement && pUnit.getX()+r<mapSize; r++){
 				if(possibleMove(pUnit, pUnit.getX()+r, pUnit.getY())==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()+r][pUnit.getY()] = 'x';
 					// Checking Left
-					for(int j = 1; j < movementRange && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
+					for(int j = r; j < movement-r && pUnit.getY()+j<mapSize && pUnit.getY()-j>=0; j++){
 						if(possibleMove(pUnit,pUnit.getX()+r, pUnit.getY()+j)==true){
 							moves[pUnit.getX()+r][pUnit.getY()+j] = 'x';
 						}
@@ -368,17 +403,18 @@ public class Logic implements Serializable
 				}
 			}
 			//Left
-			for(int c = 1; c<movementRange && pUnit.getY()-c>=0; c++){
+			for(int c = 1; c<movement && pUnit.getY()-c>=0; c++){
 				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()-c)==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()][pUnit.getY()-c] = 'x';
-					// Checking below
-					for(int j = 1; j < movementRange && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+					for(int j = c; j < movement-c && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+						// Below
 						if(possibleMove(pUnit, pUnit.getX()+j, pUnit.getY()-c)==true){
 							moves[pUnit.getX()+j][pUnit.getY()-c] = 'x';
 						}
+						// Above
 						if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()-c)==true){
 							moves[pUnit.getX()-j][pUnit.getY()-c] = 'x';
 						}
@@ -387,17 +423,18 @@ public class Logic implements Serializable
 				}
 			}
 			//Right
-			for(int c = 1; c<movementRange && pUnit.getY()+c<mapSize; c++){
+			for(int c = 1; c<movement && pUnit.getY()+c<mapSize; c++){
 				if(possibleMove(pUnit, pUnit.getX(), pUnit.getY()+c)==false){
 					break;
 				}
 				else{
 					moves[pUnit.getX()][pUnit.getY()+c] = 'x';
-					// Checking Below
-					for(int j = 1; j < movementRange && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+					for(int j = c; j < movement-c && pUnit.getX()+j<mapSize && pUnit.getX()-j>=0; j++){
+						// Below
 						if(possibleMove(pUnit,pUnit.getX()+j, pUnit.getY()+c)==true){
 							moves[pUnit.getX()+j][pUnit.getY()+c] = 'x';
 						}
+						// Above
 						if(possibleMove(pUnit,pUnit.getX()-j, pUnit.getY()+c)==true){
 							moves[pUnit.getX()-j][pUnit.getY()+c] = 'x';
 						}
@@ -424,7 +461,6 @@ public class Logic implements Serializable
 				}
 			}
 		}
-		//pUnit.setHasMoved(true);
 	}
 
 	/******************************************************** 
@@ -436,8 +472,9 @@ public class Logic implements Serializable
 	 *********************************************************/
 	private boolean possibleMove(Unit pUnit, int x, int y){
 		boolean retval = true;
-		System.out.println(x +" " + y);
 		if((tBoard[x][y].getType()=='m' && pUnit.getType()!='i' )) {
+			retval = false;
+		}else if(unitBoard[x][y] != null){
 			retval = false;
 		}
 
@@ -446,6 +483,8 @@ public class Logic implements Serializable
 
 	public void setUnit(int x, int y, Unit pUnit){
 		unitBoard[x][y] = pUnit;
+		unitBoard[x][y].setX(x);
+		unitBoard[x][y].setY(y);
 	}
 
 	public void unitNewTurn(int pNum){
@@ -462,7 +501,7 @@ public class Logic implements Serializable
 						unitBoard[i][j].setHasCaptured(false);
 					}
 
-						
+
 
 			}
 	}

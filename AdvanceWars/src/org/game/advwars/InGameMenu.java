@@ -11,6 +11,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**********************************************************************************************
+ * 
+ * Action menu that is invoked by selecting a unit on the game board. It is used
+ * for ending the attacking, moving, and capturing.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class InGameMenu extends Activity implements OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();

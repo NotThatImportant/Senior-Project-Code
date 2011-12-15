@@ -19,6 +19,14 @@ import controller.Controller;
 import dataconnectors.SaveGUIData;
 import dataconnectors.SaveGameData;
 
+/**********************************************************************************************
+ * 
+ * This class controls the integration of the game board and the controller and can be
+ * considered the most important class of the game.
+ * 
+ * @author Sinisa Malbasa, Austin Padilla
+ *
+ *********************************************************************************************/
 public class GameBoard extends Activity implements OnTouchListener
 {
 	private MediaPlayer mp;
@@ -85,15 +93,16 @@ public class GameBoard extends Activity implements OnTouchListener
 		gameBoardView.initGame();
 		sd.saveGGVData(ggvGlobal);
 
-		// Background music
-		if (mp != null){
-			mp.release();
+		// Play background music only if enabled
+		if (ggvGlobal.getSound())
+		{
+			if (mp != null)
+				mp.release();
+			
+			mp = MediaPlayer.create(this, R.raw.background_music);
+			mp.setLooping(true);
+			mp.start();
 		}
-
-		// Begin gameplay music
-		mp = MediaPlayer.create(this, R.raw.background_music);
-		mp.setLooping(true);
-		mp.start();
 	}
 
 	@Override
@@ -172,7 +181,9 @@ public class GameBoard extends Activity implements OnTouchListener
 				ggvGlobal.setMovement(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
 				sd.saveGGVData(ggvGlobal);
 				gameBoardView.setController(c);
+                gameBoardView.setmPlayerMoves(ggvGlobal.getMovement());
 				gameBoardView.initGame();
+
 			}
 			// Attack
 			else if (ggvGlobal.getSelectedCommand() == 1)
@@ -191,6 +202,8 @@ public class GameBoard extends Activity implements OnTouchListener
 				gameBoardView.setController(c);
 				gameBoardView.initGame();
 			}
+            ggvGlobal.setSelectedCommand(-1);
+            sd.saveGGVData(ggvGlobal);
 		}
 		else
 		{
