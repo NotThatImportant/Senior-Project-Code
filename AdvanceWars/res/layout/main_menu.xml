@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/camo">
+    android:background="@drawable/bg3">
     <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/main_menu" android:text="@string/main_menu_title" android:textStyle="bold"></TextView>
     <TextView android:layout_height="wrap_content" android:layout_gravity="center" android:layout_width="wrap_content" android:id="@+id/welcome_message" android:text="@string/main_menu_welcome" android:textStyle="bold"></TextView>
     <Button android:layout_gravity="center" android:id="@+id/single_player" android:layout_width="250dp" android:text="@string/single_player_button" android:layout_height="45dp"></Button>

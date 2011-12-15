@@ -76,19 +76,19 @@ public class GameBoardView extends View
 
 		// Terrain tiles
 
-		loadTile(0, r.getDrawable(R.drawable.grass2), mTileArray);
-		loadTile(1, r.getDrawable(R.drawable.mountain), mTileArray);
-		loadTile(2, r.getDrawable(R.drawable.road), mTileArray);
+		loadTile(0, r.getDrawable(R.drawable.grass_tile2), mTileArray);
+		loadTile(1, r.getDrawable(R.drawable.mountain2), mTileArray);
+		loadTile(2, r.getDrawable(R.drawable.road2), mTileArray);
 		loadTile(3, r.getDrawable(R.drawable.water), mTileArray);
 		loadTile(4, r.getDrawable(R.drawable.selected), mTileArray);
-		loadTile(5, r.getDrawable(R.drawable.blue_building), mTileArray);
-		loadTile(6, r.getDrawable(R.drawable.blue_hq), mTileArray);
-		loadTile(7, r.getDrawable(R.drawable.blue_factory), mTileArray);
-		loadTile(8, r.getDrawable(R.drawable.red_building), mTileArray);
-		loadTile(9, r.getDrawable(R.drawable.red_hq), mTileArray);
-		loadTile(10, r.getDrawable(R.drawable.red_factory), mTileArray);
-		loadTile(11, r.getDrawable(R.drawable.uncaptured_building), mTileArray);
-		loadTile(12, r.getDrawable(R.drawable.uncaptured_factory), mTileArray);
+		loadTile(5, r.getDrawable(R.drawable.blue_building2), mTileArray);
+		loadTile(6, r.getDrawable(R.drawable.blue_hq2), mTileArray);
+		loadTile(7, r.getDrawable(R.drawable.blue_factory2), mTileArray);
+		loadTile(8, r.getDrawable(R.drawable.red_building2), mTileArray);
+		loadTile(9, r.getDrawable(R.drawable.red_hq2), mTileArray);
+		loadTile(10, r.getDrawable(R.drawable.red_factory3), mTileArray);
+		loadTile(11, r.getDrawable(R.drawable.uncaptured_building2), mTileArray);
+		loadTile(12, r.getDrawable(R.drawable.uncaptured_factory2), mTileArray);
 
 		// Red units tiles
 
