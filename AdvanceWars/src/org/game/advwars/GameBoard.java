@@ -85,15 +85,16 @@ public class GameBoard extends Activity implements OnTouchListener
 		gameBoardView.initGame();
 		sd.saveGGVData(ggvGlobal);
 
-		// Background music
-		if (mp != null){
-			mp.release();
+		// Play background music only if enabled
+		if (ggvGlobal.getSound())
+		{
+			if (mp != null)
+				mp.release();
+			
+			mp = MediaPlayer.create(this, R.raw.background_music);
+			mp.setLooping(true);
+			mp.start();
 		}
-
-		// Begin gameplay music
-		mp = MediaPlayer.create(this, R.raw.background_music);
-		mp.setLooping(true);
-		mp.start();
 	}
 
 	@Override
