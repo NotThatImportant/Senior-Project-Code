@@ -128,12 +128,12 @@ public class Controller implements Serializable
 
 	public void endTurn() {
 		if (playerTurn == 0) {
-			log.econDay(secondPlayer);
+			log.econDay(log.getP2());
 			log.unitNewTurn(playerTurn);
 			playerTurn = 1;
 		}
 		else {
-			log.econDay(firstPlayer);
+			log.econDay(log.getP1());
 			log.unitNewTurn(playerTurn);
 			playerTurn = 0;
 		}
