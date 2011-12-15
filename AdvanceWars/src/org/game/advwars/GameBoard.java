@@ -203,6 +203,7 @@ public class GameBoard extends Activity implements OnTouchListener
 				gameBoardView.initGame();
 			}
             ggvGlobal.setSelectedCommand(-1);
+            sd.saveGGVData(ggvGlobal);
 		}
 		else
 		{
