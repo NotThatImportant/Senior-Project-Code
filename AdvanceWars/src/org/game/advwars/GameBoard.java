@@ -146,7 +146,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			ggvGlobal.setSelectedCommand(-1);
 			sd.saveGGVData(ggvGlobal);
 			Toast.makeText(this, "Player turn: " + (c.whosTurn() + 1), Toast.LENGTH_SHORT).show();
-			
+			Toast.makeText(this, "Money: " + c.getCurrentPlayerMoney(), Toast.LENGTH_SHORT).show();
 			gameBoardView.setController(c);
 			gameBoardView.initGame();
 		}
@@ -208,6 +208,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			{
 				c.unitTakeAction(ggvGlobal.getSelectedCommand());
 				gameBoardView.setController(c);
+				Toast.makeText(this, "Buildling Captured!", Toast.LENGTH_SHORT).show();
 				gameBoardView.initGame();
 			}
 			// Unit info
@@ -261,7 +262,26 @@ public class GameBoard extends Activity implements OnTouchListener
 
 				if (attk == true && selectedPoints != null && 
 						c.isValidAttk(selectedPoints[0], selectedPoints[1])) {
+					Unit atker = c.getUnitBoard()[x][y];
+					Unit defndr = c.getUnitBoard()[selectedPoints[0], selectedPoints[1];
+					
+					int aHP = atker.getHP();
+					int dHP = defndr.getHP();
+					
+					Toast.makeText(this, "Attacker: " + atker.getName() + " HP: " + aHP, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Defender: " + defndr.getName() + " HP: " + dHP, Toast.LENGTH_SHORT).show();
+					
 					c.attackUnit(selectedPoints[0], selectedPoints[1]);
+					atker = c.getUnitBoard()[x][y];
+					defndr = c.getUnitBoard()[selectedPoints[0], selectedPoints[1];
+					
+					int aDmg = dHP - defndr.getHP();
+					int dDmg = aHP - atker.getHP();
+					
+					Toast.makeText(this, "Attacker: " + atker.getName() + " Damage: " + aDmg, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Defender: " + defndr.getName() + " Damage: " + dDmg, Toast.LENGTH_SHORT).show();
+					
+					
 					gameBoardView.setController(c);
 					gameBoardView.initGame();
 					attk = false;
