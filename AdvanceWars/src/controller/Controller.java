@@ -157,24 +157,56 @@ public class Controller implements Serializable
 	}
 
 	private char[][] attack() {
-		char[][] move = move();
-		Unit[][] ub = log.getUB();
-		char[][] canAttack = new char[log.getTBoard().length][log.getTBoard().length];
-
-		for (int r = 0; r < canAttack.length; r++) {
-			for (int c = 0; c < canAttack.length; c++) {
-
-				//if there is a unit there that does not belong to you and you can move there...
-				//TODO move[r][c] isn't correct you should say if you can move within attack range
-				//of that unit NOT if you can move to the same tile as that unit!
-
-				if (ub[r][c] != null && playerTurn != ub[r][c].getOwner() && move[r][c] == 'x') {
-					canAttack[r][c] = 'a';
-				}
-			}
+			private char[][] attack() {
+		char[][] attackGrid = new char[log.getSize()][log.getSize()];
+		Unit attacker = log.getUnit(x, y);
+		int attackRange = attacker.getAtkRange();
+		
+		for (int r = 0; r < log.getSize(); r++) 
+			for (int c = 0; c < log.getSize(); c++) 
+				attackGrid[r][c] = '-';
+		
+		for (int i = 1; i <= attackRange; i++) {
+			//To the right
+			if (x+i < log.getSize() && (attackRange == 1 || i != 1))  
+				attackGrid[x+i][y] = 'x';
+			
+			/*Second part of the if just says if the attack range is 1 
+			or if it is not the first time around, meaning it's ranged,
+			then put a x there.*/
+			
+			//To the left
+			if (x-i >= 0 && (attackRange == 1 || i != 1)) 
+				attackGrid[x-i][y] = 'x';
+			
+			//Up
+			if (y+i < log.getSize() && (attackRange == 1 || i != 1))
+				attackGrid[x][y+i] = 'x';
+			
+			//Down
+			if (y-i >= 0 && (attackRange == 1 || i != 1))
+				attackGrid[x][y-i] = 'x';
+				
+			if (attackRange > 1 && attacker.hasMoved() == false) {
+				//Top right
+				if (x+i < log.getSize() && y+i < log.getSize()) 
+					attackGrid[x+i][y+i] = 'x';
+					
+				//Bottom right
+				if (x+i < log.getSize() && y-i > 0) 
+					attackGrid[x+i][y-i] = 'x';
+					
+				//Top left
+				if (x-i > 0 && y+i < log.getSize()) 
+					attackGrid[x-i][y+i] = 'x';
+				
+				//Bottom left
+				if (x-i > 0 && y-i > 0) 
+					attackGrid[x-i][y-i] = 'x';
+			}  
 		}
-
-		return canAttack;
+		
+		return attackGrid;
 	}
 
 	public void attackUnit(int r, int c) {
