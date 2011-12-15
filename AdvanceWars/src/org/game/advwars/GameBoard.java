@@ -188,7 +188,11 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Attack
 			else if (ggvGlobal.getSelectedCommand() == 1)
 			{
-
+				ggvGlobal.setAttackGrid(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
+				sd.saveGGVData(ggvGlobal);
+				gameBoardView.setController(c);
+				gameBoardView.setmPlayerAttack(ggvGlobal.getAttackGrid());
+				gameBoardView.initGame();
 			}
 			// Capture
 			else if (ggvGlobal.getSelectedCommand() == 2)
