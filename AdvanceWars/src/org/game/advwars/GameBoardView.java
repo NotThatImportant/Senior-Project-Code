@@ -33,7 +33,8 @@ public class GameBoardView extends View
 	//private Bitmap[] mBlueBuildingArray;
 	private Bitmap[] mUncaptBuildingArray;
 	private char[][] mTileGrid;
-    private char[][] mPlayerMoves;
+        private char[][] mPlayerMoves;
+        private char[][] mPlayerAttack;
 	private int[][] mPlayer1Units;
 	private int[][] mPlayer2Units;
 	private int mX;
@@ -211,17 +212,25 @@ public class GameBoardView extends View
 							mPaint);
 
 
-                if(mPlayerMoves != null){
-                    if(mPlayerMoves[x][y] == 'x')
-                        canvas.drawBitmap(mTileArray[13],
-                            mXOffset + (x - mX) * mTileSize,
-                            mYOffset + (y - mY) * mTileSize,
-                            mPaint);
-
-                }
+                		if(mPlayerMoves != null){
+                  		  if(mPlayerMoves[x][y] == 'x')
+                      		  	canvas.drawBitmap(mTileArray[13],
+                       		     	mXOffset + (x - mX) * mTileSize,
+                       		     	mYOffset + (y - mY) * mTileSize,
+                            		mPaint);
+               			 }
+                
+               			 if (mPlayerAttack != null) {
+        				if (mPlayerAttack[x][y] == 'x')
+        					canvas.drawBitmap(mTileArray[13],
+        					mXOffset + (x - mX) * mTileSize,
+        					mYOffset + (y - mY) * mTileSize, 
+        					mPaint);
+                		 }
 			}
-		}
+	}
         mPlayerMoves = null;
+        mPlayerAttack = null;
 //		drawPossibleMoves(canvas);
 	}
 	
@@ -427,7 +436,9 @@ public class GameBoardView extends View
 		this.invalidate();
 	}
 
-
+	public void setmPlayerAttack(char[][] attackGrid) {
+		this.mPlayerAttack = attackGrid;
+	}
 
 
     public void setmPlayerMoves(char[][] mPlayerMoves) {
