@@ -60,8 +60,7 @@ public class GameBoard extends Activity implements OnTouchListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gameboard_layout);
-		// Tells Android to adjust the volume of music instead of the ringer
-		//setVolumeControlStream(AudioManager.STREAM_MUSIC);
+		mp = MediaPlayer.create(this, R.raw.background_music);
 
 		// Load player values
 		ggvGlobal = sd.loadGGVData();
@@ -98,10 +97,14 @@ public class GameBoard extends Activity implements OnTouchListener
 		{
 			if (mp != null)
 				mp.release();
-			
-			mp = MediaPlayer.create(this, R.raw.background_music);
+
 			mp.setLooping(true);
 			mp.start();
+		}
+		else
+		{
+			mp.setLooping(false);
+			mp.stop();
 		}
 	}
 
@@ -151,6 +154,8 @@ public class GameBoard extends Activity implements OnTouchListener
 		}
 		else if (ggvGlobal.getInGameMenuQuitGame())
 		{
+			// Quit game
+			mp.stop();
 			Intent i = new Intent(this, MainMenu.class);
 			i.putExtra("ggv", ggvGlobal);
 			startActivityForResult(i, 0);

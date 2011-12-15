@@ -181,10 +181,10 @@ public class Logic implements Serializable
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
 		if (tBoard[pX][pY].getOwner() != p.getPNum() && (
-			tBoard[pX][pY].getType == 'h' || tBoard[pX][pY].getType == 'H' || 
-			tBoard[pX][pY].getType == 'b' || tBoard[pX][pY].getType == 'p' || 
-			tBoard[pX][pY].getType == 'q' || tBoard[pX][pY].getType == 'Q' || 
-			tBoard[pX][pY].getType == 'x' || tBoard[pX][pY].getType == 'X' || )) {
+			tBoard[pX][pY].getType() == 'h' || tBoard[pX][pY].getType() == 'H' || 
+			tBoard[pX][pY].getType() == 'b' || tBoard[pX][pY].getType() == 'p' || 
+			tBoard[pX][pY].getType() == 'q' || tBoard[pX][pY].getType() == 'Q' || 
+			tBoard[pX][pY].getType() == 'x' || tBoard[pX][pY].getType() == 'X' )) {
 		
 			if(unitBoard[pX][pY].getHasCaptured()) {
 				tBoard[pX][pY].setOwner(p.getPNum());
