@@ -52,7 +52,7 @@ public class Controller implements Serializable
 		log.setUB(((AI) secondPlayer).getNewUBoard());
 		log.setTBoard(((AI) secondPlayer).getNewTBoard());
 		endTurn();
-		
+
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Controller implements Serializable
 			log.unitNewTurn(playerTurn);
 			playerTurn = 0;
 		}
-		
+
 	}
 
 	public char[][] unitTakeAction(int action)
@@ -160,51 +160,51 @@ public class Controller implements Serializable
 		char[][] attackGrid = new char[log.getSize()][log.getSize()];
 		Unit attacker = log.getUnit(x, y);
 		int attackRange = attacker.getAtkRange();
-		
+
 		for (int r = 0; r < log.getSize(); r++) 
 			for (int c = 0; c < log.getSize(); c++) 
 				attackGrid[r][c] = '-';
-		
+
 		for (int i = 1; i <= attackRange; i++) {
 			//To the right
 			if (x+i < log.getSize() && (attackRange == 1 || i != 1))  
 				attackGrid[x+i][y] = 'x';
-			
+
 			/*Second part of the if just says if the attack range is 1 
 			or if it is not the first time around, meaning it's ranged,
 			then put a x there.*/
-			
+
 			//To the left
 			if (x-i >= 0 && (attackRange == 1 || i != 1)) 
 				attackGrid[x-i][y] = 'x';
-			
+
 			//Up
 			if (y+i < log.getSize() && (attackRange == 1 || i != 1))
 				attackGrid[x][y+i] = 'x';
-			
+
 			//Down
 			if (y-i >= 0 && (attackRange == 1 || i != 1))
 				attackGrid[x][y-i] = 'x';
-				
+
 			if (attackRange > 1 && attacker.getHasMoved() == false) {
 				//Top right
 				if (x+i < log.getSize() && y+i < log.getSize()) 
 					attackGrid[x+i][y+i] = 'x';
-					
+
 				//Bottom right
 				if (x+i < log.getSize() && y-i > 0) 
 					attackGrid[x+i][y-i] = 'x';
-					
+
 				//Top left
 				if (x-i > 0 && y+i < log.getSize()) 
 					attackGrid[x-i][y+i] = 'x';
-				
+
 				//Bottom left
 				if (x-i > 0 && y-i > 0) 
 					attackGrid[x-i][y-i] = 'x';
 			}  
 		}
-		
+
 		return attackGrid;
 	}
 
@@ -300,87 +300,85 @@ public class Controller implements Serializable
 		Unit[][] unitBoard = log.getUB();
 		boolean canIAttack = false;
 
-		for (int c = 0; c < unitBoard.length; c++) {
-			for (int r = 0; r < unitBoard.length && r <= selUnit.getAtkRange(); r++) {
-				for (int i = 1; i <= selUnit.getAtkRange(); i++) {
-					if (selUnit.getAtkRange() == 1 || 
-						i > 1) { 
-						//check up
-						if (r + i < unitBoard.length && unitBoard[r + i][c] != null) {
-							Unit otherUnit = unitBoard[r + i][c];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
-								canIAttack = true;
-						}
-				
-						//check the right one
-						if (c + i < unitBoard.length && unitBoard[r][c + i] != null) {
-							Unit otherUnit = unitBoard[r][c + i];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
-								canIAttack = true;
-						}
-				
-						//check the left
-						if (c - i >= 0 && unitBoard[r][c - i] != null) {
-							Unit otherUnit = unitBoard[r][c - i];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
-								canIAttack = true;						
-						}
-					
-						//check the bottom
-						if (r - i >= 0  && unitBoard[r - i][c] != null) {
-							Unit otherUnit = unitBoard[r-i][c];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
-								canIAttack = true;							
-						}
-					} else {
-						int oC = i - 1;
-						
-						//lower left corner
-						if (r - oC > 0 && c - oC > 0 && unitBoard[r - oC][c - oC] != null) {
-							Unit otherUnit = unitBoard[r - oC][c - oC];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
-								canIAttack = true;
-						}
-						
-						//upper left corner
-						if (r + oC < log.getSize() && c - oC > 0 && unitBoard[r + oC][c - oC] != null) {
-							Unit otherUnit = unitBoard[r + oC][c - oC];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
-								canIAttack = true;
-						}
-						
-						//bottom right corner
-						if (r - oC > 0 && c + oC < log.getSize() && unitBoard[r - oC][c + oC] != null) {
-							Unit otherUnit = unitBoard[r - oC][c + oC];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
-								canIAttack = true;
-						}
-						
-						//top right corner
-						if (r + oC < log.getSize() && c + oC < log.getSize() && unitBoard[r + oC][c + oC] != null) {
-							Unit otherUnit = unitBoard[r + oC][c + oC];
-							if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
-								canIAttack = true; 
-						}
-					}
+		for (int i = 1; i <= selUnit.getAtkRange(); i++) {
+			if (selUnit.getAtkRange() == 1 || 
+					i > 1) { 
+				//check up
+				if (x + i < unitBoard.length && unitBoard[x + i][y] != null) {
+					Unit otherUnit = unitBoard[x + i][y];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//check the right one
+				if (y + i < unitBoard.length && unitBoard[x][y + i] != null) {
+					Unit otherUnit = unitBoard[x][y + i];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;
+				}
+
+				//check the left
+				if (y - i >= 0 && unitBoard[x][y - i] != null) {
+					Unit otherUnit = unitBoard[x][y - i];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;						
+				}
+
+				//check the bottom
+				if (x - i >= 0  && unitBoard[x - i][y] != null) {
+					Unit otherUnit = unitBoard[x-i][y];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked()) 
+						canIAttack = true;							
+				}
+			} else {
+				int oC = i - 1;
+
+				//lower left corner
+				if (x - oC > 0 && y - oC > 0 && unitBoard[x - oC][y - oC] != null) {
+					Unit otherUnit = unitBoard[x - oC][y - oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//upper left corner
+				if (x + oC < log.getSize() && y - oC > 0 && unitBoard[x + oC][y - oC] != null) {
+					Unit otherUnit = unitBoard[x + oC][y - oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//bottom right corner
+				if (x - oC > 0 && y + oC < log.getSize() && unitBoard[x - oC][y + oC] != null) {
+					Unit otherUnit = unitBoard[x - oC][y + oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true;
+				}
+
+				//top right corner
+				if (x + oC < log.getSize() && y + oC < log.getSize() && unitBoard[x + oC][y + oC] != null) {
+					Unit otherUnit = unitBoard[x + oC][y + oC];
+					if (otherUnit.getOwner() != selUnit.getOwner() && !selUnit.getHasAttacked())
+						canIAttack = true; 
 				}
 			}
+
+
 		}
-		
+
 		if (canIAttack) 
 			actions.add("Attack");
 
 		Tile[][] tileBoard = log.getTBoard();
 
 		if ((tileBoard[x][y].getType() == 'q' || tileBoard[x][y].getType() == 'p' ||
-			tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P' ||
-			tileBoard[x][y].getType() == 'h' || tileBoard[x][y].getType() == 'H' ||
-			tileBoard[x][y].getType() == 'b' || tileBoard[x][y].getType() == 'x' ||
-			tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner()) {	
-			
+				tileBoard[x][y].getType() == 'Q' || tileBoard[x][y].getType() == 'P' ||
+				tileBoard[x][y].getType() == 'h' || tileBoard[x][y].getType() == 'H' ||
+				tileBoard[x][y].getType() == 'b' || tileBoard[x][y].getType() == 'x' ||
+				tileBoard[x][y].getType() == 'X') && tileBoard[x][y].getOwner() != selUnit.getOwner()) {	
+
 			actions.add("Capture");
 		}	
-			
+
 		actions.add("UnitInfo");
 
 		return actions;
@@ -503,7 +501,7 @@ public class Controller implements Serializable
 					} else
 						retBoard[i][j] = -1;
 				}
-				
+
 			}
 
 
@@ -522,21 +520,21 @@ public class Controller implements Serializable
 
 		return false;
 	}
-	
+
 	public int getCurrentPlayerMoney()
 	{
 		int munny = 0;
-		
+
 		if (playerTurn == firstPlayer.getPNum())
 			munny = log.getP1().getCash();
-		
+
 		else if (playerTurn == secondPlayer.getPNum())
 			munny = log.getP2().getCash();
-		
+
 		else
 			munny = -1;
-		
-		
+
+
 		return munny;
 	}
 }

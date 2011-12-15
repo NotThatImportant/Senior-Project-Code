@@ -56,6 +56,10 @@ public class Tile implements Serializable
 		return type;
 	}
 	
+	public void setType(char newType) {
+		this.type = newType;
+	}
+	
 	public int getHeight() {
 		return height;
 	}

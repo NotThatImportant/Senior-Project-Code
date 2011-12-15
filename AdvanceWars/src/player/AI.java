@@ -69,7 +69,7 @@ public class AI extends Player{
 		moveLogger = new ArrayList<String>();
 		unitTracker = new int[types.values().length];
 
-		test();
+		//test();
 		
 	}
 
