@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**********************************************************************************************
+ * 
+ * Starts a single player game against the AI.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class SinglePlayer extends Activity implements OnClickListener
 {
 	private GUIGameValues ggvGlobal = new GUIGameValues();

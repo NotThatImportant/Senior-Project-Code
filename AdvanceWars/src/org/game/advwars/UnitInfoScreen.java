@@ -7,6 +7,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+/**********************************************************************************************
+ * 
+ * Shows all attributes of the selected unit.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class UnitInfoScreen extends Activity
 {
 	private GUIGameValues ggv = new GUIGameValues();

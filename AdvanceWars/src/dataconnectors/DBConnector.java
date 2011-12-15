@@ -5,13 +5,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-/**
- * Default path where Android stores database file:
- *'/data/data/packagename/databases'
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
+ * Old database connector class that is using JDBC. Since JDBC is currently not supported in
+ * Android this connector is deprecated and DBAndroidConnector should be used instead.
  * 
  * @author Sinisa Malbasa
  *
- */
+ *********************************************************************************************/
 public class DBConnector
 {
 	private int numOfColumns = 0;

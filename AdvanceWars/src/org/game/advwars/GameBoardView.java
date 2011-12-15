@@ -12,6 +12,13 @@ import android.view.View;
 import controller.Controller;
 import dataconnectors.SaveGUIData;
 
+/**********************************************************************************************
+ * 
+ * This class controls the game board.
+ * 
+ * @author Sinisa Malbasa, Austin Padilla
+ *
+ *********************************************************************************************/
 public class GameBoardView extends View
 {
 	protected static int mTileSize;

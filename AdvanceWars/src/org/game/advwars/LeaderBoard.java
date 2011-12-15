@@ -13,6 +13,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+/**********************************************************************************************
+ * 
+ * This class shows scores of various players in a well-organized table.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class LeaderBoard extends Activity
 {
 	private int index = 0;

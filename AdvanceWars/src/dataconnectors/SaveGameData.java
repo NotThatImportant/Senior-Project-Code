@@ -10,11 +10,15 @@ import java.io.ObjectOutputStream;
 import controller.Controller;
 import android.util.Log;
 
-/**
- * Connector class used to save actual game data.
+/**********************************************************************************************
+ * 
+ * Data Connector Class
+ * 
+ * This class is used to save and load actual game session data.
  * 
  * @author Sinisa Malbasa
- */
+ *
+ *********************************************************************************************/
 public class SaveGameData
 {
 	private String filePath;

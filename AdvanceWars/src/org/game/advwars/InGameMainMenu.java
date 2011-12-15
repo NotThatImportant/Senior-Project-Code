@@ -6,6 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+/**********************************************************************************************
+ * 
+ * Main menu that is invoked by pressing the Menu button while on the game board. It is used
+ * for ending the current turn, saving the current game, or quitting the current game.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class InGameMainMenu extends Activity implements OnClickListener
 {
 	private GUIGameValues ggv = new GUIGameValues();

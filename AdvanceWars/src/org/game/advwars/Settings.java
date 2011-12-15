@@ -14,6 +14,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to change his/her name, toggle background music on/off, and change the
+ * difficulty of the AI.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class Settings extends Activity implements OnClickListener, OnCheckedChangeListener
 {
 	private int soundOn;

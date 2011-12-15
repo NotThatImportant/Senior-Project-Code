@@ -19,6 +19,14 @@ import controller.Controller;
 import dataconnectors.SaveGUIData;
 import dataconnectors.SaveGameData;
 
+/**********************************************************************************************
+ * 
+ * This class controls the integration of the game board and the controller and can be
+ * considered the most important class of the game.
+ * 
+ * @author Sinisa Malbasa, Austin Padilla
+ *
+ *********************************************************************************************/
 public class GameBoard extends Activity implements OnTouchListener
 {
 	private MediaPlayer mp;

@@ -10,6 +10,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Button;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to enter a new player name.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class EnterPlayerName extends Activity implements OnClickListener
 {
 	private String playerName = null;

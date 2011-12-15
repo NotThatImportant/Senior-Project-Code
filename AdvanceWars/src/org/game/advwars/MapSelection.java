@@ -14,6 +14,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import dataconnectors.SaveGUIData;
 
+/**********************************************************************************************
+ * 
+ * Allows the player to select the battle map before going to the game board screen.
+ * 
+ * @author Sinisa Malbasa
+ *
+ *********************************************************************************************/
 public class MapSelection extends Activity implements OnItemSelectedListener, OnClickListener
 {
 	private String mapName = "";
