@@ -30,6 +30,7 @@ public class GUIGameValues implements Serializable
 	private char[][] movement;
 	private boolean aiOn;
 	private int money;
+	private char[][] attackGrid;
 	
 	public GUIGameValues()
 	{
@@ -47,6 +48,7 @@ public class GUIGameValues implements Serializable
 		movement = null;
 		aiOn = false;
 		money = -1;
+		attackGrid = null;
 	}
 	
 	public void setPlayerName (String playerName)
@@ -204,6 +206,14 @@ public class GUIGameValues implements Serializable
 	public char[][] getMovement()
 	{
 		return movement;
+	}
+	
+	public void setAttackGrid(char[][] atk) {
+		attackGrid = atk;
+	}
+	
+	public char[][] getAttackGrid() {
+		return attackGrid;
 	}
 	
 	public void setAIOn (boolean aiOn)
