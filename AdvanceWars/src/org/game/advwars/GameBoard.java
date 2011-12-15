@@ -95,6 +95,7 @@ public class GameBoard extends Activity implements OnTouchListener
 			mp.release();
 		
 		mp = MediaPlayer.create(this, R.raw.background_music);
+		//mp.stop();
 
 		// Play background music only if enabled
 		if (ggvGlobal.getSound())
