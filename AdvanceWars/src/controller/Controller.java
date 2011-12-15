@@ -157,7 +157,6 @@ public class Controller implements Serializable
 	}
 
 	private char[][] attack() {
-		private char[][] attack() {
 		char[][] attackGrid = new char[log.getSize()][log.getSize()];
 		Unit attacker = log.getUnit(x, y);
 		int attackRange = attacker.getAtkRange();
@@ -187,7 +186,7 @@ public class Controller implements Serializable
 			if (y-i >= 0 && (attackRange == 1 || i != 1))
 				attackGrid[x][y-i] = 'x';
 				
-			if (attackRange > 1 && attacker.hasMoved() == false) {
+			if (attackRange > 1 && attacker.getHasMoved() == false) {
 				//Top right
 				if (x+i < log.getSize() && y+i < log.getSize()) 
 					attackGrid[x+i][y+i] = 'x';

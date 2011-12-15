@@ -180,17 +180,7 @@ public class Logic implements Serializable
 	 * @param p
 	 ************************************************************************/
 	public void captureBuilding(Player p, int pX, int pY) {
-		if (tBoard[pX][pY].getType() == 'p' || 
-				tBoard[pX][pY].getType() == 'b' && 
-				tBoard[pX][pY].getOwner() != p.getPNum()) {
 
-			if (tBoard[pX][pY].getBC() == p.getPNum()) 
-				tBoard[pX][pY].setOwner(p.getPNum());
-			else 
-				tBoard[pX][pY].setBC(p.getPNum());
-
-		}
-		unitBoard[pX][pY].setStartedCapture(Boolean.TRUE);
 	}
 
 	public Player getP1() {
