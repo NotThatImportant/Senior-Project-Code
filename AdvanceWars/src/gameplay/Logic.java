@@ -184,7 +184,8 @@ public class Logic implements Serializable
 			tBoard[pX][pY].getType() == 'h' || tBoard[pX][pY].getType() == 'H' || 
 			tBoard[pX][pY].getType() == 'b' || tBoard[pX][pY].getType() == 'p' || 
 			tBoard[pX][pY].getType() == 'q' || tBoard[pX][pY].getType() == 'Q' || 
-			tBoard[pX][pY].getType() == 'x' || tBoard[pX][pY].getType() == 'X' )) {
+			tBoard[pX][pY].getType() == 'x' || tBoard[pX][pY].getType() == 'X' ||
+			tBoard[pX][pY].getType() == 'P')) {
 		
 			if(unitBoard[pX][pY].getHasCaptured()) {
 				tBoard[pX][pY].setOwner(p.getPNum());
