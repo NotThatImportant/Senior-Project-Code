@@ -181,7 +181,7 @@ public class GameBoard extends Activity implements OnTouchListener
 				ggvGlobal.setMovement(c.unitTakeAction(ggvGlobal.getSelectedCommand()));
 				sd.saveGGVData(ggvGlobal);
 				gameBoardView.setController(c);
-                gameBoardView.setmPlayerMoves(ggvGlobal.getMovement());
+            		        gameBoardView.setmPlayerMoves(ggvGlobal.getMovement());
 				gameBoardView.initGame();
 
 			}
@@ -193,7 +193,9 @@ public class GameBoard extends Activity implements OnTouchListener
 			// Capture
 			else if (ggvGlobal.getSelectedCommand() == 2)
 			{
-
+				c.unitTakeAction(ggvGlobal.getSelectedCommand());
+				gameBoardView.setController(c);
+				gameBoardView.initGame();
 			}
 			// Unit info
 			else
