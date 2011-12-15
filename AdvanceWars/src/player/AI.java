@@ -1225,8 +1225,6 @@ public class AI extends Player{
 		Unit[][] unitBoard = log.getUB();
 		String unitType;
 
-		System.out.println("Anti-Air: " + types.ANTIAIR.ordinal()+"\n\n\n\n\n");
-
 		for(int i = 0; i<log.getSize(); i++)
 			for(int j = 0; j < log.getSize(); j++)
 				if(unitBoard[i][j] != null)
@@ -1383,21 +1381,21 @@ public class AI extends Player{
 		boolean finished = false;
 
 
-		// creating Logic - NECESSARY
-		log = new Logic("test", 'b', 'r', "Puny Human", "Herp Derp", true);
+		// creating test Logic - NECESSARY
+		log = new Logic(this);
 
 		// create some random units
-		log.setUnit(1, 5, new Infantry(1));
-		log.setUnit(10, 8, new MedTank(1));
-		log.setUnit(13, 3, new Mech(1));
-		log.setUnit(21, 18, new HeavyTank(1));
+		log.setUnit(1, 5, new Infantry(0));
+		log.setUnit(10, 8, new MedTank(0));
+		log.setUnit(13, 3, new Mech(0));
+		log.setUnit(21, 18, new HeavyTank(0));
 
-		log.setUnit(29, 27, new MedTank(2));
-		log.setUnit(27, 26, new Infantry(2));
-		log.setUnit(23, 28, new HeavyTank(2));
-		log.setUnit(28, 28, new Rockets(2));
+		log.setUnit(29, 27, new MedTank(1));
+		log.setUnit(27, 26, new Infantry(1));
+		log.setUnit(23, 28, new HeavyTank(1));
+		log.setUnit(28, 28, new Rockets(1));
 
-		Unit m = new Rockets(2);
+		Unit m = new Rockets(1);
 		log.setUnit(0, 5, m);
 		char[][] t = log.getMoves(m);
 		for(int i = 0; i < log.getSize(); i++){
