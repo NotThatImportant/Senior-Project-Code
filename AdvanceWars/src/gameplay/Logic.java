@@ -191,6 +191,7 @@ public class Logic implements Serializable
 				unitBoard[pX][pY].justProded();
 			} else {
 				unitBoard[pX][pY].setHasCaptured(true);
+				unitBoard[pX][pY].justProded();
 			}
 		}
 	}
